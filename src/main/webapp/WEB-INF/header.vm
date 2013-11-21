@@ -1,0 +1,37 @@
+<div class="clear" id="header"><div style="float:left;">
+<a href="." ><img alt="$text.application.title" src="img/logo.png" border="0" /></a>
+</div>
+
+<div id="main_menu" style="">
+    #parse( "header/menu.vm" )
+</div>
+<div id="searchFormDiv" style="vertical-align:middle;margin:auto;padding:7px;width:600px;">
+    #parse( "header/form.vm" )
+</div>
+</div>
+
+#if(${cols.current})
+<div id="current_vc">
+     <span class="mainNav" href="javascript:leaveVirtualCollection();">
+         ${cols.currentText}
+     #if(${cols.canLeaveCurrent}=='true')
+     <a id="leave_vc" title="$text.search.leave.virtual.collection" href="javascript:leaveVirtualCollection();" style="float:right;margin-top:5px;margin-left:5px;" class="ui-icon ui-icon-arrowreturnthick-1-w">leave virtual collection</a>    
+     #end
+     
+</div>
+#end
+
+<script type="text/javascript">
+    $('#main_menu_in a').button();
+    $('#searchFormDiv a').button();
+    $('#leave_vc').button();
+    function leaveVirtualCollection(){
+    
+        var page = new PageQuery(window.location.search);
+
+        page.setValue("offset", "0");
+        page.setValue("collection", "none");
+        var url = "?" + page.toString();
+        window.location = url;
+    }
+</script>

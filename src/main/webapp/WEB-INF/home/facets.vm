@@ -1,0 +1,33 @@
+
+
+#set($fn = ($facets.length() - 1))
+#set($frange = [0..$fn])
+
+<div id="facets" style="font-size:1.2em;">
+    <ul>
+#foreach($fi in $facets.keys())
+    #set($facet = $facets.get($fi))
+    #set($n = ($facet.length() - 1))
+    #set($range = [0..$n])
+        <li style="float:left; border:1px solid silver;margin:5px;padding:5px;width:30%;">
+        <span class="ui-icon ui-icon-triangle-1-e folder" ></span>
+            <a href="#">$text.facet.get($fi)</a>
+                <ul>
+        #foreach($i in $range)
+            #set($value = $facet[$i])
+            #if( 1 == $velocityCount % 2)
+               <li><a href="javascript:addFilter('$fi', '$value')">
+                    #if($fi == "fedora.model")
+                        $text.fedora.model.get($value)
+                    #else
+                        $value
+                    #end
+            #else
+               ($value)</a></li>
+            #end
+        #end
+            </ul>
+        </li>
+#end
+    </ul>
+</div>

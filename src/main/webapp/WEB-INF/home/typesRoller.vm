@@ -1,0 +1,32 @@
+#set($dts1 = $convert.toStrings($conf.search.home.document.types))
+#set($dts = "")
+#foreach($dt1 in $dts1)
+    #set( $dts = "${dts}[${dt1}]" )
+#end
+
+#set($facets = $results.get("facet_counts").get("facet_fields"))
+#set($fi = "fedora.model")
+#set($facet = $facets.get($fi))
+#set($n = ($facet.length() - 1))
+#set($range = [0..$n])
+<div>$text.home.document.type
+#foreach($i in $range)
+    #if( 1 == $velocityCount % 2)
+        #set($name = $facet[$i])
+#set($next = $i + 1)
+        #set($numStr = $facet[$next])
+        #set($num = $convert.toInt($numStr))
+        #if($dts.contains($name))
+            <span><b><a>$numStr
+            #if($num == 1)
+                $text.document.type.get($name)
+            #elseif($num < 5)
+                $text.document.type.get("${name}.2")
+            #else
+                $text.document.type.get("${name}.5")
+            #end
+            </a></b></span>
+        #end
+    #end
+#end
+</div>

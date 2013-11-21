@@ -1,0 +1,61 @@
+$response.setContentType('text/xml')<?xml version="1.0" encoding="UTF-8" ?>
+$rssHome.getDesirables()
+#set($n = ($rssHome.JSON.data.length() - 1))
+#set($range = [0..$n])
+<rss version="2.0">
+<channel>
+<title>$text.application.title</title> 
+<description>$text.home.tab.mostDesirables</description>
+<link>${rssHome.channelURL}</link>
+#foreach($i in $range)
+#set($doc = $rssHome.JSON.data[$i])
+<item>
+            	<title>${doc.title}</title>
+            	<description>
+            		<![CDATA[
+            		<p>
+            		<a href="${rssHome.applicationURL}/handle/${doc.pid}">
+            		<img src="${rssHome.applicationURL}/img?uuid=${doc.pid}&stream=IMG_THUMB&action=SCALE&scaledHeight=96" hspace="10" vspace="2" style="border: 0pt none;" align="left" />
+            		</a>             		
+            		]]>            		           	
+                    
+                    #if($doc.has('authors') == "true")
+                    #foreach($aut in $doc.authors)
+                        <![CDATA[Autor: ${aut} <br/>]]>
+                    #end
+                    #end
+
+                    #if($doc.has('datumstr') == "true")
+                        <![CDATA[Rok vydání: ${doc.datumstr} <br/>]]>
+                    #end
+
+                    #if($doc.has('model') == "true")
+                        <![CDATA[Typ svazku: $text.fedora.model.get(${doc.model}) <br/>]]>
+                    #end
+
+                    #if(($doc.has('rozsah') == "true") && ($doc.rozsah>0))
+                        <![CDATA[Rozsah: ${doc.rozsah} <br/>]]>
+                    #end
+
+                    #if($doc.has('languages') == "true")
+                        <![CDATA[Jazyk: ]]>
+                        #foreach($lang in $doc.languages)
+                            #if ($velocityCount > 1),#end <![CDATA[$text.language.get(${lang})]]>
+                        #end
+                        <![CDATA[<br/>]]>
+                    #end
+
+                    #if($doc.has('issn') == "true")
+                        #set($issnType = "$rssHome.getISSNType($doc.issn)")
+                        <![CDATA[${issnType}: ${doc.issn} <br/>]]>
+                    #end
+
+                    <![CDATA[</p>]]>
+                </description>                
+                <link>${rssHome.applicationURL}/handle/${doc.pid}</link>
+                <guid>${rssHome.applicationURL}/handle/${doc.pid}</guid>
+            </item>
+#end
+
+</channel>
+</rss>

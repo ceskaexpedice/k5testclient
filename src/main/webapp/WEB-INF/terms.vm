@@ -1,0 +1,8 @@
+#set($xsl = $import.read("xsl/autocomplete.xsl"))
+#if(${params.field} == 'browse_title')
+    #set($xml = $search.getTitles($params.t))
+#else
+    #set($xml = $search.getAuthors($params.t))
+#end
+$xslt.addParam("incl", "true")
+$xslt.transform($xml, $xsl)

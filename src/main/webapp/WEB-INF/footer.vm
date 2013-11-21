@@ -1,0 +1,156 @@
+
+<div id="socialbuttons_div" class="viewer socialbuttons" style="visibility: hidden; height: 0px;">
+     #if(${gplus.buttonEnabled} || ${fb.buttonEnabled} || ${tweet.buttonEnabled})
+      <script type="text/javascript">
+        // changing og metadata
+        $('#socialbuttons_div.viewer').bind('viewReady', function(event, viewerOptions){
+        	if(!viewerOptions) return;
+            var rbs = new RebuildSocialButtons();
+            // rebuild all buttons
+            rbs.rebuild(rbs.buildItemsURLS())
+        });
+
+
+        function RebuildSocialButtons() {}
+
+        RebuildSocialButtons.prototype.isItemPage = function() {
+            if(viewerOptions) return true;
+            return false;
+        }
+
+        RebuildSocialButtons.prototype.buildSearchURLS = function() {
+            return {
+                "url":window.location.href,
+                "imgUrl":window.location.href+'/img/logo.png'
+            };            
+        }
+
+        // gplus button - explicit initialization
+        RebuildSocialButtons.prototype.rebuildExplicit=function(urls) {
+            $('meta[property="og:url"]').attr('content',urls.url);
+            $('meta[property="og:image"]').attr("content", urls.imgUrl);
+            $('link[rel="canonical"]').attr("href", urls.url);
+
+        	//Google plus one
+            if(typeof(gapi) !== 'undefined') {
+                gapi.plusone.go("gplusbutton");
+            }
+            
+        }
+        
+        RebuildSocialButtons.prototype.buildItemsURLS = function() {
+            var pathname = window.location.pathname;
+            if (pathname.startsWith("/")) {
+                pathname=pathname.substring(1,pathname.length);
+            }
+            var url = window.location.protocol+"//"+window.location.host+"/"+pathname.split("/")[0]+"/handle/"+encodeURIComponent(viewerOptions.pid);
+            var imgUrl = window.location.protocol+"//"+window.location.host+"/"+pathname.split("/")[0]+"/img?uuid="+encodeURIComponent(viewerOptions.pid)+"&stream=IMG_THUMB&action=GETRAW"
+            return {
+                "url":url,
+                "imgUrl":imgUrl
+            };            
+        }
+        
+        RebuildSocialButtons.prototype.rebuild = function(urls) {
+        	$('meta[property="og:url"]').attr('content',urls.url);
+            $('meta[property="og:image"]').attr("content", urls.imgUrl);
+            $('link[rel="canonical"]').attr("href", urls.url);
+            
+            //Facebook like
+            if(typeof(FB) !== 'undefined') {
+                $('#fbbutton').html('<fb:like href="' + urls.url + '" id="fbbutton_elm" layout="button_count" show_faces="false" width="16" action="like" />');
+                FB.XFBML.parse(document.getElementById('fbbutton'), function()  {
+                });
+            }
+
+            //Google plus one
+            if(typeof(gapi) !== 'undefined') {
+                gapi.plusone.go("gplusbutton");
+            }
+
+            //Twitter tweet button
+            if(typeof(twttr) !== 'undefined' && typeof(twttr.widgets) !== 'undefined') {
+                $('.twitter-share-button').attr('data-url',urls.url);
+                twttr.widgets.load();
+            }
+        }
+        
+      </script>
+    #end
+</div>
+
+<table class="socialbuttons" align="center">
+    <tr>
+     #if(${gplus.buttonEnabled})
+       <td id="gplusbutton"  class="gplus">
+           <div class="g-plusone" data-size="small" data-annotation="bubble"></div>
+       </td>
+     #end
+
+     #if(${fb.buttonEnabled})
+      <!-- like button -->
+      <td id="fbbutton" class="fb">
+        <!--  place for fb -->
+        <fb:like id="fbbutton_elm" href="${fb.shareURL} "  send="false" width="16"  layout="button_count" show_faces="false"></fb:like>
+      </td>
+     #end
+
+     #if(${tweet.buttonEnabled})
+      <!-- twitter -->
+      <td class="tweet">
+        <a href="https://twitter.com/share" class="twitter-share-button" data-lang="${tweet.locale}">Tweet</a>
+      </td>
+     #end
+    
+    <td>
+    
+<div align="center" >
+    ©2013.
+    Developed under GNU GPL by <a href="http://www.incad.cz/">Incad</a>, <a href="http://www.nkp.cz/">NKČR</a>, <a href="http://www.lib.cas.cz/">KNAV</a> and <a href="http://www.mzk.cz/">MZK</a> 
+    (version: ${footerViewObject.version}, revision: ${footerViewObject.revision})
+</div>
+    </td>
+    
+    </tr>
+    
+</table>
+
+
+
+#if(${ga.ready})
+<!-- google analytics support -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', '${ga.webPropertyId}']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+#end
+
+#if(${fb.buttonEnabled})
+<!-- facebook support  -->
+<div id="fb-root"></div>
+<script>
+
+
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/${fb.locale}/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+#end
+
+
+#if(${tweet.buttonEnabled})
+<!--  twitter -->
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+#end

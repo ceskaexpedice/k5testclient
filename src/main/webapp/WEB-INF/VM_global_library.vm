@@ -1,0 +1,2 @@
+#macro( isOdd $number $oddText $evenText )#if( 0 == $number%2
+)$evenText#else$oddText#end#end

@@ -1,0 +1,50 @@
+#set($facets = $results.get("facet_counts").get("facet_fields"))
+<table style="width: 990px;"><tr><td valign="top">
+<div id="homedabox" style="float:left;width:239px;margin-left:4px;">
+    <ul><li><a href="#dadiv">$text.time.line</a></li></ul>
+    <div id="dadiv" style="padding:3px;">
+        <p style="text-align: center;">
+            <img src="img/loading.gif" alt="loading date axis" /><br/>Time line loading...
+        </p>
+
+    </div>
+</div>
+</td><td style="width:745px;"> 
+<div style="float:left;width:740px;">
+<div id="dt_home">
+    #parse("home/typesRoller.vm")
+</div>
+#parse("home/tabs.vm")
+</div>
+</td></tr></table>
+<script type="text/javascript">
+    $(window).resize(function(event){
+        resizeAll();
+    });
+    $(document).ready(function(){
+        setTimeout(resizeAll, 5000);
+        $.get("da.vm", function(data){
+            $("#dadiv").html(data);
+        //    doDateAxis(daJSON);
+            initDateAxis();
+            $("#content-resizable").css("height", (containerHeight+7) + "px");
+            daScrollToMax();
+            setTimeout(resizeAll, 2000);
+        });
+        $('#dt_home>div>span').hide();
+        rollTypes();
+        
+    });
+    function resizeAll(){
+        var w = $("#intro>div.ui-tabs-panel:first").height() +
+            $(window).height() -
+            $("#main").height() - 
+            $("#footer").outerHeight(true);
+        $("#intro>div.ui-tabs-panel").css("height", w);
+        if($("#content-resizable").length>0){
+            w = w -35;
+            $("#content-resizable").css("height", w);
+            resizeDateAxisContent();
+        }
+    }
+</script>

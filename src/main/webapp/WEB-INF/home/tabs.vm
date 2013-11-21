@@ -1,0 +1,141 @@
+#set($tabs = $convert.toStrings($conf.search.home.tabs))
+#set( $pismena = ["0","A","B","C","Č","D","E","F","G","H","CH","I","J","K","L","M","N","O","P","Q","R","Ř","S","Š","T","U","V","W","X","Y","Z","Ž"])
+<div id="intro" >
+    <ul>
+    #foreach($tab in ${tabs})
+        <li><a href="#intro${foreach.count}">$text.home.tab.get(${tab})</a></li>
+    #end
+    </ul>
+
+    #foreach($tab in ${tabs})
+        <div id="intro${foreach.count}" style="height: 510px; overflow:auto;">
+            #parse("home/${tab}.vm")
+        </div>
+    #end
+</div>
+<script type="text/javascript" language="javascript">
+
+    var letters = "0,A,B,C,Č,D,E,F,G,H,CH,I,J,K,L,M,N,O,P,Q,R,Ř,S,Š,T,U,V,W,X,Y,Z,Ž";
+    var titleDivTopBorder;
+    var titleDivBottomBorder;
+        
+    $('#intro').tabs({
+        select: function (event, ui) {
+            window.location.hash = ui.tab.hash;
+        }
+    });
+    $('#homedabox').tabs();
+    
+    $(document).ready(function(){
+        $('.term').live('click', function(){
+            var field = $(this).parent().attr('id');
+            var value = $(this).children("span").html();
+            if(field.indexOf('browse_title')>-1){
+                window.location = "r.jsp?suggest=true&browse_title=" + value + "&forProfile=search";
+            } else{
+                window.location = "r.jsp?author=\"" + value + "\"&forProfile=search";
+            }
+        });
+
+        $('.letters>div>a').live('click', function(){
+           //var field = $(this).parent().parent().attr('id').substring("letters_".length);
+           var field = $(this).attr("class");
+           var value = $(this).html();
+           if(value.startsWith("<")){
+               value = "";
+           }
+           doBrowse(value, field);
+           
+        });
+
+    });
+    
+    function hideSuggest(obj){
+        $(obj).hide();
+    }
+    function doSuggest(input){
+        var input_id = $(input).attr("id");
+        var value = $("#"+input_id).val();
+        var res_id = input_id + "_res";
+        var field_id = input_id.substring(3);
+        doBrowse(value, field_id);
+        return;
+        var url = 'terms.jsp?i=false&field=' + field_id + '&t=' + value;
+        $.get(url, function(data){
+            $('#'+res_id+">div.content").html(data);
+            if(data!=""){
+                $('#'+res_id).show();
+            }else{
+                $('#'+res_id).hide();
+            }
+        });
+    }
+    
+    function escapeValue(value){
+        return '#' + value.replace(/(\"|\.)/g,'\\$1');
+    }
+    
+    function checkScroll(id, id2){
+        if($('#'+id+">div.more_terms").length>0 && isTermVisible(id)){
+           getMoreTerms(id);
+        }
+        selectLetter(id);
+    }
+    
+    function doBrowse(value, field){
+        var url = 'terms.vm?field=' + field;
+        $.post(url, {t: value}, function(data){
+            $('#'+field).html(data);
+            $('#'+field).scrollTop(0);
+            selectLetter(field);
+        
+        });
+    }
+
+    function getMoreTerms(field){
+        var term = $('#'+field+">div.term:last>span").html();
+        var url = 'terms.jsp?i=false&field=' + field;
+        $('#'+field+" div.more_terms").remove();
+        $.post(url, {t: term}, function(data){
+            $('#'+field).append(data);
+        });
+    }
+
+    function selectLetter(field){
+        var letter = '0';
+        $('#'+field+'>div.term').each(function(){
+            if($(this).position().top>0){
+                letter = $(this).children('span').html().substring(0,2).toUpperCase();
+                if(letter != "CH"){
+                    letter = letter.substring(0,1);
+                }
+                
+                return false;
+            }
+        });
+        if(letters.indexOf(letter)<0){
+            letter = '0';
+        }  
+        $('#letters_'+field+'>div').removeClass('sel');
+        $('#letters_'+field+'>div.'+letter).addClass('sel');
+    }
+    
+    function setBrowseScrollPosition(){
+        if(titleDivTopBorder==null){
+            titleDivTopBorder = $('#browse_title').offset().top;
+            titleDivBottomBorder = titleDivTopBorder + $('#browse_title').height() ;
+        }
+    }
+    
+    function isTermVisible(id){
+        var t = $('#'+id+">div.more_terms").position().top;
+        var b = $('#'+id+">div.more_terms").position().top + $('#'+id+">div.more_terms").height();
+        var reserve = 40;
+        setBrowseScrollPosition();
+        if(t<titleDivBottomBorder+reserve && b>titleDivTopBorder-reserve){
+            return true;
+        }
+        return false;
+    }
+
+</script>

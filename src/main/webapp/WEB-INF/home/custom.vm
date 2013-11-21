@@ -1,0 +1,30 @@
+#set($pids = $convert.toStrings($conf.search.home.tab.custom.uuids))
+<div id="home_custom_tab">
+#foreach($pid in $pids)
+    <div align="center" class="item" data-pid="${pid}">
+        <a href="i.jsp?pid=${pid}" >
+            <img align="middle" vspace="2" id="img_${pid}" src="api/img/${pid}/thumb" border="0"
+                 title="" alt="" />
+        </a>
+    </div>
+#end
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#home_custom_tab>div.item").each(function(){
+        hitem($(this), $(this).data("pid"));
+    });
+});
+
+function hitem(obj, pid) {
+    var url = "api/item/"+pid;
+#if($virtualCollection.active)
+    url = url + "?vc=${virtualCollection.current.pid}";
+#end
+    $.getJSON(url, function(data) {
+        var img = $(obj).find("img");
+        img.attr('alt', data.title);
+        img.attr('title', data.title);
+    });
+}
+</script>

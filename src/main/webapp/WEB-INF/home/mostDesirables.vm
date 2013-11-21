@@ -1,0 +1,24 @@
+<div id="desirables"></div>
+<div ><a href="home/mostDesirables-rss.vm"><span class="ui-icon ui-icon-signal-diag"></span></a></div>
+<script type="text/javascript">
+desirables();
+function desirables() {
+    var url = "api/feed/mostdesirable";
+#if($virtualCollection.active)
+    url = url + "?vc=${virtualCollection.current.pid}";
+#end
+    $.getJSON(url, function(data) {
+        var url = data.rss;
+        $.each(data.data, function(i, item) {
+            var div = $('<div align="center" class="item"></div>');
+            var a = $('<a href="item.vm?pid='+item.pid+'" ></a>');
+            var img = $('<img align="middle" height="96" border="0" vspace="2" src="' + item.IMG_THUMB + '" title="' + item.title + '" alt="' + item.title + '" />');
+            $(div).append('<div></div>');
+            $(a).append(img);
+            $(div).append(a);
+            $("#desirables").append(div);
+        });
+        
+    });
+}
+</script>

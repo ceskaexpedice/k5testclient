@@ -1,0 +1,32 @@
+
+        <div class="ui-tabs-panel ui-corner-bottom">
+            <table width="100%">
+                <tr>
+                    <td valign="top" colspan="2">
+                        <div style="position:relative;">${text.filter.maintitle}: 
+                        <input type="text" id="br_browse_title" onkeyup="doSuggest(this)" size="70" />
+                        <div id="br_browse_title_res" class="suggest border shadow">
+                            <div class="header"><a href="javascript:hideSuggest('#br_browse_title_res');">
+                                <span class="ui-icon ui-icon-close" style="float:right;">close</span></a></div>
+                            <div class="content"></div>
+                        </div>    
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="90%" valign="top">
+                        <div id="browse_title" class="autocomplete" onscroll="checkScroll('browse_title');"></div>
+                    </td>
+                    <td align="center" valign="top" id="letters_browse_title" class="letters letters_l">
+
+
+<div class="all"><a class="browse_title" href="#"><span class="ui-icon ui-icon-arrowthickstop-1-n" title="${text.search.terms.start}">all</span></a></div>
+#foreach($p in ${pismena})<div class="${p}"><a class="browse_title" href="#">${p}</a></div>#end
+                    </td>
+                </tr></table>
+<script type="text/javascript">
+    $(document).ready(function(){
+        doBrowse('', 'browse_title');
+    });
+</script>
+        </div>

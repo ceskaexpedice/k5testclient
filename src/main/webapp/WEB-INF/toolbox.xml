@@ -1,0 +1,27 @@
+<tools>
+    <data type="boolean" key="xhtml" value="true"/>
+    <data type="boolean" key="isSimple" value="true"/>
+    <data type="number" key="version" value="2.0"/>
+    <data key="searchHomeDocumentTypes" value="monograph,periodical,page" type="list"/>
+    <toolbox scope="request">
+        <tool class="org.apache.velocity.tools.view.ImportTool" />
+        <tool key="date" class="org.apache.velocity.tools.generic.DateTool" />
+        <tool class="org.apache.velocity.tools.view.ParameterTool" />
+        <tool class="org.apache.velocity.tools.generic.ResourceTool"
+              bundles="labels"/>
+        <tool class="org.apache.velocity.tools.generic.ResourceTool"
+              bundles="res.configuration"
+              key="conf"/>
+        <tool key="headerViewObject" class="cz.incad.kramerius.k5.k5velocity.views.HeaderViewObject" />
+        <tool key="rssHome" class="cz.incad.kramerius.k5.k5velocity.views.RSSHomeViewObject" />
+        <tool key="search" class="cz.incad.kramerius.k5.k5velocity.tools.Search" />
+        <tool key="xslt" class="cz.incad.kramerius.k5.k5velocity.tools.XSLTool" />
+    </toolbox>
+    <toolbox scope="session">
+        <tool key="map" class="java.util.HashMap"/>
+    </toolbox>
+    <toolbox scope="application">
+     <tool class="org.apache.velocity.tools.generic.ConversionTool"
+              dateFormat="yyyy-MM-dd"/>
+   </toolbox>
+</tools>
