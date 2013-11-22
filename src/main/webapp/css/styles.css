@@ -487,3 +487,15 @@ div.search_result *{
     float:left; 
     margin:5px;
 }
+
+.collections li{
+    line-height: 22px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0 0 0 10px;
+}
+.collections > ul > li > a {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+

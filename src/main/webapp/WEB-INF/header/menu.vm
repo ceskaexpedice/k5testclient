@@ -1,0 +1,37 @@
+<div  id="main_menu_in">
+
+    #foreach ( $langitm in ${buttons.languageItems})
+        <a href="${langitm.link}">${langitm.name}</a>
+    #end
+        <!-- Registrace pouze pro neprihlasene -->
+        <scrd:notloggedusers>
+            #if(${text.search.mainbuttons.showregistrationbutton} == "true")
+                <a id="registerHref" href="javascript:registerUser.register();">$text.registeruser.menu.title</a>
+            #end
+        </scrd:notloggedusers>
+
+        <!--  show admin menu - only for logged users -->
+        <scrd:loggedusers>
+            <a id="adminHref" href="javascript:showAdminMenu();">$text.administrator.menu</a>
+        </scrd:loggedusers>
+        
+        <!-- login - only for notlogged -->
+        <scrd:notloggedusers>
+            <a href="redirect.jsp?redirectURL=${searchFormViewObject.requestedAddress}">$text.application.login</a>
+        </scrd:notloggedusers>
+        
+        <!-- logout - only for logged -->
+        <scrd:loggedusers>
+            #if(!${buttons.shibbLogout})
+                 <a href="logout.jsp?redirectURL=${searchFormViewObject.requestedAddress}">$text.application.logout</a>
+            #else
+                 <a href="${buttons.shibbLogout}"><view:msg>application.logout</view:msg></a>
+            #end
+            </c:choose>
+        </scrd:loggedusers>
+
+<a href="javascript:showHelp('$!{params.language}');">$text.application.help</a>
+#if($rows != 0)
+    <a href=".">$text.application.home</a>
+#end
+</div>

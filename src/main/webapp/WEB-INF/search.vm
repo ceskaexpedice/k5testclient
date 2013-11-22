@@ -1,15 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" xmlns:fb="http://ogp.me/ns/fb#">
-#if($params.language != "")
-#set($text = $text.locale("$params.language"))
+#set($language = "$request.locale.language")
+#if($params.language)
+    #set($text = $text.locale("$params.language"))
+    #set($language = "$params.language")
 #end
-#set($results = $search.do)
+
+#set($bundle_url = "${conf.applicationUrl}/i18n?action=bundle&format=xml&name=labels&language=${language}")
 <html>
     #parse( "html_header.vm" )
     <body>
         <div id="main" class="shadow">
             #parse( "header.vm" )
+
+#set($isGrouped = !$fqsStr.contains('fedora.model'))
+#if($isGrouped)
+    #set($results = $search.grouped)
+#else
+    #set($results = $search.ungrouped)
+#end
             <div class="clear"></div>
-            <div style="display:block;">
+            <div id="split" style="display:block;">
                 #parse( "results.vm" )
             </div>
             <div class="clear"></div>
@@ -23,10 +33,10 @@
               
             </script>
         </div>
-        #if(${param.error})
+        #if(${params.error})
             <script type="text/javascript">
                 $(document).ready(function(){
-                    alert('$text.error.${param.error}');
+                    alert('$text.error.${params.error}');
                 });
             </script>
        #end

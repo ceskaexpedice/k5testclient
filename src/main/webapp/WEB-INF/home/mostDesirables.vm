@@ -12,7 +12,7 @@ function desirables() {
         $.each(data.data, function(i, item) {
             var div = $('<div align="center" class="item"></div>');
             var a = $('<a href="item.vm?pid='+item.pid+'" ></a>');
-            var img = $('<img align="middle" height="96" border="0" vspace="2" src="' + item.IMG_THUMB + '" title="' + item.title + '" alt="' + item.title + '" />');
+            var img = $('<img align="middle" height="96" border="0" vspace="2" src="api/item/' + item.pid + '/thumb" title="' + item.title + '" alt="' + item.title + '" />');
             $(div).append('<div></div>');
             $(a).append(img);
             $(div).append(a);

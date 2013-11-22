@@ -1,0 +1,5 @@
+#set($xsl = $import.read("xsl/facets.xsl"))
+$xslt.addParam("bundle_url", $bundle_url)
+$xslt.addParam("policyPublic", "$conf.search.policy.public")
+
+$xslt.transform($results, $xsl)

@@ -66,6 +66,15 @@
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>i18n</servlet-name>
+        <servlet-class>cz.incad.kramerius.k5.k5velocity.I18NServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>i18n</servlet-name>
+        <url-pattern>/i18n</url-pattern>
+    </servlet-mapping>
     
     <session-config>
         <session-timeout>

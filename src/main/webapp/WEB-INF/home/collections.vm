@@ -1,0 +1,13 @@
+
+<div id="vc">
+    <a id="col_refresh" style="float:right;" href="javascript:refreshCollections();" title="$text.common.refresh"><span class="ui-icon ui-icon-refresh">refresh</span></a>
+    <div class="collections" id="collection_list" style="font-size:1.2em;"><ul></ul>
+    </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+    refreshCollections();
+    $("#col_refresh").button();
+});
+</script>
+

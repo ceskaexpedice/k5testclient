@@ -23,31 +23,6 @@ function item(pid) {
     });
 }
 
-function decade(i, y){
-    
-}
-
-function doDateAxis(data){
-
-            
-    var max = maxYear;
-    var wt = years.length * 3 + 10;
-    for(var i=0; i<years.length; i++){
-        var l = years[i];
-        var c = years[++i];
-        var title = l + " (" + c + ")";
-        var d1 = l.toString();
-        d1 = substring(d1, 3);
-        var h = parseInt(c) / max * 100;
-        var m = 100 - h;
-        var dagroup = '<div class="da_group" id="da_group_'+d1+'">'+
-            '<div class="da_group_title">'+d1+'0 - '+d1+'9</div>' +
-            '<div class="da_space"></div>' +
-            decade(1, 0) +
-            '</div>';
-        $("#da_container").append(dagroup);
-    }
-}
 
 function addFilter(field, value){
     var page = new PageQuery(window.location.search);
@@ -70,3 +45,23 @@ function rollTypes(){
         setTimeout('rollTypes()', 4000);
     });
 }
+
+function setVirtualCollection(collection){
+    var page = new PageQuery(window.location.search);
+    page.setValue("collection", collection);
+    var url = "?" + page.toString();
+    window.location = url;
+}
+
+function refreshCollections(){
+     $("#vc>div.collections>ul>li").remove();
+    var url = "api/vc";
+    $.getJSON(url, function(data) {
+        $.each(data, function(i, item) {
+            var a = $('<li><a href="javascript:setVirtualCollection(\''+item.pid+'\');">'+item[language]+'</a></li>');
+            $("#vc>div.collections>ul").append(a);
+        });
+        
+    });
+}
+

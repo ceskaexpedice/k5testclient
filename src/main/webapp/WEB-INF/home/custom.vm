@@ -3,7 +3,7 @@
 #foreach($pid in $pids)
     <div align="center" class="item" data-pid="${pid}">
         <a href="i.jsp?pid=${pid}" >
-            <img align="middle" vspace="2" id="img_${pid}" src="api/img/${pid}/thumb" border="0"
+            <img align="middle" height="96" vspace="2" id="img_${pid}" src="api/item/${pid}/thumb" border="0"
                  title="" alt="" />
         </a>
     </div>

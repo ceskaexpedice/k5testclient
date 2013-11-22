@@ -1,6 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" xmlns:fb="http://ogp.me/ns/fb#">
-#if($params.language != "")
-#set($text = $text.locale("$params.language"))
+#set($language = "$request.locale.language")
+#if($params.language)
+    #set($text = $text.locale("$params.language"))
+    #set($language = "$params.language")
 #end
 #set($results = $search.home)
 <html>
