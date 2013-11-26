@@ -1,0 +1,8 @@
+$params.all
+<br/>
+#set($l = $link.relative())
+#foreach($p in $params.all.entrySet())
+    #set($l = $l.param($p.key, $p.value))
+$p.key -- $p.value <br/>
+#end
+$l

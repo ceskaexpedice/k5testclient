@@ -5,6 +5,7 @@
     <data key="searchHomeDocumentTypes" value="monograph,periodical,page" type="list"/>
     <toolbox scope="request">
         <tool class="org.apache.velocity.tools.view.ImportTool" />
+        <tool key="link" class="org.apache.velocity.tools.view.LinkTool" />
         <tool key="date" class="org.apache.velocity.tools.generic.DateTool" />
         <tool class="org.apache.velocity.tools.view.ParameterTool" />
         <tool class="org.apache.velocity.tools.generic.ResourceTool"

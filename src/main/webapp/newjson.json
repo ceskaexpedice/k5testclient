@@ -1,158 +1,32 @@
-{
-    "responseHeader": {
-        "status": 0,
-        "QTime": 1,
-        "params": {
-            "facet": "true",
-            "q": "*:*",
-            "facet.field": "fedora.model",
-            "wt": "json",
-            "rows": "2"
-        }
-    },
-    "response": {
-        "numFound": 308,
-        "start": 0,
-        "docs": [
-            {
-                "PID": "uuid:c7a708a0-4969-11de-b268-000d606f5dc6",
-                "datum_str": "1929",
-                "dc.title": "4",
-                "text": [
-                    "4",
-                    "",
-                    "﻿TRA\nP  1\nradosti ruce nad nějakou další „popularitou\". Mám\npro  toto  mlčení dvě  omluvy.  Buď si   všichni  tram-\npové o panu Augustovi mysleli, aby jim-------, nebo,\ncož je pravděpodobnější, nikdo z trampů „Frontu\"\nnečte. Z toho mám ohromnou radost a vám všem tady\nněkolika výňatky a poznámkami naznačím, jak se\ndívá na tramping puncovaný fašista.\nV prvním článku své „duchaplné studie trampingu\"\npokouší se pan Augusta slovy nehledanými naznačiti\nvývoj a pojem slova „tramp*. A činí to následovně:\n„Pro nás a naše zkoumání mají hlavně význam\npražští „pepici\", též pražská kvítka. Postupem _ času\nse vyvinuli t. zv. „flákači\" a posléze „apači\". —\nFlákač jest produkt místa, apač jest již mezinárodní.\nFlákač jest skoro ještě občan, apač již skoro trampO)\"\nTedy tak začínají páně Augustovy „studie\". Ne-\nbudu se s tím příliš zdržovati a veškeré nadávky,\nkterými jsme od tohoto pána častováni, k vůli snad-\nnějšímu přehledu sečtu na konci článku, aby jste\npoznali fašistickou krasomluvu. A můžeme (pokračo-\nvati. Černokošiláček vyšťáral někde naivní písničku\nWallyho-tuláka: Vzhůru pražští trampové, rošťáci a\nsígrové, tedy písničku, kterou sice žádný tramp ne-\nzná, ale na které pan Augusta dokazuje, že „Tramp-\nský národ se tvoří výhradně z pražských kluků,\nfrajerů, kroutilů, štrycáků, event. sígrů, flákačů\na pardálů!\"\nTedy zatím opět „pouze\" sedm nadávek v jedné\nvětě fašistického „intelektuálu\". Milý pane Augusto,\npřijeďte k nám do osady na návštěvu a „Fronta\" bude\nmít hroznou radost. Určitě by vás přišlo potom do\nredakce alespoň pět.                                              w\nVe druhém článku je to však mnohem horší. Pan\nAugusta chce být totiž vtipným a provádí vědecko-\nhumoristický rozbor trampských písní. Dopadá to\nasi   následovně:\n„Podzimu list  na chatu první paď,\nzapočne píseň   slibně,  a  dodává:\nSmutně  vidíš  své  léto  odlétat.\nDobrá! To jest asi v září...  Ale co to?\nNad  lesy  se  již  válí  zimy  dech.\nTedy  počátek  prosince?\nSvoje štěstí ukryješ v měkký mech.\nŽe by  v  zimě  byl  ještě  měkký  mech,  že by  snad\ndokonce  kvetly   fialky...\"\nTedy to má býti věaecko-satyrický rozbor trampské\npísničky? Krucifix, možná že je autor téhle písničky\nblbej, ale blbější se mi rozhodně zdá tvrdit, že na\npodzim není mlha a v zimě v lese mech. Avšak dle\nrozkazu. Možná, že Vůdce nařídil, že na podzim mlha\na v zimě mech, „nejní\".\nMohl bych v podobných ukáizkách z nadávek a\n„vtipných\" rozborů pana Augusty pokračovati dále,\nrozsah tohoto časopisu a vědomí, že tomuto pánovi\nbylo věnováno příliš mnoho místa, nutí mě ukončiti\ntento článek, který nechce být polemikou, nýbrž\nupozorněním těm kamarádům, kteří ve svých osadách\nna nejvyšší stožár vytahují vlajku, tu, kterou nejvýše\ntřímají lidé, rázu páně Augustova.\nPan Augusta ukončuje svůj článek, v němž jsem\nnapočítal ve dvou větách dvanáct(!) nejsprostších na-\ndávek, citátem ze Scarrona:\nNejistota   krajiny   je   rozličná.    Pro   syčáky\nčiní ji nejistou četník, pro řádné lidi syčák.\nDobrá! Tak si, pane Augusto, dejte pozor na četníka!\nKarel Melíšek-\n\nMary: Eda je nej-\nvětším lhářem na\nsvětě.\nJoe:   Co ti  udělal?\nMary: To je právě\nto. Nasliboval to-\nho a pak mi ne-\nudělal  vůbec  nic.\n",
-                    "4 \n                        ##NormalPage",
-                    "4",
-                    "﻿TRA\nP  1\nradosti ruce nad nějakou další „popularitou\". Mám\npro  toto  mlčení dvě  omluvy.  Buď si   všichni  tram-\npové o panu Augustovi mysleli, aby jim-------, nebo,\ncož je pravděpodobnější, nikdo z trampů „Frontu\"\nnečte. Z toho mám ohromnou radost a vám všem tady\nněkolika výňatky a poznámkami naznačím, jak se\ndívá na tramping puncovaný fašista.\nV prvním článku své „duchaplné studie trampingu\"\npokouší se pan Augusta slovy nehledanými naznačiti\nvývoj a pojem slova „tramp*. A činí to následovně:\n„Pro nás a naše zkoumání mají hlavně význam\npražští „pepici\", též pražská kvítka. Postupem _ času\nse vyvinuli t. zv. „flákači\" a posléze „apači\". —\nFlákač jest produkt místa, apač jest již mezinárodní.\nFlákač jest skoro ještě občan, apač již skoro trampO)\"\nTedy tak začínají páně Augustovy „studie\". Ne-\nbudu se s tím příliš zdržovati a veškeré nadávky,\nkterými jsme od tohoto pána častováni, k vůli snad-\nnějšímu přehledu sečtu na konci článku, aby jste\npoznali fašistickou krasomluvu. A můžeme (pokračo-\nvati. Černokošiláček vyšťáral někde naivní písničku\nWallyho-tuláka: Vzhůru pražští trampové, rošťáci a\nsígrové, tedy písničku, kterou sice žádný tramp ne-\nzná, ale na které pan Augusta dokazuje, že „Tramp-\nský národ se tvoří výhradně z pražských kluků,\nfrajerů, kroutilů, štrycáků, event. sígrů, flákačů\na pardálů!\"\nTedy zatím opět „pouze\" sedm nadávek v jedné\nvětě fašistického „intelektuálu\". Milý pane Augusto,\npřijeďte k nám do osady na návštěvu a „Fronta\" bude\nmít hroznou radost. Určitě by vás přišlo potom do\nredakce alespoň pět.                                              w\nVe druhém článku je to však mnohem horší. Pan\nAugusta chce být totiž vtipným a provádí vědecko-\nhumoristický rozbor trampských písní. Dopadá to\nasi   následovně:\n„Podzimu list  na chatu první paď,\nzapočne píseň   slibně,  a  dodává:\nSmutně  vidíš  své  léto  odlétat.\nDobrá! To jest asi v září...  Ale co to?\nNad  lesy  se  již  válí  zimy  dech.\nTedy  počátek  prosince?\nSvoje štěstí ukryješ v měkký mech.\nŽe by  v  zimě  byl  ještě  měkký  mech,  že by  snad\ndokonce  kvetly   fialky...\"\nTedy to má býti věaecko-satyrický rozbor trampské\npísničky? Krucifix, možná že je autor téhle písničky\nblbej, ale blbější se mi rozhodně zdá tvrdit, že na\npodzim není mlha a v zimě v lese mech. Avšak dle\nrozkazu. Možná, že Vůdce nařídil, že na podzim mlha\na v zimě mech, „nejní\".\nMohl bych v podobných ukáizkách z nadávek a\n„vtipných\" rozborů pana Augusty pokračovati dále,\nrozsah tohoto časopisu a vědomí, že tomuto pánovi\nbylo věnováno příliš mnoho místa, nutí mě ukončiti\ntento článek, který nechce být polemikou, nýbrž\nupozorněním těm kamarádům, kteří ve svých osadách\nna nejvyšší stožár vytahují vlajku, tu, kterou nejvýše\ntřímají lidé, rázu páně Augustova.\nPan Augusta ukončuje svůj článek, v němž jsem\nnapočítal ve dvou větách dvanáct(!) nejsprostších na-\ndávek, citátem ze Scarrona:\nNejistota   krajiny   je   rozličná.    Pro   syčáky\nčiní ji nejistou četník, pro řádné lidi syčák.\nDobrá! Tak si, pane Augusto, dejte pozor na četníka!\nKarel Melíšek-\n\nMary: Eda je nej-\nvětším lhářem na\nsvětě.\nJoe:   Co ti  udělal?\nMary: To je právě\nto. Nasliboval to-\nho a pak mi ne-\nudělal  vůbec  nic.\n",
-                    "",
-                    "4 \n                        ##NormalPage"
-                ],
-                "ddt": "",
-                "dostupnost": "public",
-                "fedora.model": "page",
-                "handle": "BOA001/913155",
-                "img_full_mime": "image/vnd.djvu",
-                "issn": "",
-                "mdt": "",
-                "root_pid": "uuid:844b8210-451e-11de-b481-000d606f5dc6",
-                "root_title": "Tramp",
-                "status": "Active",
-                "text_ocr": "﻿TRA\nP  1\nradosti ruce nad nějakou další „popularitou\". Mám\npro  toto  mlčení dvě  omluvy.  Buď si   všichni  tram-\npové o panu Augustovi mysleli, aby jim-------, nebo,\ncož je pravděpodobnější, nikdo z trampů „Frontu\"\nnečte. Z toho mám ohromnou radost a vám všem tady\nněkolika výňatky a poznámkami naznačím, jak se\ndívá na tramping puncovaný fašista.\nV prvním článku své „duchaplné studie trampingu\"\npokouší se pan Augusta slovy nehledanými naznačiti\nvývoj a pojem slova „tramp*. A činí to následovně:\n„Pro nás a naše zkoumání mají hlavně význam\npražští „pepici\", též pražská kvítka. Postupem _ času\nse vyvinuli t. zv. „flákači\" a posléze „apači\". —\nFlákač jest produkt místa, apač jest již mezinárodní.\nFlákač jest skoro ještě občan, apač již skoro trampO)\"\nTedy tak začínají páně Augustovy „studie\". Ne-\nbudu se s tím příliš zdržovati a veškeré nadávky,\nkterými jsme od tohoto pána častováni, k vůli snad-\nnějšímu přehledu sečtu na konci článku, aby jste\npoznali fašistickou krasomluvu. A můžeme (pokračo-\nvati. Černokošiláček vyšťáral někde naivní písničku\nWallyho-tuláka: Vzhůru pražští trampové, rošťáci a\nsígrové, tedy písničku, kterou sice žádný tramp ne-\nzná, ale na které pan Augusta dokazuje, že „Tramp-\nský národ se tvoří výhradně z pražských kluků,\nfrajerů, kroutilů, štrycáků, event. sígrů, flákačů\na pardálů!\"\nTedy zatím opět „pouze\" sedm nadávek v jedné\nvětě fašistického „intelektuálu\". Milý pane Augusto,\npřijeďte k nám do osady na návštěvu a „Fronta\" bude\nmít hroznou radost. Určitě by vás přišlo potom do\nredakce alespoň pět.                                              w\nVe druhém článku je to však mnohem horší. Pan\nAugusta chce být totiž vtipným a provádí vědecko-\nhumoristický rozbor trampských písní. Dopadá to\nasi   následovně:\n„Podzimu list  na chatu první paď,\nzapočne píseň   slibně,  a  dodává:\nSmutně  vidíš  své  léto  odlétat.\nDobrá! To jest asi v září...  Ale co to?\nNad  lesy  se  již  válí  zimy  dech.\nTedy  počátek  prosince?\nSvoje štěstí ukryješ v měkký mech.\nŽe by  v  zimě  byl  ještě  měkký  mech,  že by  snad\ndokonce  kvetly   fialky...\"\nTedy to má býti věaecko-satyrický rozbor trampské\npísničky? Krucifix, možná že je autor téhle písničky\nblbej, ale blbější se mi rozhodně zdá tvrdit, že na\npodzim není mlha a v zimě v lese mech. Avšak dle\nrozkazu. Možná, že Vůdce nařídil, že na podzim mlha\na v zimě mech, „nejní\".\nMohl bych v podobných ukáizkách z nadávek a\n„vtipných\" rozborů pana Augusty pokračovati dále,\nrozsah tohoto časopisu a vědomí, že tomuto pánovi\nbylo věnováno příliš mnoho místa, nutí mě ukončiti\ntento článek, který nechce být polemikou, nýbrž\nupozorněním těm kamarádům, kteří ve svých osadách\nna nejvyšší stožár vytahují vlajku, tu, kterou nejvýše\ntřímají lidé, rázu páně Augustova.\nPan Augusta ukončuje svůj článek, v němž jsem\nnapočítal ve dvou větách dvanáct(!) nejsprostších na-\ndávek, citátem ze Scarrona:\nNejistota   krajiny   je   rozličná.    Pro   syčáky\nčiní ji nejistou četník, pro řádné lidi syčák.\nDobrá! Tak si, pane Augusto, dejte pozor na četníka!\nKarel Melíšek-\n\nMary: Eda je nej-\nvětším lhářem na\nsvětě.\nJoe:   Co ti  udělal?\nMary: To je právě\nto. Nasliboval to-\nho a pak mi ne-\nudělal  vůbec  nic.\n",
-                "title_sort": "4",
-                "datum_begin": 1929,
-                "datum_end": 1929,
-                "level": 3,
-                "pages_count": 0,
-                "rok": 1929,
-                "created_date": "2010-10-03T11:14:53Z",
-                "datum": "1970-01-01T01:00:00Z",
-                "modified_date": "2013-09-27T12:30:48.225Z",
-                "viewable": true,
-                "virtual": false,
-                "details": [
-                    "4 \n                        ##NormalPage"
-                ],
-                "document_type": [
-                    "page"
-                ],
-                "model_path": [
-                    "periodical/periodicalvolume/periodicalitem/page"
-                ],
-                "parent_pid": [
-                    "uuid:44d84170-4953-11de-a1f5-000d606f5dc6"
-                ],
-                "pid_path": [
-                    "uuid:844b8210-451e-11de-b481-000d606f5dc6/uuid:44bb4390-4953-11de-a8b3-000d606f5dc6/uuid:44d84170-4953-11de-a1f5-000d606f5dc6/uuid:c7a708a0-4969-11de-b268-000d606f5dc6"
-                ],
-                "rels_ext_index": [
-                    3
-                ],
-                "collection": [
-                    "vc:534b8b98-82d8-49c7-a751-33e88aaeeea9"
-                ],
-                "_version_": 1449853028276371456
-            },
-            {
-                "PID": "uuid:45078ed0-4953-11de-a429-000d606f5dc6",
-                "datum_str": "1929",
-                "dc.title": "5",
-                "text": [
-                    "5",
-                    "",
-                    "﻿TRAMP   1\nDívko, čekej na mně v přístavu...\nTrampská námořnická.\nSlova i hudbu: Kamel.                                        zpívá  si. Jiřina Šejbalová.\nI h',s í TJ fr\n^s\n1-     VeCifa'        j&       oid-ea,    meL-mot\"**- ~4<í.#   ct-^sni 6yi v něm mcfí rvtc^cr-\nZ.     &cj,ocC       o&t       v-AH>'»*&    v*c/óe*t    Juo~   oU ,      4ot-vyezvt-          &í ot cUknv *\n■ J  \\J\"f.r-\n\n\nSmu-fow -nevm &. fot vďi USxficC &u,~ ott      et&m.iou, *£+'o^-neve tact'\n\ncUn\nQfv.Bo-tovnhu.   -nebo &y*aa~fvů,- ■»**.,      -vóLcte/ina   ol&vct.rnua* trntf\n87,n/| taj i3 H.i \"\"HN I -^yji g O 1 \"M^\n\nBi jiJnniti gum 1 yi i mi\nSbvt^Ho- at&yy**. *»•* v>vw-& • n* ,        vwi&n «       A-*>   ijfci/ #\nov«   o*j£\nIpr3i im|<itv | ni i in | <T¥^\nce ti >ie<Jlevtn v-zen-i*. - vu. ,\n•>**,\n«£&-        \"fič*'/*      »W£.—\nIJ Í 1 P ^ TM^PvV-h^^l^^TT^TBg\n*\n•»v>&-      «-4«' -«íiwi*v^'-«4- vk .     *>-*«•*>*«* *»*\">*t\nMon ,\nj* g 11 i | •/ ují i 1 i a lMl i g I ^f^^\nZ»(4«   úát-ty      w*-tim->e. zpÁt-iy       «ev*í,tt£\nV-OtiZ-in-Ci,      tc^o .",
-                    "5 \n                        ##NormalPage",
-                    "5",
-                    "﻿TRAMP   1\nDívko, čekej na mně v přístavu...\nTrampská námořnická.\nSlova i hudbu: Kamel.                                        zpívá  si. Jiřina Šejbalová.\nI h',s í TJ fr\n^s\n1-     VeCifa'        j&       oid-ea,    meL-mot\"**- ~4<í.#   ct-^sni 6yi v něm mcfí rvtc^cr-\nZ.     &cj,ocC       o&t       v-AH>'»*&    v*c/óe*t    Juo~   oU ,      4ot-vyezvt-          &í ot cUknv *\n■ J  \\J\"f.r-\n\n\nSmu-fow -nevm &. fot vďi USxficC &u,~ ott      et&m.iou, *£+'o^-neve tact'\n\ncUn\nQfv.Bo-tovnhu.   -nebo &y*aa~fvů,- ■»**.,      -vóLcte/ina   ol&vct.rnua* trntf\n87,n/| taj i3 H.i \"\"HN I -^yji g O 1 \"M^\n\nBi jiJnniti gum 1 yi i mi\nSbvt^Ho- at&yy**. *»•* v>vw-& • n* ,        vwi&n «       A-*>   ijfci/ #\nov«   o*j£\nIpr3i im|<itv | ni i in | <T¥^\nce ti >ie<Jlevtn v-zen-i*. - vu. ,\n•>**,\n«£&-        \"fič*'/*      »W£.—\nIJ Í 1 P ^ TM^PvV-h^^l^^TT^TBg\n*\n•»v>&-      «-4«' -«íiwi*v^'-«4- vk .     *>-*«•*>*«* *»*\">*t\nMon ,\nj* g 11 i | •/ ují i 1 i a lMl i g I ^f^^\nZ»(4«   úát-ty      w*-tim->e. zpÁt-iy       «ev*í,tt£\nV-OtiZ-in-Ci,      tc^o .",
-                    "",
-                    "5 \n                        ##NormalPage"
-                ],
-                "ddt": "",
-                "dostupnost": "public",
-                "fedora.model": "page",
-                "handle": "BOA001/913156",
-                "img_full_mime": "image/vnd.djvu",
-                "issn": "",
-                "mdt": "",
-                "root_pid": "uuid:844b8210-451e-11de-b481-000d606f5dc6",
-                "root_title": "Tramp",
-                "status": "Active",
-                "text_ocr": "﻿TRAMP   1\nDívko, čekej na mně v přístavu...\nTrampská námořnická.\nSlova i hudbu: Kamel.                                        zpívá  si. Jiřina Šejbalová.\nI h',s í TJ fr\n^s\n1-     VeCifa'        j&       oid-ea,    meL-mot\"**- ~4<í.#   ct-^sni 6yi v něm mcfí rvtc^cr-\nZ.     &cj,ocC       o&t       v-AH>'»*&    v*c/óe*t    Juo~   oU ,      4ot-vyezvt-          &í ot cUknv *\n■ J  \\J\"f.r-\n\n\nSmu-fow -nevm &. fot vďi USxficC &u,~ ott      et&m.iou, *£+'o^-neve tact'\n\ncUn\nQfv.Bo-tovnhu.   -nebo &y*aa~fvů,- ■»**.,      -vóLcte/ina   ol&vct.rnua* trntf\n87,n/| taj i3 H.i \"\"HN I -^yji g O 1 \"M^\n\nBi jiJnniti gum 1 yi i mi\nSbvt^Ho- at&yy**. *»•* v>vw-& • n* ,        vwi&n «       A-*>   ijfci/ #\nov«   o*j£\nIpr3i im|<itv | ni i in | <T¥^\nce ti >ie<Jlevtn v-zen-i*. - vu. ,\n•>**,\n«£&-        \"fič*'/*      »W£.—\nIJ Í 1 P ^ TM^PvV-h^^l^^TT^TBg\n*\n•»v>&-      «-4«' -«íiwi*v^'-«4- vk .     *>-*«•*>*«* *»*\">*t\nMon ,\nj* g 11 i | •/ ují i 1 i a lMl i g I ^f^^\nZ»(4«   úát-ty      w*-tim->e. zpÁt-iy       «ev*í,tt£\nV-OtiZ-in-Ci,      tc^o .",
-                "title_sort": "5",
-                "datum_begin": 1929,
-                "datum_end": 1929,
-                "level": 3,
-                "pages_count": 0,
-                "rok": 1929,
-                "created_date": "2010-10-03T11:14:55.256Z",
-                "datum": "1970-01-01T01:00:00Z",
-                "modified_date": "2013-09-27T12:30:49.994Z",
-                "viewable": true,
-                "virtual": false,
-                "details": [
-                    "5 \n                        ##NormalPage"
-                ],
-                "document_type": [
-                    "page"
-                ],
-                "model_path": [
-                    "periodical/periodicalvolume/periodicalitem/page"
-                ],
-                "parent_pid": [
-                    "uuid:44d84170-4953-11de-a1f5-000d606f5dc6"
-                ],
-                "pid_path": [
-                    "uuid:844b8210-451e-11de-b481-000d606f5dc6/uuid:44bb4390-4953-11de-a8b3-000d606f5dc6/uuid:44d84170-4953-11de-a1f5-000d606f5dc6/uuid:45078ed0-4953-11de-a429-000d606f5dc6"
-                ],
-                "rels_ext_index": [
-                    4
-                ],
-                "collection": [
-                    "vc:534b8b98-82d8-49c7-a751-33e88aaeeea9"
-                ],
-                "_version_": 1449853029273567232
-            }
-        ]
-    },
-    "facet_counts": {
-        "facet_queries": {},
-        "facet_fields": {
-            "fedora.model": [
-                "page",
-                272,
-                "internalpart",
-                25,
-                "monograph",
-                3,
-                "periodical",
-                3,
-                "periodicalvolume",
-                3,
-                "periodicalitem",
-                2
-            ]
+[
+    [
+        {
+            "pid": "uuid:045b1250-7e47-11e0-add1-000d606f5dc6",
+            "model": "periodical",
+            "IMG_THUMB": "http://localhost:8080/search/img?pid=uuid:045b1250-7e47-11e0-add1-000d606f5dc6&stream=IMG_THUMB&action=GETRAW",
+            "handle": "http://localhost:8080/search/handle/uuid:045b1250-7e47-11e0-add1-000d606f5dc6",
+            "title": "Dějiny a současnost"
         },
-        "facet_dates": {},
-        "facet_ranges": {}
-    }
-}
+        {
+            "pid": "uuid:f7e50720-80b6-11e0-9ec7-000d606f5dc6",
+            "model": "periodicalvolume",
+            "IMG_THUMB": "http://localhost:8080/search/img?pid=uuid:f7e50720-80b6-11e0-9ec7-000d606f5dc6&stream=IMG_THUMB&action=GETRAW",
+            "handle": "http://localhost:8080/search/handle/uuid:f7e50720-80b6-11e0-9ec7-000d606f5dc6",
+            "title": "Dějiny a současnost"
+        },
+        {
+            "pid": "uuid:91214030-80bb-11e0-b482-000d606f5dc6",
+            "model": "periodicalitem",
+            "IMG_THUMB": "http://localhost:8080/search/img?pid=uuid:91214030-80bb-11e0-b482-000d606f5dc6&stream=IMG_THUMB&action=GETRAW",
+            "handle": "http://localhost:8080/search/handle/uuid:91214030-80bb-11e0-b482-000d606f5dc6",
+            "title": "Dějiny a současnost"
+        },
+        {
+            "pid": "uuid:916267e0-80bb-11e0-8559-000d606f5dc6",
+            "model": "page",
+            "IMG_THUMB": "http://localhost:8080/search/img?pid=uuid:916267e0-80bb-11e0-8559-000d606f5dc6&stream=IMG_THUMB&action=GETRAW",
+            "handle": "http://localhost:8080/search/handle/uuid:916267e0-80bb-11e0-8559-000d606f5dc6",
+            "title": "Dějiny a současnost"
+        }
+    ]
+]

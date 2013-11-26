@@ -1,8 +1,22 @@
-<div  id="main_menu_in">
+#set($langs = $convert.toStrings($conf.interface.languages))
+#set($currentParam = $request.url)
 
-    #foreach ( $langitm in ${buttons.languageItems})
-        <a href="${langitm.link}">${langitm.name}</a>
+#set($l = $link.relative())
+#foreach($p in $params.all.entrySet())
+    #if($p.key != "language")
+        #set($l = $l.param($p.key, $p.value))
     #end
+#end
+
+<div  id="main_menu_in">
+    #foreach($lang in $langs)
+        #if($velocityCount % 2 == 1)
+            #set($lname = $lang)
+        #else
+            <a href="$l.param("language", $lang)">${lname}</a>
+        #end
+    #end
+
         <!-- Registrace pouze pro neprihlasene -->
         <scrd:notloggedusers>
             #if(${text.search.mainbuttons.showregistrationbutton} == "true")

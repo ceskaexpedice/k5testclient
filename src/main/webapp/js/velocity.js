@@ -17,11 +17,25 @@
  */
 
 function item(pid) {
-    var url = api + "api/item/" + pid + "/context";
+    
+    
+    var url = "api/item/" + pid + "/context";
     $.getJSON(url, function(data) {
-
+        var url = data.rss;
+        $.each(data.data, function(i, item) {
+            var div = $('<div align="center" class="item"></div>');
+            var a = $('<a href="item.vm?pid='+item.pid+'" ></a>');
+            var img = $('<img align="middle" height="96" border="0" vspace="2" src="api/item/' + item.pid + '/thumb" title="' + item.title + '" alt="' + item.title + '" />');
+            $(div).append('<div></div>');
+            $(a).append(img);
+            $(div).append(a);
+            $("#newest").append(div);
+        });
+        
     });
+    
 }
+
 
 
 function addFilter(field, value){
@@ -65,3 +79,25 @@ function refreshCollections(){
     });
 }
 
+function getCollsDict(){
+    var url = "api/vc/" + language;
+    $.getJSON(url, function(data) {
+        $.each(data, function(i, item) {
+            collectionsDict[item.pid.toString()] = item[language];
+        });
+        
+        $("div.search_result>div.collections>div.cols>div.collection").each(function(){
+            var id = $(this).data("vcid");
+            var title = "";
+            title = collectionsDict[id];
+            $(this).html(title);
+        });
+        
+        $("#filters li.collection>ul>li>a").each(function(){
+            var id = $(this).text();
+            var title = "";
+            title = collectionsDict[id];
+            $(this).html(title);
+        });
+    });
+}

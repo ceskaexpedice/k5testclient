@@ -163,7 +163,10 @@
             <xsl:call-template name="teaser">
                 <xsl:with-param name="pid"><xsl:value-of select="$pid" /></xsl:with-param>
             </xsl:call-template>
-            <div class="extInfo" style="display:none;"><xsl:value-of select="./arr[@name='pid_path']/str[position()=1]"/></div>
+            <div class="extInfo" style="display:none;">
+                <xsl:attribute name="data-pid"><xsl:value-of select="$pid" /></xsl:attribute>
+                <xsl:attribute name="data-pidpath"><xsl:value-of select="./arr[@name='pid_path']/str[position()=1]" /></xsl:attribute>
+            </div>
             </div>
         </div>
         </td></tr></table>
@@ -183,7 +186,11 @@
                     <h4>
                         <xsl:value-of select="$bundle/value[@key=$colsText]"/>
                     </h4>
-                    <xsl:for-each select="./arr[@name='collection']/str"><div class="collection"><xsl:value-of select="."/></div></xsl:for-each>
+                    <xsl:for-each select="./arr[@name='collection']/str">
+                        <div class="collection">
+                            <xsl:attribute name="data-vcid"><xsl:value-of select="."/></xsl:attribute>
+                        </div>
+                    </xsl:for-each>
                 </div>
             </div>
         </xsl:if>

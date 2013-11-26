@@ -1,3 +1,5 @@
+#set($cols = 2)
+
 #set($xsl = $import.read("xsl/results_header.xsl"))
 
 $xslt.addParam("bundle_url", $bundle_url)
