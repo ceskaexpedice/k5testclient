@@ -1,5 +1,4 @@
-$convert.stringsDelimiter("/")
-#set($pids = $convert.toStrings($params.pid_path))
+#set($pids = $pidconvert.toStrings($params.pid_path))
 
 #set($q = '')
 #foreach($pid in $pids)     

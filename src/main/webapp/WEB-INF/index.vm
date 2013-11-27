@@ -1,9 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" xmlns:fb="http://ogp.me/ns/fb#">
-#set($language = "$request.locale.language")
-#if($params.language)
-    #set($text = $text.locale("$params.language"))
-    #set($language = "$params.language")
-#end
+#parse("language.vm")
 #set($results = $search.home)
 <html>
     #parse( "html_header.vm" )

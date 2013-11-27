@@ -16,16 +16,6 @@ import org.antlr.stringtemplate.StringTemplate;
 import org.antlr.stringtemplate.StringTemplateGroup;
 import org.antlr.stringtemplate.language.DefaultTemplateLexer;
 
-import com.google.inject.Inject;
-import com.google.inject.Provider;
-
-//import cz.incad.kramerius.FedoraAccess;
-//import cz.incad.kramerius.security.User;
-//import cz.incad.kramerius.security.UserManager;
-//import cz.incad.kramerius.service.ResourceBundleService;
-//import cz.incad.kramerius.users.LoggedUsersSingleton;
-//import cz.incad.kramerius.utils.conf.KConfiguration;
-//import cz.incad.kramerius.utils.json.JSONUtils;
 import org.apache.velocity.tools.generic.ResourceTool;
 
 /**
@@ -36,24 +26,6 @@ public class HeaderViewObject {
 
     public static final java.util.logging.Logger LOGGER = java.util.logging.Logger
             .getLogger(HeaderViewObject.class.getName());
-    
-    @Inject
-    Provider<HttpServletRequest> requestProvider;
-    @Inject
-    Provider<Locale> localeProvider;
-//    @Inject
-//    ResourceBundleService resourceBundleService;
-//    @Inject
-//    @Named("securedFedoraAccess")
-//    FedoraAccess fedoraAccess;
-//    @Inject
-//    Provider<User> userProvider; 
-//    @Inject
-//    UserManager userManager;
-//    @Inject
-//    KConfiguration configuration;
-//    @Inject
-//    LoggedUsersSingleton loggedUsersSingleton;
     
     public String getDictionary() {
         Map<String, String> resourceBundleMap = new HashMap<String, String>();
@@ -118,55 +90,55 @@ public class HeaderViewObject {
     
     
     public String getSearchingRSSChannels() throws MalformedURLException {
-        if(true) return "";
-        if (isSearchingURL()) {
-            
-            String urlString = this.requestProvider.get().getRequestURL().toString();
-            String rss = urlString.substring(0,urlString.length()-"r.jsp".length())+"r-rss.jsp?"+this.requestProvider.get().getQueryString();
-
-            return "<link rel=\"alternate\" title=\"K4 - vyhledavani\" href=\""+rss+"\" type=\"application/rss+xml\"/>";
-        } else return "";
+        return "";
+//        if (isSearchingURL()) {
+//            
+//            String urlString = this.requestProvider.get().getRequestURL().toString();
+//            String rss = urlString.substring(0,urlString.length()-"r.jsp".length())+"r-rss.jsp?"+this.requestProvider.get().getQueryString();
+//
+//            return "<link rel=\"alternate\" title=\"K4 - vyhledavani\" href=\""+rss+"\" type=\"application/rss+xml\"/>";
+//        } else return "";
     }
 
     public boolean isSearchingURL() throws MalformedURLException {
-        if(true) return false;
-        URL url = new URL(this.requestProvider.get().getRequestURL().toString());
-        String file = url.getFile();
-        if (file.endsWith("r.jsp")) {
-            return true;
-        } else {
-            return false;
-        }
+        return false;
+//        URL url = new URL(this.requestProvider.get().getRequestURL().toString());
+//        String file = url.getFile();
+//        if (file.endsWith("r.jsp")) {
+//            return true;
+//        } else {
+//            return false;
+//        }
     }
     
     
     public String getLocalizationScripts() {
-        if(true) return "";
-        Locale locale = this.localeProvider.get();
-        return "<script src=\"js/localization/jquery.ui.datepicker-"+locale.getLanguage()+".js\" language=\"javascript\" type=\"text/javascript\"></script>"+
-            "<script src=\"js/localization/jquery-ui-timepicker-"+locale.getLanguage()+".js\" language=\"javascript\" type=\"text/javascript\"></script>";
+        return "";
+//        Locale locale = this.localeProvider.get();
+//        return "<script src=\"js/localization/jquery.ui.datepicker-"+locale.getLanguage()+".js\" language=\"javascript\" type=\"text/javascript\"></script>"+
+//            "<script src=\"js/localization/jquery-ui-timepicker-"+locale.getLanguage()+".js\" language=\"javascript\" type=\"text/javascript\"></script>";
     }
 
     
     public String getLevelsModelSelectionArray() {
-        if(true) return "";
-        //StringTemplate template = new StringTemp
-        StringTemplateGroup grp = stGroup();
-        StringTemplate st = grp.getInstanceOf("levelModelsSelection");
-        HashMap<String, String> model = new HashMap<String, String>(); {
-            HttpServletRequest request = this.requestProvider.get();
-            String pidPath = request.getParameter("pid_path");
-            String path = request.getParameter("path");
-            if ((pidPath != null) && (path !=null)) {
-                String[] uuids = pidPath.split("/");
-                String[] models = path.split("/");
-                for (int i = 0; i < models.length; i++) {
-                    String key = (i+1)+"_"+models[i];
-                    model.put(key, uuids[i]);
-                }
-            }
-        }
-        st.setAttribute("data", model);
-        return st.toString();
+       return "";
+       
+//        StringTemplateGroup grp = stGroup();
+//        StringTemplate st = grp.getInstanceOf("levelModelsSelection");
+//        HashMap<String, String> model = new HashMap<String, String>(); {
+//            HttpServletRequest request = this.requestProvider.get();
+//            String pidPath = request.getParameter("pid_path");
+//            String path = request.getParameter("path");
+//            if ((pidPath != null) && (path !=null)) {
+//                String[] uuids = pidPath.split("/");
+//                String[] models = path.split("/");
+//                for (int i = 0; i < models.length; i++) {
+//                    String key = (i+1)+"_"+models[i];
+//                    model.put(key, uuids[i]);
+//                }
+//            }
+//        }
+//        st.setAttribute("data", model);
+//        return st.toString();
     }
 }

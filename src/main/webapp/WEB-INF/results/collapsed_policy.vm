@@ -1,0 +1,3 @@
+#set($results = $search.policy)
+#set($xsl = $import.read("../xsl/policy.xsl"))
+$xslt.transform($results, $xsl)

@@ -1,11 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" xmlns:fb="http://ogp.me/ns/fb#">
-#set($language = "$request.locale.language")
-#if($params.language)
-    #set($text = $text.locale("$params.language"))
-    #set($language = "$params.language")
-#end
-
-#set($bundle_url = "${conf.applicationUrl}/i18n?action=bundle&format=xml&name=labels&language=${language}")
+#parse("language.vm")
 <html>
     #parse( "html_header.vm" )
     <body>
@@ -26,19 +20,6 @@
         </div>
         <div id="footer">
             #parse( "footer.vm" )
-            <script type="text/javascript">
-              var rbs = new RebuildSocialButtons();
-              // rebuild gplus button - explicit initialization
-              rbs.rebuildExplicit(rbs.buildSearchURLS());
-              
-            </script>
         </div>
-        #if(${params.error})
-            <script type="text/javascript">
-                $(document).ready(function(){
-                    alert('$text.error.${params.error}');
-                });
-            </script>
-       #end
     </body>
 </html>

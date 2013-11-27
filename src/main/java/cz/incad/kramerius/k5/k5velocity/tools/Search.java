@@ -55,7 +55,7 @@ public class Search {
     private final String daFacetsRange = "&facet.range=rok&facet.range.start=1100&facet.range.end=2014&facet.range.gap=1";
     private final String daFacets = "&facet.mincount=1&facet.field=rok&f.rok.facet.limit=-1&f.rok.facet.sort=false";
     private final String groupedParams = "&group.field=root_pid&group.type=normal&group.threshold=1"
-            + "&group.facet=true&group=true&group.ngroups=true";
+            + "&group.facet=false&group=true&group.ngroups=true";
 
     private boolean isFilterByType() {
         String[] fqs = req.getParameterValues("fq");
@@ -159,6 +159,19 @@ public class Search {
                     + getSort()
                     + getFilters()
                     + groupedParams);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public String getPolicy() {
+        try {
+            
+            String q = "root_pid:\""+req.getParameter("root")+"\"";
+            
+            return K5APIRetriever.getAsString("/search?q=" + q + 
+                    "&wt=xml&facet=true&facet.field=dostupnost&facet.mincount=1&rows=0");
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, null, ex);
             return null;

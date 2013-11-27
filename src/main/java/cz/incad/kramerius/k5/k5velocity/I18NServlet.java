@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.antlr.stringtemplate.StringTemplate;
 
-import com.google.inject.Provider;
 import cz.incad.utils.ResourceBundleService;
 import javax.servlet.http.HttpServlet;
 
@@ -105,16 +104,7 @@ public class I18NServlet extends HttpServlet {
 
         abstract void doAction(ServletContext context, HttpServletRequest req, HttpServletResponse resp);
 
-        static Locale locale(HttpServletRequest req, Provider<Locale> provider) {
-            String lang = req.getParameter("lang");
-            String country = req.getParameter("country");
-            if ((lang != null) && (country != null)) {
-                Locale locale = new Locale(lang, country);
-                return locale;
-            } else {
-                return provider.get();
-            }
-        }
+        
 
         static String formatBundleToJSON(ResourceBundle bundle, String bundleName) {
             Map<String, String> map = new HashMap<String, String>();

@@ -430,7 +430,7 @@ $(document).ready(function(){
                     
                     var div = '<div class="ui-tabs-panel ui-widget-content">';
                     $.each(data[0], function(i, item) {
-                        div += '| <a href="item.vm?pid=">'+item.title+'</a>';            
+                        div += '| <a href="doc.vm?pid=">'+item.title+'</a>';            
                     });
                     div += '</div><div class="clear"></div>';
                     $(info).append(div);

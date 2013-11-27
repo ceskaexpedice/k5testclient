@@ -1,0 +1,54 @@
+#set($expandTree = $conf.search.expand.tree)
+#set($showSuggest = $conf.search.details.showSuggest)
+
+#set($class_viewable = "false")
+#if(($item.fields.root_pid == $params.pid) && $viewable)
+    #set($class_viewable = "true")
+#end
+
+#set($models = $pidconvert.toStrings($item.fields.model_path.get(0)))
+#set($root_model = $models.get(0))
+
+
+<div id="rightMenuBox" class="shadow_">
+    <ul>   
+        <li><a href="#structure" title="$text.item.structure"><span class="ui-icon ui-icon-folder-open">$text.item.structure</span></a></li>
+        <li><a href="#searchInside" title="$text.administrator.menu.searchinside"><span class="ui-icon ui-icon-search">$text.administrator.menu.searchinside</span></a></li>
+        <li><a href="#contextMenu" title="$text.administrator.menu"><span  class="ui-icon ui-icon-gear" >$text.administrator.menu</span></a></li>
+        
+        #if($showSuggest && $showSuggest=='true')
+        <li><a href="#suggest" title="$text.search.results.suggested.documents"><span  class="ui-icon ui-icon-lightbulb" >$text.search.results.suggested.documents</span></a></li>
+        #end
+    </ul>
+    <div id="structure"  >
+        <div id="item_tree" class="viewer">
+            
+        </div>
+    <div id="donator" class="viewer" style="position:relative; bottom:0px; width:100%; text-align:center;clear:both;"></div>  
+    </div>
+    <div id="contextMenu">#parse("details/contextMenu.vm")</div>
+    <div id="searchInside">
+        $text.administrator.menu.selected.scope:
+        <ul id="searchInsideScope"></ul>
+        <div>
+            <input type="text"  id="insideQuery" size="25" class="searchQuery" onkeypress="checkEnter();" onclick="checkInsideInput();" value="${params.q}" />
+            <a href="javascript:searchInside();"><img border="0" align="top" alt="$text.administrator.menu.searchinside" src="img/lupa_orange.png" /></a>
+        </div>
+        <div id="searchInsideResults"></div>
+    </div> 
+    #if($showSuggest && $showSuggest=='true')
+    <div id="suggest" style="padding:3px;" class="viewer">
+        <div><h3>$text.search.results.suggested.documents</h3></div>
+        <div class="content"></div>
+    </div>
+    #end
+</div> 
+<script  src="js/itemTree.js" language="javascript" type="text/javascript"></script>
+<script type="text/javascript">
+    var initContext = $item.context; 
+    $(document).ready(function(){
+        initTree('${item.fields.pid_path.get(0)}',
+                 '${item.fields.model_path.get(0)}',
+                 '$item.fields.root_title', $class_viewable);
+    });
+</script>

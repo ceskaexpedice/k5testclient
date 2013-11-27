@@ -122,7 +122,7 @@
         <xsl:param name="pos" />
         <xsl:variable name="fmodel" ><xsl:value-of select="./str[@name='fedora.model']" /></xsl:variable>
         <xsl:variable name="root_pid" ><xsl:value-of select="./str[@name='root_pid']" /></xsl:variable>
-        <xsl:variable name="link" >./i.jsp?pid=<xsl:value-of
+        <xsl:variable name="link" >doc.vm?pid=<xsl:value-of
         select="$pid"/>&amp;q=<xsl:value-of
         select="$q"/><xsl:value-of select="$fqs" disable-output-escaping="yes" /><xsl:value-of select="$collection" disable-output-escaping="yes" />
         </xsl:variable>

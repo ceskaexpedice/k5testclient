@@ -25,9 +25,9 @@
         </scrd:notloggedusers>
 
         <!--  show admin menu - only for logged users -->
-        <scrd:loggedusers>
+        #if($loggedusers)
             <a id="adminHref" href="javascript:showAdminMenu();">$text.administrator.menu</a>
-        </scrd:loggedusers>
+        #end
         
         <!-- login - only for notlogged -->
         <scrd:notloggedusers>
@@ -35,14 +35,14 @@
         </scrd:notloggedusers>
         
         <!-- logout - only for logged -->
-        <scrd:loggedusers>
+        #if($loggedusers)
             #if(!${buttons.shibbLogout})
                  <a href="logout.jsp?redirectURL=${searchFormViewObject.requestedAddress}">$text.application.logout</a>
             #else
                  <a href="${buttons.shibbLogout}"><view:msg>application.logout</view:msg></a>
             #end
             </c:choose>
-        </scrd:loggedusers>
+        #end
 
 <a href="javascript:showHelp('$!{params.language}');">$text.application.help</a>
 #if($rows != 0)

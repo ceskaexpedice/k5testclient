@@ -69,7 +69,7 @@ function setVirtualCollection(collection){
 
 function refreshCollections(){
      $("#vc>div.collections>ul>li").remove();
-    var url = "api/vc";
+    var url = "api/vc/" + language;
     $.getJSON(url, function(data) {
         $.each(data, function(i, item) {
             var a = $('<li><a href="javascript:setVirtualCollection(\''+item.pid+'\');">'+item[language]+'</a></li>');

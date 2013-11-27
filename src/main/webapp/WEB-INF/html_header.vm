@@ -107,7 +107,15 @@
 
         
         // localization
-        ${headerViewObject.dictionary}
+#*        
+${headerViewObject.dictionary}
+*#
+
+var dictionary = {#foreach($key in $text.keys)
+"$key" : "$esc.javascript($text.get($key))", 
+#end
+"dummy":""};
+
         // selekce
         ${headerViewObject.levelsModelSelectionArray}
         
