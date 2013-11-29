@@ -17,37 +17,26 @@
  */
 
 function item(pid) {
-    var url = api + "api/item/" + pid + "/context";
+    
+    
+    var url = "api/item/" + pid + "/context";
     $.getJSON(url, function(data) {
-
+        var url = data.rss;
+        $.each(data.data, function(i, item) {
+            var div = $('<div align="center" class="item"></div>');
+            var a = $('<a href="item.vm?pid='+item.pid+'" ></a>');
+            var img = $('<img align="middle" height="96" border="0" vspace="2" src="api/item/' + item.pid + '/thumb" title="' + item.title + '" alt="' + item.title + '" />');
+            $(div).append('<div></div>');
+            $(a).append(img);
+            $(div).append(a);
+            $("#newest").append(div);
+        });
+        
     });
-}
-
-function decade(i, y){
     
 }
 
-function doDateAxis(data){
 
-            
-    var max = maxYear;
-    var wt = years.length * 3 + 10;
-    for(var i=0; i<years.length; i++){
-        var l = years[i];
-        var c = years[++i];
-        var title = l + " (" + c + ")";
-        var d1 = l.toString();
-        d1 = substring(d1, 3);
-        var h = parseInt(c) / max * 100;
-        var m = 100 - h;
-        var dagroup = '<div class="da_group" id="da_group_'+d1+'">'+
-            '<div class="da_group_title">'+d1+'0 - '+d1+'9</div>' +
-            '<div class="da_space"></div>' +
-            decade(1, 0) +
-            '</div>';
-        $("#da_container").append(dagroup);
-    }
-}
 
 function addFilter(field, value){
     var page = new PageQuery(window.location.search);
@@ -68,5 +57,47 @@ function rollTypes(){
         if(rollIndex>=$('#dt_home>div>span').length) rollIndex=0;
         $('#dt_home>div>span:nth('+rollIndex+')').show();
         setTimeout('rollTypes()', 4000);
+    });
+}
+
+function setVirtualCollection(collection){
+    var page = new PageQuery(window.location.search);
+    page.setValue("collection", collection);
+    var url = "?" + page.toString();
+    window.location = url;
+}
+
+function refreshCollections(){
+     $("#vc>div.collections>ul>li").remove();
+    var url = "api/vc/" + language;
+    $.getJSON(url, function(data) {
+        $.each(data, function(i, item) {
+            var a = $('<li><a href="javascript:setVirtualCollection(\''+item.pid+'\');">'+item[language]+'</a></li>');
+            $("#vc>div.collections>ul").append(a);
+        });
+        
+    });
+}
+
+function getCollsDict(){
+    var url = "api/vc/" + language;
+    $.getJSON(url, function(data) {
+        $.each(data, function(i, item) {
+            collectionsDict[item.pid.toString()] = item[language];
+        });
+        
+        $("div.search_result>div.collections>div.cols>div.collection").each(function(){
+            var id = $(this).data("vcid");
+            var title = "";
+            title = collectionsDict[id];
+            $(this).html(title);
+        });
+        
+        $("#filters li.collection>ul>li>a").each(function(){
+            var id = $(this).text();
+            var title = "";
+            title = collectionsDict[id];
+            $(this).html(title);
+        });
     });
 }

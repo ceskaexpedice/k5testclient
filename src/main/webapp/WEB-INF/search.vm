@@ -1,34 +1,25 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" xmlns:fb="http://ogp.me/ns/fb#">
-#if($params.language != "")
-#set($text = $text.locale("$params.language"))
-#end
-#set($results = $search.do)
+#parse("language.vm")
 <html>
     #parse( "html_header.vm" )
     <body>
         <div id="main" class="shadow">
             #parse( "header.vm" )
+
+#set($isGrouped = !$fqsStr.contains('fedora.model'))
+#if($isGrouped)
+    #set($results = $search.grouped)
+#else
+    #set($results = $search.ungrouped)
+#end
             <div class="clear"></div>
-            <div style="display:block;">
+            <div id="split" style="display:block;">
                 #parse( "results.vm" )
             </div>
             <div class="clear"></div>
         </div>
         <div id="footer">
             #parse( "footer.vm" )
-            <script type="text/javascript">
-              var rbs = new RebuildSocialButtons();
-              // rebuild gplus button - explicit initialization
-              rbs.rebuildExplicit(rbs.buildSearchURLS());
-              
-            </script>
         </div>
-        #if(${param.error})
-            <script type="text/javascript">
-                $(document).ready(function(){
-                    alert('$text.error.${param.error}');
-                });
-            </script>
-       #end
     </body>
 </html>

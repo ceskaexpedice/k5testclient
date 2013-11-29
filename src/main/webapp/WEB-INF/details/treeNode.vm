@@ -1,0 +1,2 @@
+#set($policyPublic = $conf.search.policy.public)
+$item.children

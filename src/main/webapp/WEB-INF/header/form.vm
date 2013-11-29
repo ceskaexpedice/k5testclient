@@ -1,0 +1,50 @@
+<form name="searchForm" id="searchForm" method="GET" action="search.vm" onsubmit="return checkQuery()">
+
+    <input type="hidden" name="forProfile" id="forProfile" value="search" />
+    <input type="hidden" name="forProfile_sorting_dir" id="forProfile_sorting_dir" value="" />
+
+#set($fqsStr = "")
+#foreach($fqs in ${params.getStrings("fq")})
+    <input type="hidden" name="fq" id="fq${velocityCount}" value="${fqs.replace( '\"', '')}" />
+    #set($fqsStr = "${fqsStr}&fq=${fqs}")
+#end
+
+    #if(${params.da_od})
+        <input type="hidden" id="da_od" name="da_od" value="${params.da_od}" />
+        <input type="hidden" id="da_do" name="da_do" value="${params.da_do}" />
+    #end
+
+    #if(!${params.q} && !$searching && !$fieldedSearch)
+        #set($qclass = "searchQuery ui-corner-all")
+    #else
+        #set($qclass = "searchQuery ui-corner-all searching")
+    #end
+
+    <input id="debug" name="debug" type="hidden" value="$!{params.debug}" /> 
+    <input id="sort" name="sort" type="hidden" value="$!{params.sort}" /> 
+    <input type="text" placeholder="$text.form.search"
+           alt="" name="q" id="q"
+           value="$!{params.q}" size="50"
+           class="${qclass}" type="text" onclick="checkSearchInput();"> &nbsp;
+    <input class="submit" title="$text.search" type="submit" value="" />
+    <span><a href="javascript:toggleAdv();"
+       title="$text.get("Pokročilé vyhledávání")">$text.get("Pokročilé vyhledávání")</a>
+    </span>
+#parse("header/advanced.vm")
+</form>
+<script type="text/javascript">
+
+    var inputSearchInitialized = false;
+    function checkSearchInput(){
+        var iniVal = '';
+        var q = $('#q').val();
+        if(!inputSearchInitialized && iniVal == q){
+            inputSearchInitialized = true;
+            $('#q').val('');
+            $('#q').addClass('searching');
+        }
+    }
+    function checkQuery(){
+        return true;
+    }
+</script>

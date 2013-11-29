@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" xmlns:fb="http://ogp.me/ns/fb#">
+#parse("language.vm")
+#set($exists = $item.check)
+<html>
+    #parse( "html_header.vm" )
+    <body>
+        <div id="main" class="shadow">
+            #parse( "header.vm" )
+            <div class="clear"></div>
+            <div style="display:block;">
+                #if($exists)
+                    #parse("details/item.vm")
+                #else
+                    $text.error.uuid_not_found
+                #end
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div id="fullImageContainer" class="viewer" style="display:none;">
+            #* for plain image *#
+            #parse("details/fullViewer.vm")
+        </div>
+
+        <div id="zoomifyFullImageContainer" class="viewer" style="display:none;">
+		#* zoomify full viewer *#
+	        #parse("details/zoomifyFullViewer.vm")
+        </div>
+        <div id="footer">
+            #parse( "footer.vm" )
+        </div>        
+    </body>
+</html>

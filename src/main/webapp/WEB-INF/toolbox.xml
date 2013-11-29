@@ -4,7 +4,9 @@
     <data type="number" key="version" value="2.0"/>
     <data key="searchHomeDocumentTypes" value="monograph,periodical,page" type="list"/>
     <toolbox scope="request">
+        <tool class="org.apache.velocity.tools.generic.EscapeTool" />
         <tool class="org.apache.velocity.tools.view.ImportTool" />
+        <tool key="link" class="org.apache.velocity.tools.view.LinkTool" />
         <tool key="date" class="org.apache.velocity.tools.generic.DateTool" />
         <tool class="org.apache.velocity.tools.view.ParameterTool" />
         <tool class="org.apache.velocity.tools.generic.ResourceTool"
@@ -15,13 +17,17 @@
         <tool key="headerViewObject" class="cz.incad.kramerius.k5.k5velocity.views.HeaderViewObject" />
         <tool key="rssHome" class="cz.incad.kramerius.k5.k5velocity.views.RSSHomeViewObject" />
         <tool key="search" class="cz.incad.kramerius.k5.k5velocity.tools.Search" />
+        <tool key="item" class="cz.incad.kramerius.k5.k5velocity.tools.Item" />
         <tool key="xslt" class="cz.incad.kramerius.k5.k5velocity.tools.XSLTool" />
+        <tool key="vc" class="cz.incad.kramerius.k5.k5velocity.tools.VirtualCollectionsTool" />
+     <tool class="org.apache.velocity.tools.generic.ConversionTool"
+              dateFormat="yyyy-MM-dd"/>
+     <tool key="pidconvert" stringsDelimiter="/" class="org.apache.velocity.tools.generic.ConversionTool"
+              dateFormat="yyyy-MM-dd"/>
     </toolbox>
     <toolbox scope="session">
         <tool key="map" class="java.util.HashMap"/>
     </toolbox>
     <toolbox scope="application">
-     <tool class="org.apache.velocity.tools.generic.ConversionTool"
-              dateFormat="yyyy-MM-dd"/>
    </toolbox>
 </tools>

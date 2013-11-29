@@ -1,7 +1,6 @@
 package cz.incad.utils;
 
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
+
 import java.io.IOException;
 
 /**

@@ -103,9 +103,19 @@
         var selectStart = "";
         var selectEnd = "";
 
+        var language = '$language';
+
         
         // localization
-        ${headerViewObject.dictionary}
+#*        
+${headerViewObject.dictionary}
+*#
+
+var dictionary = {#foreach($key in $text.keys)
+"$key" : "$esc.javascript($text.get($key))", 
+#end
+"dummy":""};
+
         // selekce
         ${headerViewObject.levelsModelSelectionArray}
         
@@ -145,7 +155,7 @@
                     });
                 });
             }
-            
+#*            
             var collectionsDict = {
             #foreach($col in ${cols.virtualCollectionsLocale})
                     #foreach($desc in ${col.descriptions})
@@ -153,5 +163,8 @@
                     #end
             #end
                 "dummy":""};
+*#
+            var collectionsDict = {};
+            getCollsDict();
     </script>
 </head>

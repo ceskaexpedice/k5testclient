@@ -1,0 +1,8 @@
+#parse("language.vm")
+#set($results = $search.ungrouped)
+#set($xsl = $import.read("../xsl/uncollapsed.xsl"))
+$xslt.addParam("bundle_url", $bundle_url)
+$xslt.addParam("root_pid", "$params.root_pid")
+$xslt.addParam("q", "$params.q")
+
+$xslt.transform($results, $xsl)

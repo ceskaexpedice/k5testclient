@@ -1,0 +1,113 @@
+#set($policyPublic = $conf.search.policy.public)
+<div id="split" class="viewer" style="position:relative;"> 
+    <div id="thumbs"  class="ui-layout-north">
+        #parse("details/thumbs.vm")
+    </div>
+    <div id="rightPanel"  class="ui-layout-west" >
+        #parse("details/tree.vm")
+    </div>
+    <div id="preview" class="ui-layout-center" >
+        #parse("details/tabs/container.vm")
+    </div>
+    <div style="clear:both;display:block;"></div>
+</div>
+
+<script type="text/javascript">
+    var viewerOptions = { deepZoomGenerated:false, 
+                          deepZoomCofigurationEnabled:false, 
+                          mimeType:'', 
+                          status:200,
+                          uuid:'',
+                          isContentPDF:function() {return viewerOptions.mimeType=='application/pdf'},
+                          isContentDJVU:function() { return viewerOptions.mimeType.indexOf('djvu')> 0 }
+    };
+    var sp;
+    $(document).ready(function(){
+        
+        var w = $("#split").height() +
+            $(window).height() -
+            $("#main").height() - 
+            $("#footer").outerHeight(true);
+        $("#split").css("height", w);
+        w = w -
+            $("#thumbs").outerHeight(true) -
+            $("#centralContent>ul").outerHeight(true) - 8 - 5 - 6;
+        $("#rightMenuBox>div.ui-tabs-panel").css("overflow", "auto");
+        $("#rightMenuBox>div.ui-tabs-panel").css("padding", "3px");
+        $("#rightMenuBox>div.ui-tabs-panel").css("height", w);
+        $("#centralContent>div.ui-tabs-panel").css("overflow", "auto");
+        $("#centralContent>div.ui-tabs-panel").css("padding", "3px");
+        $("#centralContent>div.ui-tabs-panel").css("height", w);
+        
+        
+       sp = $("#split").layout({
+           north:{
+                togglerLength_closed:	'100%',
+                togglerLength_open:	'100%',
+                togglerTip_open: '$text.thumbs.showhide',
+                onopen_end: function(){
+                    resizeAll();
+                },
+                onclose_end: function(){
+                    resizeAll();
+                }
+           },
+            west:{
+                size:300,
+                spacing_closed:	5,
+                spacing_open:	5,
+                togglerLength_closed:	'100%',
+                togglerLength_open:	'100%',
+                togglerAlign_open:	"top",
+                togglerAlign_closed:	"top",
+                togglerTip_closed: '$text.item.showhide',
+                togglerTip_open: '$text.item.showhide',
+                
+                onopen_end: function(){
+                    //positionAlto();
+                },
+                onclose_end: function(){
+                    //positionAlto();
+                }
+            },
+            center:{
+                onresize_end: function(){
+                    var h = $("#bigThumbZone").height();$("#container").height(h);
+                    resizeAll();
+                }
+            }
+        });
+        $('#split.viewer').bind('viewReady', function(event, viewerOptions){
+            resizeSplit(viewerOptions.fullid);
+        });
+        
+        $(window).resize(function(event, viewerOptions){
+            resizeAll();
+        });
+        
+        
+    });
+    
+    function resizeAll(){
+        var w = $("#split").height() +
+            $(window).height() -
+            $("#main").height() - 
+            $("#footer").outerHeight(true);
+        $("#split").css("height", w);
+        w = w - $("#centralContent>ul").outerHeight(true) - 8 - 5 - 6;
+        if($("#thumbs").is(':visible')){
+            w = w - $("#thumbs").outerHeight(true) ;
+        }
+        $("#rightMenuBox>div.ui-tabs-panel").css("overflow", "auto");
+        $("#rightMenuBox>div.ui-tabs-panel").css("padding", "3px");
+        $("#rightMenuBox>div.ui-tabs-panel").css("height", w);
+        $("#centralContent>div.ui-tabs-panel").css("overflow", "auto");
+        $("#centralContent>div.ui-tabs-panel").css("padding", "3px");
+        $("#centralContent>div.ui-tabs-panel").css("height", w);
+        resizeSplit();
+        checkThumbsVisibility();
+    }
+    
+    
+    function resizeSplit(){ var h = $("#bigThumbZone").height();$("#container").height(h); }
+</script>

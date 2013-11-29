@@ -1,0 +1,11 @@
+#set($language = "$request.locale.language")
+#if($params.language)
+    $request.getSession().setAttribute("language", "$params.language")
+    #set($language = "$params.language")
+    #set($text = $text.locale("$language"))
+#elseif($request.getSession().getAttribute('language'))
+    #set($language = "$request.getSession().getAttribute('language')")
+    #set($text = $text.locale("$language"))
+#end
+
+#set($bundle_url = "${conf.applicationUrl}/i18n?action=bundle&format=xml&name=labels&language=${language}")

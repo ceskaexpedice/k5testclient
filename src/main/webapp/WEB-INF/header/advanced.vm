@@ -1,0 +1,45 @@
+<div id="advSearch" class="shadow ui-widget ui-widget-content" style="display:none;z-index:110">
+    <table class="advancedSearch">
+        <col width="150px">
+        <tbody>
+            <tr><td colspan="2"><strong>Metadata</strong></td></tr>
+            <tr>
+                <td>$text.filter.query.isbnissn</td>
+                <td><input type="text" value="$!{params.issn}" size="20" name="issn" id="issn"></td>
+            </tr>
+            <tr>
+                <td>$text.filter.query.title</td>
+                <td><input type="text" value="$!{params.title}" size="20" name="title" id="title"></td>
+            </tr>
+            <tr>
+        	<td>$text.filter.query.keywords</td>
+        	<td><input type="text" value="$!{params.keywords}" size="20" name="keywords" id="keywords"></td>
+    	    </tr>
+            <tr>
+                <td>$text.filter.query.author</td>
+                <td><input type="text" value="$!{params.author}" size="20" name="author" id="author"></td>
+            </tr>
+            <tr>
+                <td>$text.filter.query.year></td>
+                <td><input type="text" value="$!{params.rok}" size="10" name="rok" id="rok"></td>
+            </tr>
+            <tr>
+                <td>$text.filter.query.mdt</td>
+                <td><input type="text" value="$!{params.udc}" size="20" name="udc" id="udc"></td>
+            </tr>
+            <tr>
+                <td>$text.filter.query.ddt</td>
+                <td><input type="text" value="$!{params.ddc}" size="20" name="ddc" id="ddc"></td>
+            </tr>
+            <tr>
+                <td>$text.get("Pouze veřejné dokumenty")</td>
+                <td><input type="checkbox" value="on" name="onlyPublic"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="right">
+                    <input type="submit" value="OK" class="ui-state-default ui-corner-all" />
+                    <input type="button" value="$text.common.close" class="ui-state-default ui-corner-all"  onclick="$('#advSearch').hide();" />
+                </td>
+            </tr>
+    </tbody></table>
+</div>

@@ -1,0 +1,97 @@
+<div id="tv" class="viewer ui-widget ui-widget-content">
+    <div id="tv_path"></div>
+<div id="tv_container" align="center" >
+    <table cellpadding="2" cellspacing="0" id="tv_container_table">
+        <tr id="tv_container_row"></tr>
+    </table>
+</div>
+</div>
+<script type="text/javascript">
+
+    var tv_containerRightBorder;
+    var tv_containerLeftBorder;
+    $(document).ready(function(){
+        tv_containerRightBorder = $('#tv_container').offset().left + $('#tv_container').width() ;
+        tv_containerLeftBorder = $('#tv_container').offset().left;
+        $('#tv.viewer').bind('activeUuidsChanged', function(event, id){
+            updateThumbs(id);
+        });
+        $('#tv.viewer').bind('viewReady', function(event, viewerOptions){
+            selectThumb(viewerOptions.fullid);
+        });
+        $('#tv_container_row>td>div').live('click', function(){
+            var id = $(this).attr('id').substring(3);
+            initView = false;
+            selectThumb(id);
+            $(".viewer").trigger('viewChanged', [id]);
+        });
+        $('#tv_container').bind('scroll', function(event){
+            checkThumbsVisibility();
+        });
+        $('#tv.viewer').bind('selectedPathChanged', function(event, level){
+            setThumbsPath();
+        });
+    });
+
+    function updateThumbs(id){
+        $('#tv_container_row>td').remove();
+        for(var i=0; i<k4Settings.activeUuids.length; i++){
+            $('#tv_container_row').append('<td><div id="tv_'+k4Settings.activeUuids[i]+'" class="t inactive"><img src="img/empty.gif" />'+
+                '<div id="dost_'+k4Settings.activeUuids[i]+'" style="position:absolute;left:2px;top:2px;"><img src="img/empty.gif" /></div></div>'+
+                '</td>');
+        }
+        selectThumb(id);
+        $('#tv_container_table').show();
+        checkThumbsVisibility();
+    }
+    
+    function checkThumbsVisibility(){
+        $('#tv_container_row div.inactive').each(function(){
+            checkIsThumbVisible($(this).attr("id").substring(3));
+        });
+    }
+    
+    function checkIsThumbVisible(uuid){
+        var imgLeft = $(jq('tv_'+uuid)).offset().left;
+        var imgRight = $(jq('tv_'+uuid)).offset().left + $(jq('tv_'+uuid)).width();
+        var reserve = $('#tv_container').width();
+        if(imgLeft<tv_containerRightBorder+reserve && imgRight>tv_containerLeftBorder-reserve){
+            $(jq('tv_'+uuid)+'>img').attr('src', 'img?uuid='+uuid.split('_')[1]+'&stream=IMG_THUMB&action=GETRAW');
+            $(jq('tv_'+uuid)).removeClass('inactive');
+        }
+        var p = isPrivate(uuid);
+        if(p && !policyPublic){
+            $(jq('dost_'+uuid)+'>img').attr('src', 'img/lock.png');
+        }else if(!p && policyPublic){
+            $(jq('dost_'+uuid)+'>img').attr('src', 'img/public.png');
+        } 
+    }
+    
+    function selectThumb(id){
+        $('#tv_container_row>td>div').removeClass('sel');
+        $(jq('tv_'+id)).addClass('sel');
+        focusThumb(id);
+    }
+    
+    function focusThumb(id){
+        var l = $(jq('tv_'+id)).offset().left - $('#tv_container').offset().left + $('#tv_container').scrollLeft() - $('#tv_container').width()/2 ;
+
+        $('#tv_container').scrollLeft(l);
+    }
+    
+    function setThumbsPath(){
+        //var p = '<span class="ui-icon ui-icon-triangle-1-e folder">folder</span>' + $(jq(k4Settings.selectedPath[0])+">a").html();
+        var p = '';
+        for(var i=0; i<k4Settings.selectedPathTexts.length; i++){
+            var maxText = k4Settings.selectedPathTexts[i].toString();
+            maxText = maxText.replaceAll("&nbsp;", " ").replace(/\n/g, "").trim().replace(/\s{2,}/g,' ');
+            //alert(maxText.length + ": " + maxText);
+            if (maxText.length > 40){
+                maxText = maxText.substring(0,40) + "...";
+            } 
+            p += '<span class="ui-icon ui-icon-triangle-1-e">folder</span><span><a href="javascript:selectBranch(\'' + k4Settings.selectedPath[i] + '\');">' + maxText + '</a></span>' ;
+        }
+        $('#tv_path').html(p);
+    }
+
+</script>

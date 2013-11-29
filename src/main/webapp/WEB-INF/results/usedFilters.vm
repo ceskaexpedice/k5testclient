@@ -1,0 +1,183 @@
+#if(($params.q && $params.q != "") ||
+($params.da_od && $params.da_od != "") ||
+($params.fq && $params.fq != "") ||
+($params.issn && $params.issn != "") ||
+($params.title && $params.title != "") ||
+($params.author && $params.author != "") ||
+($params.keywords && $params.keywords != "") ||
+($params.udc && $params.udc != "") ||
+($params.ddc && $params.ddc != "") ||
+($params.onlyPublic && $params.onlyPublic != "") ||
+($params.suggest && $params.suggest != "") ||
+($cols.current && $cols.current != "") ||
+($params.rok && $params.rok != ""))
+
+<ul id="usedFilters">
+    <li style="border-color: #E66C00;border-right: 1px solid #E66C00;">
+        <span class="ui-icon ui-icon-triangle-1-e folder"></span>
+        <span style="text-indent:0px;width:auto;font-weight: bold;">$text.filter.used</span><div class="clear"> </div>
+        <ul id="usedFilters">
+            #if(${cols.current})
+            <li>
+                 <a title="$text.filter.remove_criteria" class="mainNav" href="javascript:removeVirtualCollection();">
+                     $text.filter.collection: ${cols.current.label}
+                 </a>
+            </li>
+            #end
+            #if($params.q && $params.q != "")
+            <li>
+                 <a title="$text.filter.remove_criteria" class="mainNav" href="javascript:removeQuery();">$params.q</a>
+                 </li>
+            #end
+
+            #if(${params.da_od} && ${params.da_od} != '')
+                <li>
+                <a title="$text.filter.remove_criteria" />" class="mainNav" href="javascript:removeDateAxisFilter();">
+                $text.common.date" />: ${params.da_od} - $param.da_do</a>
+                </li>
+            #end
+
+            #foreach($fq1 in ${params.getStrings("fq")})
+
+                #set($facetName = "#substringBefore($fq1, ':')")
+                #set($facetValue = "#substringAfter($fq1, ':')")
+                #set($facetValue = $facetValue.replaceAll('"', ''))
+                
+                #set($facetValueDisp = $facetValue)
+                
+                #if(${facetName} == 'fedora.model' || $facetName == 'document_type')
+                    #set($facetValueDisp = $text.fedora.model.get($facetValue))
+                    #if($facetValueDisp.startsWith('???'))#set($facetValueDisp = ${facetValue})#end
+                #end
+                
+                #if(${facetName} == 'dostupnost')
+                    #set($facetValueDisp = $text.dostupnost.get($facetValue))
+                    #if($facetValueDisp.startsWith('???'))#set($facetValueDisp = ${facetValue})#end
+                #end
+
+                    
+                <li>
+                <a title="$text.filter.remove_criteria" class="mainNav" href="javascript:removeFacet(${velocityCount});">
+                $text.facet.get("${facetName}"): ${facetValueDisp}</a>
+                <input type="hidden" name="fq" id="fq${velocityCount}" value="${facetName}:${facetValue}" />
+                </li>
+
+            #end
+
+            #if(${params.suggest}=='true')
+                    <li>
+                    <a title="$text.filter.remove_criteria" />" class="mainNav" href="javascript:removeSuggest();">
+                    $text.filter.maintitle: ${params.browse_title}</a>
+                    </li>
+            #end
+
+            #if($params.issn && $params.issn != '')
+                    <li>
+                    <a title="$text.filter.remove_criteria" />" class="mainNav" href="javascript:removeAdvFilter('issn', '${params.issn}');">
+                    $text.issn: ${params.issn}</a>
+                    </li>
+            #end
+
+            #if($params.title && $params.title != '')
+                    <li>
+                    <a title="$text.filter.remove_criteria" />" class="mainNav" href="javascript:removeAdvFilter('title', '${params.title}');">
+                    $text.filter.maintitle: ${params.title}</a>
+                    </li>
+            #end
+
+            #if($params.author && $params.author != '')
+                    <li>
+                    <a title="$text.filter.remove_criteria" />" class="mainNav" href="javascript:removeAdvFilter('author', '${params.author}');">
+                    $text.author: ${params.author}</a>
+                    </li>
+            #end
+
+            #if($params.rok && $params.rok != '')
+                    <li>
+                    <a title="$text.filter.remove_criteria" />" class="mainNav" href="javascript:removeAdvFilter('rok', '${params.rok}');">
+                    $text.rok: ${params.rok}</a>
+                    </li>
+            #end
+
+            #if($params.keywords && $params.keywords != '')
+                    <li>
+                    <a title="$text.filter.remove_criteria" />" class="mainNav" href="javascript:removeAdvFilter('keywords', '${params.keywords}');">
+                    $text.filter.keywords: ${params.keywords}</a>
+                    </li>
+            #end
+
+            #if($params.udc && $params.udc != '')
+                    <li>
+                    <a title="$text.filter.remove_criteria" />" class="mainNav" href="javascript:removeAdvFilter('udc', '${params.udc}');">
+                    MDT: ${params.udc}</a>
+                    </li>
+            #end
+
+            #if($params.ddc && $params.ddc != '')
+                    <li>
+                    <a title="$text.filter.remove_criteria" />" class="mainNav" href="javascript:removeAdvFilter('ddc', '${params.ddc}');">
+                    DDT: ${params.ddc}</a>
+                    </li>
+            #end
+
+            #if($params.onlyPublic && $params.onlyPublic != '')
+                    <li>
+                    <a title="$text.filter.remove_criteria" />" class="mainNav" href="javascript:removeAdvFilter('onlyPublic', '${params.onlyPublic}');">
+                    $text.onlyPublic: ${params.onlyPublic}</a>
+                    </li>
+            #end
+
+        </ul>
+    </li>
+</ul>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#usedFilters>li>a").prepend('<span class="ui-icon ui-icon-close" title="$text.filter.remove_criteria">remove</span>');
+    });
+    
+    function removeFacet(index){
+        $('#fq'+index).remove();
+        //checkQuery();
+        $('#searchForm').submit();
+    }
+    
+    function removeSuggest(){
+        $('#suggest').remove();
+        $('#suggest_q').remove();
+        //checkQuery();
+        $('#searchForm').submit();
+    }
+    
+    function removeDateAxisFilter(){
+        $('#da_od').remove();
+        $('#da_do').remove();
+        //checkQuery();
+        $('#searchForm').submit();
+        
+        //var page = new PageQuery(window.location.search);
+        //page.removeParam(fromField);
+        //page.removeParam(toField);
+        //var newurl = "?" + page.toString();
+        //document.location.href = newurl;
+    }
+    function removeQuery(){
+    
+        var page = new PageQuery(window.location.search);
+
+        page.setValue("offset", "0");
+        page.setValue("q", "");
+        var url = "r.jsp?" + page.toString();
+        window.location = url;
+    }
+    function removeAdvFilter(field, value){
+        $('#'+field).val('');
+        //checkQuery();
+        $('#searchForm').submit();
+    }
+    
+    
+    
+</script>
+
+
+#end
