@@ -18,12 +18,16 @@ package cz.incad.kramerius.k5.k5velocity;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLConnection;
+import java.security.Principal;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import cz.ceskaexpedice.k5.k5jaas.K5User;
 
 public class ForwardServlet extends HttpServlet {
 
@@ -32,8 +36,16 @@ public class ForwardServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		String userName = getInitParameter("user");
-		String password = getInitParameter("password");
+		String userName = null /*getInitParameter("user")*/;
+		String password = null /*getInitParameter("password")*/;
+		
+		K5User k5user = (K5User) req.getUserPrincipal();
+		if (k5user != null) {
+			userName = k5user.getRemoteName();
+			password = k5user.getRemotePass();
+		}
+		
+		
 		String k5addr = getInitParameter("k5prefix");
 		
 		String queryString = req.getQueryString();
@@ -46,7 +58,13 @@ public class ForwardServlet extends HttpServlet {
 			replaceURL = replaceURL+"?"+queryString;
 		}
 		LOGGER.info("requesting url "+replaceURL);
-		InputStream inputStream = RESTHelper.inputStream(replaceURL);
+		URLConnection urlCon = null;
+		if (userName != null && password != null) {
+			urlCon = RESTHelper.openConnection(replaceURL, userName, password);
+		} else {
+			urlCon = RESTHelper.openConnection(replaceURL, userName, password);
+		}
+		InputStream inputStream = RESTHelper.inputStream(replaceURL, userName, password);
 		resp.setContentType("application/json; charset=utf-8");
 		IOUtils.copyStreams(inputStream, resp.getOutputStream());
 	}
