@@ -45,6 +45,7 @@ public class ForwardServlet extends HttpServlet {
 			password = k5user.getRemotePass();
 		}
 		
+		LOGGER.info("user & password "+(userName+","+password));
 		
 		String k5addr = getInitParameter("k5prefix");
 		
@@ -62,7 +63,7 @@ public class ForwardServlet extends HttpServlet {
 		if (userName != null && password != null) {
 			urlCon = RESTHelper.openConnection(replaceURL, userName, password);
 		} else {
-			urlCon = RESTHelper.openConnection(replaceURL, userName, password);
+			urlCon = RESTHelper.openConnection(replaceURL);
 		}
 		InputStream inputStream = RESTHelper.inputStream(replaceURL, userName, password);
 		resp.setContentType("application/json; charset=utf-8");

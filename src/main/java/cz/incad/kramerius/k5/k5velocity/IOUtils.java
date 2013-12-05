@@ -194,11 +194,20 @@ public class IOUtils {
     }
 
     public static void copyFiles(File source, File dest) throws IOException {
-        FileChannel fichannel = new FileInputStream(source).getChannel();
-        FileChannel foChannel = new FileOutputStream(dest).getChannel();
+    	FileInputStream fis = null;
+    	FileOutputStream fos = null;
+    	try {
+        	fis = new FileInputStream(source);
+        	fos = new FileOutputStream(dest);
+        	FileChannel fichannel = fis.getChannel();
+			FileChannel foChannel = fos.getChannel();
 
-        long size = fichannel.size();
-        fichannel.transferTo(0, size, foChannel);
+			long size = fichannel.size();
+			fichannel.transferTo(0, size, foChannel);
+		} finally {
+			if (fis != null)  { fis.close(); }
+			if (fos != null)  { fos.close(); }
+		}
     }
 
     public static void copyFolders(File sourceFolder, File destFolder) throws IOException {
