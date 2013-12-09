@@ -104,5 +104,76 @@ public class Item {
     public boolean getCheck() {
         return getContext().length() > 0;
     }
+/*    
+    {
+        pdfMaxRange:20,
+        previewStreamGenerated:false,
+        deepZoomGenerated:false,
+        deepZoomCofigurationEnabled:false,
+        
+        mimeType:'image/jpeg', 
+        hasAlto:false,
+        pid:"uuid:6e1b0dda-c1a7-11df-b7b5-001b63bd97ba",
+        model:"page",
+        
+        displayableContent:true,
+        
+        imgfull:true,
+    
+        donator:'',
+        
+        
+        pathsOfPids:[    ["uuid:6e1b0dda-c1a7-11df-b7b5-001b63bd97ba" ,"uuid:6b767ab8-c1a7-11df-b7b5-001b63bd97ba" ]],
+        imageServerConfigured:'false', 
+
+            rights: 
+            { 
+                      "administrate": { 
+                                   "uuid:6e1b0dda-c1a7-11df-b7b5-001b63bd97ba":false  ,"uuid:6b767ab8-c1a7-11df-b7b5-001b63bd97ba":false  ,"uuid:1":false   
+                      }  ,
+                      "read": { 
+                                   "uuid:6e1b0dda-c1a7-11df-b7b5-001b63bd97ba":true  ,"uuid:6b767ab8-c1a7-11df-b7b5-001b63bd97ba":true  ,"uuid:1":true   
+                      }   
+            },                
+                isContentPDF:function() {return viewerOptions.mimeType=='application/pdf'},
+                isContentDJVU:function() {return viewerOptions.mimeType.indexOf('djvu')> 0 }
+}
+
+  */              
+    public String getViewerOptions(){
+        return "{\n" +
+"        pdfMaxRange:20,\n" +
+"        previewStreamGenerated:false,\n" +
+"        deepZoomGenerated:false,\n" +
+"        deepZoomCofigurationEnabled:false,\n" +
+"        \n" +
+"        mimeType:'image/jpeg', \n" +
+"        hasAlto:false,\n" +
+"        pid:\"uuid:6e1b0dda-c1a7-11df-b7b5-001b63bd97ba\",\n" +
+"        model:\"page\",\n" +
+"        \n" +
+"        displayableContent:true,\n" +
+"        \n" +
+"        imgfull:true,\n" +
+"    \n" +
+"        donator:'',\n" +
+"        \n" +
+"        \n" +
+"        pathsOfPids:[    [\"uuid:6e1b0dda-c1a7-11df-b7b5-001b63bd97ba\" ,\"uuid:6b767ab8-c1a7-11df-b7b5-001b63bd97ba\" ]],\n" +
+"        imageServerConfigured:'false', \n" +
+"\n" +
+"            rights: \n" +
+"            { \n" +
+"                      \"administrate\": { \n" +
+"                                   \"uuid:6e1b0dda-c1a7-11df-b7b5-001b63bd97ba\":false  ,\"uuid:6b767ab8-c1a7-11df-b7b5-001b63bd97ba\":false  ,\"uuid:1\":false   \n" +
+"                      }  ,\n" +
+"                      \"read\": { \n" +
+"                                   \"uuid:6e1b0dda-c1a7-11df-b7b5-001b63bd97ba\":true  ,\"uuid:6b767ab8-c1a7-11df-b7b5-001b63bd97ba\":true  ,\"uuid:1\":true   \n" +
+"                      }   \n" +
+"            },                \n" +
+"                isContentPDF:function() {return viewerOptions.mimeType=='application/pdf'},\n" +
+"                isContentDJVU:function() {return viewerOptions.mimeType.indexOf('djvu')> 0 }\n" +
+"}";
+    } 
 
 }

@@ -56,7 +56,7 @@
         var imgRight = $(jq('tv_'+uuid)).offset().left + $(jq('tv_'+uuid)).width();
         var reserve = $('#tv_container').width();
         if(imgLeft<tv_containerRightBorder+reserve && imgRight>tv_containerLeftBorder-reserve){
-            $(jq('tv_'+uuid)+'>img').attr('src', 'img?uuid='+uuid.split('_')[1]+'&stream=IMG_THUMB&action=GETRAW');
+            $(jq('tv_'+uuid)+'>img').attr('src', 'api/item/'+uuid.split('_')[1]+'/thumb');
             $(jq('tv_'+uuid)).removeClass('inactive');
         }
         var p = isPrivate(uuid);

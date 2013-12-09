@@ -47,7 +47,7 @@ public class ForwardServlet extends HttpServlet {
 		}
 		LOGGER.info("requesting url "+replaceURL);
 		InputStream inputStream = RESTHelper.inputStream(replaceURL);
-		resp.setContentType("application/json; charset=utf-8");
+		//resp.setContentType("application/json; charset=utf-8");
 		IOUtils.copyStreams(inputStream, resp.getOutputStream());
 	}
 }
