@@ -29,15 +29,12 @@
                     <img src="img/loading.gif" />
                 </div>
                 <xsl:variable name="rows"><xsl:value-of select="number(/response/lst[@name='responseHeader']/lst[@name='params']/str[@name='rows'])" /></xsl:variable>
-                <xsl:variable name="start">
-                    <xsl:choose>
-                        <xsl:when test="/response/lst[@name='responseHeader']/lst[@name='params']/str[@name='start']/text()">
+                <xsl:variable name="start"><xsl:choose>
+                        <xsl:when test="number(/response/lst[@name='responseHeader']/lst[@name='params']/str[@name='start']/text())">
                             <xsl:value-of select="number(/response/lst[@name='responseHeader']/lst[@name='params']/str[@name='start'])" />
                         </xsl:when>
                         <xsl:otherwise>0</xsl:otherwise>
-                    </xsl:choose>
-
-                </xsl:variable>
+                    </xsl:choose></xsl:variable>
                 <xsl:if test="//result/doc" >
                     <xsl:choose>
                         <xsl:when test="$start = 0">
@@ -54,7 +51,9 @@
                     <xsl:if test="(($sc &lt; $numDocs) and ($numGroups = '0')) or (not($numGroups = 0) and ($sc &lt; $numGroups)) ">
                     <div class="more_docs">
                         <xsl:attribute name="id">offset_<xsl:value-of select="$start + $rows"/></xsl:attribute>
-                    <img src="img/loading.gif" /><br/>><xsl:value-of select="$bundle/value[@key='results.loading.more.documents']"/></div>
+                        <xsl:attribute name="data-start"><xsl:value-of select="$start"/></xsl:attribute>
+                        <xsl:attribute name="data-rows"><xsl:value-of select="$rows"/></xsl:attribute>
+                    <img src="img/loading.gif" /><br/><xsl:value-of select="$bundle/value[@key='results.loading.more.documents']"/></div>
                     </xsl:if>
                 </xsl:if>
             </xsl:when>

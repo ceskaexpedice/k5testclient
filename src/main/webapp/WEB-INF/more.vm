@@ -1,0 +1,12 @@
+#parse("language.vm")
+#set($fqsStr = "")
+#foreach($fqs in ${params.getStrings("fq")})
+    #set($fqsStr = "${fqsStr}&fq=${fqs}")
+#end
+#set($isGrouped = !$fqsStr.contains('fedora.model'))
+#if($isGrouped)
+    #set($results = $search.grouped)
+#else
+    #set($results = $search.ungrouped)
+#end
+#parse("results/docs.vm")

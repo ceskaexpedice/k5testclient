@@ -107,6 +107,19 @@ public class Search {
         return res.toString();
 
     }
+    
+     private String getStart() throws UnsupportedEncodingException {
+        String res = "";
+        String offset = req.getParameter("offset");
+        if (offset == null || offset.equals("")) {
+            offset = "0";
+        }
+        String rows = req.getParameter("rows");
+        if (rows == null || rows.equals("")) {
+            rows = "20";
+        }
+        return "&start=" + offset + "&rows=" + rows;
+     }
 
     private String getSort() throws UnsupportedEncodingException {
         String res = "";
@@ -144,16 +157,80 @@ public class Search {
                 res += "&fq=" + fq;
             }
         }
+        String browse_title = req.getParameter("browse_title");
+        if (browse_title != null && !browse_title.equals("")) {
+            res = "fq=search_title:"+browse_title;
+        }
         return res;
+        
+        /*
+        
+        <c:set var="fieldedSearch" value="false" scope="request" />
+    <%-- advanced params --%>
+    <c:if test="${!empty param.issn}">
+        <c:param name="fq" value="issn:${searchParams.escapedIssn} OR dc.identifier:${searchParams.escapedIssn}" />
+        <c:set var="rows" value="${rowsdefault}" scope="request" />
+        <c:set var="fieldedSearch" value="true" scope="request" />
+    </c:if>
+    <c:if test="${!empty param.title}">
+        <c:param name="fq" value="dc.title:${searchParams.escapedTitle}" />
+        <c:set var="rows" value="${rowsdefault}" scope="request" />
+        <c:set var="fieldedSearch" value="true" scope="request" />
+    </c:if>
+    <c:if test="${!empty param.author}">
+        <c:param name="fq" value="dc.creator:${searchParams.escapedAuthor}" />
+        <c:set var="rows" value="${rowsdefault}" scope="request" />
+        <c:set var="fieldedSearch" value="true" scope="request" />
+    </c:if>
+    <c:if test="${!empty param.rok}">
+        <c:param name="fq" value="rok:${searchParams.escapedRok}" />
+        <c:set var="rows" value="${rowsdefault}" scope="request" />
+        <c:set var="fieldedSearch" value="true" scope="request" />
+    </c:if>
+    <c:if test="${!empty param.udc}">
+        <c:param name="fq" value="mdt:\"${param.udc}\"" />
+        <c:set var="rows" value="${rowsdefault}" scope="request" />
+        <c:set var="fieldedSearch" value="true" scope="request" />
+    </c:if>
+    <c:if test="${!empty param.ddc}">
+        <c:param name="fq" value="ddt:\"${param.ddc}\"" />
+        <c:set var="rows" value="${rowsdefault}" scope="request" />
+        <c:set var="fieldedSearch" value="true" scope="request" />
+    </c:if>
+    <c:if test="${!empty param.keywords}">
+        <c:param name="fq" value="keywords:\"${param.keywords}\"" />
+        <c:set var="rows" value="${rowsdefault}" scope="request" />
+        <c:set var="fieldedSearch" value="true" scope="request" />
+    </c:if>
+    <c:if test="${!empty param.onlyPublic}">
+        <c:param name="fq" value="dostupnost:${param.onlyPublic}" />
+        <c:set var="rows" value="${rowsdefault}" scope="request" />
+        <c:set var="fieldedSearch" value="true" scope="request" />
+    </c:if>
+        
+        */
+    }
+    
+    public String getQuery(){
+        String ret = "";
+        boolean hasExtField = false;
+        String browse_title = req.getParameter("browse_title");
+        if (browse_title != null && !browse_title.equals("")) {
+            ret = "fq=search_title:"+browse_title;
+            hasExtField = true;
+        }
+        return ret;
     }
 
     public String getGrouped() {
         try {
+            
             String q = req.getParameter("q");
             if (q == null || q.equals("")) {
-                q = "*:*";
+                q += "*:*";
             }
             return K5APIRetriever.getAsString("/search?q=" + q + "&wt=xml&facet=true"
+                    + getStart()
                     + homeFacets
                     + daFacets
                     + getSort()

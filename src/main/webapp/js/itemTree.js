@@ -68,16 +68,20 @@ function initTree(pps, mps, title, viewable) {
     
 
     for (var i = 0; i < initContext.length; i++) {
+        var mPath = "";
         for (var j = 0; j < initContext[i].length; j++) {
             //if (initContext[i][j].viewable == "true") {
-                lastPid = initContext[i][j].model_path[0].replaceAll("/", "-") + "_" + initContext[i][j].pid;
+                //lastPid = initContext[i][j].model_path[0].replaceAll("/", "-") + "_" + initContext[i][j].pid;
+                if(j>0) mPath += "-"
+                mPath += initContext[i][j];
+                lastPid = mPath + "_" + initContext[i][j].pid;
             //}
             var el = initContext[i][j];
             var title = el.title;
-            if(el.details.length > 0){
+            if(el.details && el.details.length > 0){
                 title = getTitleByModel(el.details[0], el.model, el.root_title);
             }
-            current = addNode(current, el.pid, el.model_path[0], el.model, title, el.viewable);
+            current = addNode(current, el.pid, el.model[0], el.model, title, el.viewable);
             var isLast = (j == (initContext[i].length - 1)) && (i == (initContext.length - 1));
             getSiblings(current, initContext[i][j].pid, initContext[i][j].model, isLast);
         }

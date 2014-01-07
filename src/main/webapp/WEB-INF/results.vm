@@ -287,8 +287,6 @@ $(document).ready(function(){
         refreshResSelection();
     }
 
-
-        
     
     function toggleColumns(post){
         $('.cols').toggle();
@@ -423,24 +421,23 @@ $(document).ready(function(){
             var pid_path = $(info).data("pidpath");
             var pid = $(info).data("pid");
             if(pid_path.indexOf("/")>0){
-
-
-                var url = "api/item/" + pid + "/context";
-                $.getJSON(url, function(data) {
-                    
-                    var div = '<div class="ui-tabs-panel ui-widget-content">';
-                    $.each(data[0], function(i, item) {
-                        div += '| <a href="doc.vm?pid=">'+item.title+'</a>';            
+                var pids = pid_path.split("/");
+                for(var i=0; i<pids.length; i++){
+                }
+                //var div = '<div class="ui-tabs-panel ui-widget-content">';
+                //div += "</div>";
+                //$(info).append(div);
+                for(var i=0; i<pids.length; i++){
+                    //var span = $();
+                    $(info).append('<span data-pid="' + pids[i] + '"></span>');
+                    var url = "api/item/" + pids[i];
+                    $.getJSON(url, function(data) {
+                            $(info).find('span[data-pid="' + data.pid + '"]').html('&t; ' + dictionary['fedora.model.'+data.model] + ': <a href="doc.vm?pid=' + data.pid + '">' + data.title+'</a>  ');
                     });
-                    div += '</div><div class="clear"></div>';
-                    $(info).append(div);
-                    $(info).show();
-                    checkRowHeightByElement(info);
-
-                });
-
-
-
+                }
+                $(info).show();
+                $(info).append('<div class="clear"></div>');
+                checkRowHeightByElement(info);
             }
         });
     }
@@ -449,7 +446,7 @@ $(document).ready(function(){
         var offset = id.split('_')[1];
         var page = new PageQuery(window.location.search);
         page.setValue("offset", offset);
-        var url =  "search.vm?onlymore=true&" + page.toString();
+        var url =  "more.vm?onlymore=true&" + page.toString();
         $.get(url, function(data) {
             $(jq(id)).html(data);
             $(jq(id)).removeClass('more_docs');

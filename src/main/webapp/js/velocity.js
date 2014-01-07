@@ -99,5 +99,12 @@ function getCollsDict(){
             title = collectionsDict[id];
             $(this).html(title);
         });
+        
+        $("#facets li.collection>ul>li>a").each(function(){
+            var id = $(this).html();
+            var title = "";
+            title = collectionsDict[id];
+            $(this).html(title);
+        });
     });
 }

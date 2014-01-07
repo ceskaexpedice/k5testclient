@@ -6,7 +6,8 @@
     #set($class_viewable = "true")
 #end
 
-#set($models = $pidconvert.toStrings($item.fields.model_path.get(0)))
+##set($models = $pidconvert.toStrings($item.fields.model_path.get(0)))
+#set($models = $pidconvert.toStrings($item.modelPath))
 #set($root_model = $models.get(0))
 
 
@@ -47,8 +48,8 @@
 <script type="text/javascript">
     var initContext = $item.context; 
     $(document).ready(function(){
-        initTree('${item.fields.pid_path.get(0)}',
-                 '${item.fields.model_path.get(0)}',
+        initTree('${item.pidPath}',
+                 '${item.modelPath}',
                  '$item.fields.root_title', $class_viewable);
     });
 </script>
