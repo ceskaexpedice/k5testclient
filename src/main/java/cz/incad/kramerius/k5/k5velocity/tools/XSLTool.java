@@ -78,6 +78,9 @@ public class XSLTool {
     }
     
     public void addParam(String name, String value){
+        if(value == null){
+            value = "";
+        }
         params.put(name, value);
     }
     

@@ -1,6 +1,6 @@
 
 <div id="socialbuttons_div" class="viewer socialbuttons" style="visibility: hidden; height: 0px;">
-     #if(${gplus.buttonEnabled} || ${fb.buttonEnabled} || ${tweet.buttonEnabled})
+     #if(${conf.googleplus.plus}=='true' || ${conf.facebook.likeit}=='true' || ${conf.twitter.tweet}=='true')
       <script type="text/javascript">
         // changing og metadata
         $('#socialbuttons_div.viewer').bind('viewReady', function(event, viewerOptions){
@@ -81,13 +81,13 @@
 
 <table class="socialbuttons" align="center">
     <tr>
-     #if(${gplus.buttonEnabled})
+     #if(${conf.googleplus.plus}=='true')
        <td id="gplusbutton"  class="gplus">
            <div class="g-plusone" data-size="small" data-annotation="bubble"></div>
        </td>
      #end
 
-     #if(${fb.buttonEnabled})
+     #if(${conf.facebook.likeit}=='true')
       <!-- like button -->
       <td id="fbbutton" class="fb">
         <!--  place for fb -->
@@ -95,7 +95,8 @@
       </td>
      #end
 
-     #if(${tweet.buttonEnabled})
+
+     #if($conf.twitter.tweet == 'true')
       <!-- twitter -->
       <td class="tweet">
         <a href="https://twitter.com/share" class="twitter-share-button" data-lang="${tweet.locale}">Tweet</a>
@@ -117,12 +118,12 @@
 
 
 
-#if(${ga.ready})
+#if($conf.googleanalytics.keys.contains('webpropertyid'))
 <!-- google analytics support -->
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', '${ga.webPropertyId}']);
+  _gaq.push(['_setAccount', '$!{conf.get('googleanalytics.webpropertyid')}']);
   _gaq.push(['_trackPageview']);
 
   (function() {
@@ -134,7 +135,7 @@
 </script>
 #end
 
-#if(${fb.buttonEnabled})
+#if(${conf.facebook.likeit}=='true')
 <!-- facebook support  -->
 <div id="fb-root"></div>
 <script>
@@ -150,7 +151,7 @@
 #end
 
 
-#if(${tweet.buttonEnabled})
+#if(${conf.twitter.tweet}=='true')
 <!--  twitter -->
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 #end

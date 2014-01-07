@@ -1,0 +1,83 @@
+#set($tabs = $convert.toStrings($conf.search.item.tabs))
+<div id="centralContent">
+    <ul>
+        <li><a href="#bigThumbZone" class="vertical-text" >$text.item.tab.image</a>        </li>
+        <li><a href="#extendedMetadata" class="vertical-text" >$text.item.tab.metadata</a></li>
+        #foreach($tab in ${tabs})
+            #set($n1 = "#substringAfter($tab, '.')")
+                <li id="${n1}_li" style="display: none;"><a href="#itemtab_${n1}" class="vertical-text">$text.item.tab.${tab}</a></li>
+        #end
+        </ul>
+    #parse("details/tabs/metadata.vm")
+    #parse("details/tabs/image.vm")
+
+    #foreach($tab in ${tabs})
+        
+            #set($ds = "#substringBefore($tab, '.')")
+            #set($xsl = "#substringAfter($tab, '.')")
+
+            <div id="itemtab_${xsl}" class="viewer" style="overflow:hidden;"></div>
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    
+                    $('#itemtab_${xsl}.viewer').bind('viewReady', function(event, viewerOptions){
+                        var pid_path = getPidPath(viewerOptions.fullid);
+                	#if($tab == 'VIRTUAL.audioPlayer')
+                           	if (console) console.log("updating audioplayer tab " + '${tab}' + ", pidPath: " + pid_path);
+                        	updateAudioplayerTab('${tab}', pid_path);
+                    	#else
+                        	if (console) console.log("update custom tab " + '${tab}' + ", pidPath: " + pid_path);
+                            updateCustomTab('${tab}', pid_path);
+                    	#end
+                    });
+                });
+            </script>
+        
+    #end
+</div>
+<script type="text/javascript">
+                
+    function updateCustomTab(tab, pid_path){
+		$("#"+tab.split(".")[1]+"_li").show();
+    
+        $.get('details/tabs/custom.vm?tab='+tab+'&pid_path=' + pid_path, function(data){
+            $('#itemtab_'+tab.split(".")[1]).html(data) ;
+        });
+    }
+    
+    function updateAudioplayerTab(tab, pid_path){
+    	var pid_path_parts = pid_path.split('/');
+    	var topLevelPid = pid_path_parts[0];
+        $.get('audioTracks?action=canContainTracks&pid_path=' + topLevelPid, function(data){
+            if (data.canContainTracks){                
+                $.get('inc/details/tabs/audioplayer.jsp', function(data){
+                    $('#itemtab_'+tab.split(".")[1]).html(data);
+                });                
+            }
+        });
+    }
+    
+    
+    function setMainContentWidth(){ 
+        var w = $(window).width()-6-$('#itemTree').width();
+
+        $("#mainContent").css('width', w);
+        w = w-45;
+        $("#centralContent").css('width', w);
+
+        //w = $('#centralContent').width();
+        $("#centralContent>div").css('width', w-30-25);
+        $("#audio").css('width', w-30-25);
+        $("#extendedMetadata").css('width', w-30-25);
+        $("#bigThumbZone").css('width', w-30-25);
+    }
+
+    $(document).ready(function() {
+        $("#centralContent").tabs({
+            
+        });//.addClass('ui-tabs-vertical ui-helper-clearfix');
+        //$("#centralContent li").removeClass('ui-corner-top').addClass('ui-corner-left');
+        //$("#centralContent").css('position', 'static');
+    });
+
+</script>

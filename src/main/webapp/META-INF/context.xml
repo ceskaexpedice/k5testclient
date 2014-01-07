@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path="/k5velocity"/>
+<Context antiJARLocking="true" path="/k5velocity">
+    <Realm appName="k5" className="org.apache.catalina.realm.JAASRealm" debug="99" 
+            userClassNames="cz.ceskaexpedice.k5.k5jaas.K5User" 
+            roleClassNames="cz.ceskaexpedice.k5.k5jaas.WebRole" />
+</Context>

@@ -66,63 +66,63 @@
 
             #if(${params.suggest}=='true')
                     <li>
-                    <a title="$text.filter.remove_criteria" />" class="mainNav" href="javascript:removeSuggest();">
+                    <a title="$text.filter.remove_criteria" class="mainNav" href="javascript:removeSuggest();">
                     $text.filter.maintitle: ${params.browse_title}</a>
                     </li>
             #end
 
             #if($params.issn && $params.issn != '')
                     <li>
-                    <a title="$text.filter.remove_criteria" />" class="mainNav" href="javascript:removeAdvFilter('issn', '${params.issn}');">
+                    <a title="$text.filter.remove_criteria" class="mainNav" href="javascript:removeAdvFilter('issn', '${params.issn}');">
                     $text.issn: ${params.issn}</a>
                     </li>
             #end
 
             #if($params.title && $params.title != '')
                     <li>
-                    <a title="$text.filter.remove_criteria" />" class="mainNav" href="javascript:removeAdvFilter('title', '${params.title}');">
+                    <a title="$text.filter.remove_criteria" class="mainNav" href="javascript:removeAdvFilter('title', '${params.title}');">
                     $text.filter.maintitle: ${params.title}</a>
                     </li>
             #end
 
             #if($params.author && $params.author != '')
                     <li>
-                    <a title="$text.filter.remove_criteria" />" class="mainNav" href="javascript:removeAdvFilter('author', '${params.author}');">
+                    <a title="$text.filter.remove_criteria" class="mainNav" href="javascript:removeAdvFilter('author', '${params.author}');">
                     $text.author: ${params.author}</a>
                     </li>
             #end
 
             #if($params.rok && $params.rok != '')
                     <li>
-                    <a title="$text.filter.remove_criteria" />" class="mainNav" href="javascript:removeAdvFilter('rok', '${params.rok}');">
+                    <a title="$text.filter.remove_criteria" class="mainNav" href="javascript:removeAdvFilter('rok', '${params.rok}');">
                     $text.rok: ${params.rok}</a>
                     </li>
             #end
 
             #if($params.keywords && $params.keywords != '')
                     <li>
-                    <a title="$text.filter.remove_criteria" />" class="mainNav" href="javascript:removeAdvFilter('keywords', '${params.keywords}');">
+                    <a title="$text.filter.remove_criteria" class="mainNav" href="javascript:removeAdvFilter('keywords', '${params.keywords}');">
                     $text.filter.keywords: ${params.keywords}</a>
                     </li>
             #end
 
             #if($params.udc && $params.udc != '')
                     <li>
-                    <a title="$text.filter.remove_criteria" />" class="mainNav" href="javascript:removeAdvFilter('udc', '${params.udc}');">
+                    <a title="$text.filter.remove_criteria" class="mainNav" href="javascript:removeAdvFilter('udc', '${params.udc}');">
                     MDT: ${params.udc}</a>
                     </li>
             #end
 
             #if($params.ddc && $params.ddc != '')
                     <li>
-                    <a title="$text.filter.remove_criteria" />" class="mainNav" href="javascript:removeAdvFilter('ddc', '${params.ddc}');">
+                    <a title="$text.filter.remove_criteria" class="mainNav" href="javascript:removeAdvFilter('ddc', '${params.ddc}');">
                     DDT: ${params.ddc}</a>
                     </li>
             #end
 
             #if($params.onlyPublic && $params.onlyPublic != '')
                     <li>
-                    <a title="$text.filter.remove_criteria" />" class="mainNav" href="javascript:removeAdvFilter('onlyPublic', '${params.onlyPublic}');">
+                    <a title="$text.filter.remove_criteria" class="mainNav" href="javascript:removeAdvFilter('onlyPublic', '${params.onlyPublic}');">
                     $text.onlyPublic: ${params.onlyPublic}</a>
                     </li>
             #end

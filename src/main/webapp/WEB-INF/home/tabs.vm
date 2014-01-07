@@ -31,9 +31,9 @@
             var field = $(this).parent().attr('id');
             var value = $(this).children("span").html();
             if(field.indexOf('browse_title')>-1){
-                window.location = "r.jsp?suggest=true&browse_title=" + value + "&forProfile=search";
+                window.location = "search.vm?suggest=true&browse_title=" + value + "&forProfile=search";
             } else{
-                window.location = "r.jsp?author=\"" + value + "\"&forProfile=search";
+                window.location = "search.vm?author=\"" + value + "\"&forProfile=search";
             }
         });
 
@@ -60,7 +60,7 @@
         var field_id = input_id.substring(3);
         doBrowse(value, field_id);
         return;
-        var url = 'terms.jsp?i=false&field=' + field_id + '&t=' + value;
+        var url = 'terms.vm?i=false&field=' + field_id + '&t=' + value;
         $.get(url, function(data){
             $('#'+res_id+">div.content").html(data);
             if(data!=""){
@@ -94,7 +94,7 @@
 
     function getMoreTerms(field){
         var term = $('#'+field+">div.term:last>span").html();
-        var url = 'terms.jsp?i=false&field=' + field;
+        var url = 'terms.vm?i=false&field=' + field;
         $('#'+field+" div.more_terms").remove();
         $.post(url, {t: term}, function(data){
             $('#'+field).append(data);

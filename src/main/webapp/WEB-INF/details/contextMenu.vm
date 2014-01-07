@@ -81,7 +81,9 @@
     });
 
     function setInitActive(){
-        var initialPid = model_path_str.replaceAll('/', '-') + "_" + pid_path[pid_path.length - 1];
+        var l1 = initContext.length - 1;
+        var l2 = initContext[l1].length - 1;
+        var initialPid = initContext[l1][l2].model_path[0].replaceAll('/', '-') + "_" + initContext[l1][l2].pid;
         $('#context_items_active').html('<li id="cms_'+ initialPid+'"><span class="ui-icon ui-icon-triangle-1-e " >item</span><label>'+$(jq(initialPid)+">div>a>label").html()+'</label></li>');
     }
 
