@@ -86,6 +86,12 @@
             <artifactId>guice-assistedinject</artifactId>
             <version>${guice.version}</version>
         </dependency>
+
+	<dependency>
+                <groupId>org.brickred</groupId>
+                <artifactId>socialauth-spring</artifactId>
+                <version>[2.3,)</version>
+        </dependency>
         
         <dependency>
             <groupId>cz.incad.kramerius.k5</groupId>
