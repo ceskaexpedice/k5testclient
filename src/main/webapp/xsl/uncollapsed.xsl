@@ -3,6 +3,7 @@
     <xsl:param name="bundle_url" select="bundle_url" />
     <xsl:param name="bundle" select="document($bundle_url)/bundle" />
     <xsl:param name="root_pid" select="root_pid"/>
+    <xsl:param name="pid" select="pid"/>
     <xsl:param name="q" select="q"/>
     <xsl:template match="/">
         <xsl:if test="//doc" >
@@ -14,7 +15,7 @@
                 </xsl:for-each>
             </div>
             <xsl:call-template name="pagination">
-                <xsl:with-param name="rows"><xsl:value-of select="count(/response/result/doc)" /></xsl:with-param>
+                <xsl:with-param name="rows"><xsl:value-of select="/response/lst[@name='responseHeader']/lst[@name='params']/str[@name='rows']" /></xsl:with-param>
                 <xsl:with-param name="start"><xsl:value-of select="/response/result/@start" /></xsl:with-param>
                 <xsl:with-param name="numDocs"><xsl:value-of select="/response/result/@numFound" /></xsl:with-param>
             </xsl:call-template>
@@ -32,9 +33,11 @@
                     <xsl:with-param name="fmodel"><xsl:value-of select="$fmodel" /></xsl:with-param>
                 </xsl:call-template>
                 </a>
+                <!--
                 <xsl:if test="./str[@name='datum_str']/text()">
                     <div><xsl:value-of select="./str[@name='datum_str']" /></div>
                 </xsl:if>
+                -->
             <div class="teaser">
                 <xsl:for-each select="../../lst[@name='highlighting']/lst">
                     <xsl:if test="@name = $solruuid">
@@ -104,7 +107,7 @@
     <xsl:template name="periodicalitem">
         <xsl:param name="detail" />
         <xsl:value-of select="$bundle/value[@key='fedora.model.periodicalitem']"/>&#160;
-        <xsl:if test="substring-before($detail, '##')"><xsl:value-of select="substring-before($detail, '##')" /><br/></xsl:if>
+        <xsl:if test="substring-before($detail, '##')"><xsl:value-of select="substring-before($detail, '##')" /></xsl:if>
         <xsl:variable name="remaining" select="substring-after($detail, '##')" />
         <xsl:value-of select="substring-before($remaining, '##')" /><br/>
         <xsl:variable name="remaining2" select="substring-after($remaining, '##')" />
@@ -149,7 +152,11 @@
             </xsl:choose></xsl:variable>
             <div style="float:right;" class="pagination">
                 <xsl:if test="$start &gt; $rows">
-                    <a class="previous"><xsl:attribute name="href">javascript:gotoOffset(<xsl:value-of select="$start - $rows - 1" />)</xsl:attribute> &lt;&lt;</a>
+                    <a class="previous">
+                        <xsl:attribute name="href">javascript:uncollapse('<xsl:value-of select="$root_pid" />', 
+                    '<xsl:value-of select="$pid" />', 
+                    <xsl:value-of select="$start - $rows - 1" />)</xsl:attribute> &lt;&lt;
+                    </a>
                 </xsl:if>
                 <xsl:call-template name="pag_page">
                     <xsl:with-param name="pageNum"><xsl:value-of select="1" /></xsl:with-param>
@@ -159,7 +166,10 @@
                     <xsl:with-param name="firsthit"><xsl:value-of select="$start" /></xsl:with-param>
                 </xsl:call-template>
                 <xsl:if test="$numDocs &gt; $rows + $start">
-                    <a class="next"><xsl:attribute name="href">javascript:gotoOffset(<xsl:value-of select="$rows + $start - 1" />)</xsl:attribute> &gt;&gt;</a>
+                    <a class="next"><xsl:attribute name="href">javascript:uncollapse('<xsl:value-of select="$root_pid" />', 
+                    '<xsl:value-of select="$pid" />', 
+                    <xsl:value-of select="$rows + $start - 1" />)</xsl:attribute> &gt;&gt;
+                    </a>
                 </xsl:if>
             </div>
         </xsl:if>
@@ -172,7 +182,7 @@
         <xsl:param name="numDocs"/>
         <xsl:param name="firsthit"/>
         &#160;<a>
-            <xsl:attribute name="href">javascript:gotoOffset(<xsl:value-of select="$start - 1" />);</xsl:attribute>
+            <xsl:attribute name="href">javascript:uncollapse('<xsl:value-of select="$root_pid" />', '<xsl:value-of select="$pid" />', <xsl:value-of select="$start - 1" />);</xsl:attribute>
             <xsl:if test="$start = $firsthit">
                 <xsl:attribute name="class">sel</xsl:attribute>
             </xsl:if><span><xsl:value-of select="$start" />-<xsl:choose>

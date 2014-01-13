@@ -432,7 +432,7 @@ $(document).ready(function(){
                     $(info).append('<span data-pid="' + pids[i] + '"></span>');
                     var url = "api/item/" + pids[i];
                     $.getJSON(url, function(data) {
-                            $(info).find('span[data-pid="' + data.pid + '"]').html('&t; ' + dictionary['fedora.model.'+data.model] + ': <a href="doc.vm?pid=' + data.pid + '">' + data.title+'</a>  ');
+                            $(info).find('span[data-pid="' + data.pid + '"]').html('> ' + dictionary['fedora.model.'+data.model] + ': <a href="doc.vm?pid=' + data.pid + '">' + data.title+'</a>  ');
                     });
                 }
                 $(info).show();
@@ -507,6 +507,7 @@ $(document).ready(function(){
           var url =  "results/uncollapse.vm?rows=10&" + page.toString() +
               "&type=uncollapse&collapsed=false&root_pid=" + root_pid +
               "&pid=" + pid +
+              "&offset=" + offset +
               "&fq=root_pid:\"" + root_pid.split("_")[1] + "\"" + "&fq=-PID:\"" + pid + "\"";
           $.get(url, function(xml) {
               $(jq("res_"+root_pid)+" div.uncollapsed").html(xml);

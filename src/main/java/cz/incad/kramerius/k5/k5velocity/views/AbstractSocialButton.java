@@ -41,7 +41,7 @@ public abstract class AbstractSocialButton {
         if(req.getSession().getAttribute("language") != null){
             language = (String) req.getSession().getAttribute("language");
         }else{
-            language = req.getLocale().getCountry();
+            language = req.getLocale().getLanguage();
         }
     }
     

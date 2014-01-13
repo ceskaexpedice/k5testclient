@@ -103,7 +103,7 @@
         var selectStart = "";
         var selectEnd = "";
 
-        var language = '$language';
+        var language = '$langTool.language';
 
         
         // localization

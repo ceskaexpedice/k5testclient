@@ -19,73 +19,28 @@
 var loadingInitNodes;
 
 
-function initTree(pps, mps, title, viewable) {
-
-
-    $('#item_tree').css('width', $('#itemTree').width() - 20);
-    $('#rightMenuBox>h3').addClass('ui-state-default ui-corner-top ui-tabs-selected ui-state-active ');
-    $("#item_tree li>div>a").live('click', function(event) {
-        nodeClick(this);
-        event.preventDefault();
-        event.stopPropagation();
-    });
-
-    $("#item_tree li>span.folder").live('click', function(event) {
-        nodeToggle($(this).parent());
-    });
-
-    $('#item_tree.viewer').bind('viewChanged', function(event, id) {
-        selectNodeView(id);
-    });
-
-
-    $('#donator.viewer').bind('viewReady', function(event, viewerOptions) {
-        checkDonator(viewerOptions);
-    });
-
-    $('#suggest.viewer').bind('viewReady', function(event, viewerOptions) {
-        getSuggested(viewerOptions);
-    });
-
-    $(window).bind('hashchange', function(e) {
-        checkHashChanged(e);
-    });
-
-
-    $('#rightMenuBox').tabs({
-        show: function(event, ui) {
-            var tab = ui.tab.toString().split('#')[1];
-            var t = "";
-            if (tab == "contextMenu") {
-                ctxMenuOpen();
-            } else {
-
-            }
-        }
-    });
+function initTree() {
 
     var current = $("#item_tree");
-    
+    var lastPid = "";
 
-    for (var i = 0; i < initContext.length; i++) {
+//    for (var i = 0; i < initContext.length; i++) {
+        var i = 0;
         var mPath = "";
         for (var j = 0; j < initContext[i].length; j++) {
-            //if (initContext[i][j].viewable == "true") {
-                //lastPid = initContext[i][j].model_path[0].replaceAll("/", "-") + "_" + initContext[i][j].pid;
-                if(j>0) mPath += "-"
-                mPath += initContext[i][j];
+                if(j>0) mPath += "-";
+                mPath += initContext[i][j].model;
                 lastPid = mPath + "_" + initContext[i][j].pid;
-            //}
             var el = initContext[i][j];
             var title = el.title;
             if(el.details && el.details.length > 0){
                 title = getTitleByModel(el.details[0], el.model, el.root_title);
             }
-            current = addNode(current, el.pid, el.model[0], el.model, title, el.viewable);
+            current = addNode(current, el.pid, mPath, el.model, title, el.datanode);
             var isLast = (j == (initContext[i].length - 1)) && (i == (initContext.length - 1));
             getSiblings(current, initContext[i][j].pid, initContext[i][j].model, isLast);
         }
-    }
+//    }
 
 
     showNode(lastPid);
@@ -93,6 +48,37 @@ function initTree(pps, mps, title, viewable) {
     initView = true;
     setInitActive();
     $(".viewer").trigger('viewChanged', [lastPid]);
+}
+
+function ctxMenuOpen(tab){
+    var t = "";
+    if (tab=="contextMenu"){
+        $('#item_tree input:checked').each(function(){
+            var id = $(this).parent().parent().attr("id");
+            //var escapedId = id.substring(4).replace(/\//g,'-');
+            t += '<li id="cm_' + id + '">';
+            t += '<span class="ui-icon ui-icon-triangle-1-e folder " >folder</span>';
+            t += '<label>'+$(jq(id)+">div>a>label").html()+'</label></li>';
+            //t += '<li><span class="ui-icon ui-icon-triangle-1-e folder " >folder</span>'+$(jq(id)+">a").html()+'</li>';
+        });
+        $('#context_items_selection').html(t);
+        //t = '<li><span class="ui-icon ui-icon-triangle-1-e folder " >folder</span>'+$(jq(k4Settings.activeUuid)+">a").html()+'</li>';
+        //$('#context_items_active').html(t);
+    }else{
+        if($('#item_tree input:checked').length>0){
+            $('#item_tree input:checked').each(function(){
+                var id = $(this).parent().parent().attr("id");
+                t += '<li><span class="ui-icon ui-icon-triangle-1-e folder " >folder</span><label>'+$(jq(id)+">div>a>label").html()+'</label></li>';
+            });
+        }else{
+            var id = $('#item_tree>li>ul>li:first').attr("id");
+            if(id){
+                t = '<li><span class="ui-icon ui-icon-triangle-1-e folder " >folder</span><label>'+$(jq(id)+">div>a>label").html()+'</label></li>';
+            }
+        }
+        $('#searchInsideScope').html(t);
+    }
+    onShowContextMenu();
 }
 
 function getTitleByModel(details, model, root_title){
@@ -120,28 +106,62 @@ function getTitleByModel(details, model, root_title){
 
 
 var span = '<span class="ui-icon ui-icon-triangle-1-e folder " >folder</span>';
+function getChildren(obj, pid) {
+    var url = "api/item/" + pid + "/children";
+    var pModel = $(obj).attr("id").split("_")[0];
+    var models = [];
+    $.getJSON(url, function(data) {
+        $.each(data, function(i, item) {
+            var title = item.title;
+            if(item.details && item.details.length > 0){
+                title = getTitleByModel(item.details[0], item.model, item.root_title);
+            }
+            var mPath = pModel + "-" + item.model;
+            if(models[item.model]){
+                var li2 = addSibling(item.pid, mPath, item.title, true);
+                $(obj).find("li."+item.model + ">ul").append(li2);
+                
+            }else{
+                addNode(obj, item.pid, mPath, item.model, title, item.datanode);
+                models[item.model] = true;
+            }
+        });
+    });
+}
 function getSiblings(obj, pid, model, isLast) {
     var url = "api/item/" + pid + "/siblings";
     $.getJSON(url, function(data) {
         var idx = false;
+        var models = [];
+        models[model] = true;
         $.each(data[0].siblings, function(i, item) {
-            if (item.pid != pid) {
-                var li2 = addSibling(item.pid, item.model, item.title, true);
-                if (idx) {
-                    $(obj).parent().append(li2);
+            var title = item.title;
+            if(item.details && item.details.length > 0){
+                title = getTitleByModel(item.details[0], item.model, item.root_title);
+            }
+            if(models[item.model]){
+                if (item.pid != pid) {
+                    var li2 = addSibling(item.pid, item.model, title, true);
+                    if (idx) {
+                        $(obj).parent().parent().parent().parent().find("li."+item.model + ">ul").append(li2);
+                        //$(obj).parent().append(li2);
+                    } else {
+                        $(obj).before(li2);
+                    }
                 } else {
-                    $(obj).before(li2);
+                    idx = true;
                 }
-            } else {
-                idx = true;
+            }else{
+                var pModel = $(obj).parent().parent().parent().attr("id").split("_")[0];
+                var mPath = pModel + "-" + item.model;
+                addNode(obj.parent().parent().parent().parent(), item.pid, mPath, item.model, title, item.datanode);
+                models[item.model] = true;
             }
 
         });
         if(isLast){
             setActiveUuids(k4Settings.activePidPath);
         }
-        
-
     });
 }
 function addSibling(pid, model, title, viewable) {
@@ -166,7 +186,7 @@ function addNode(node, pid, model_path, model, title, viewable) {
 
     $(node).append(nnode);
 
-    var li = $('<li style="clear:both;" class="' + model + '" id="' + model + '"></li>');
+    var li = $('<li style="clear:both;" class="model ' + model + '" id="' + model + '"></li>');
     $(nnode).append(li);
 
     $(li).append(span);
@@ -190,8 +210,9 @@ function addNode(node, pid, model_path, model, title, viewable) {
 }
 
 function nodeClick(obj) {
-    if ($(obj).hasClass('viewable')) {
-        var id = $(obj).parent().parent().attr('id');
+    var li = $(obj).parent().parent();
+    var id = $(li).attr('id');
+    if ($(li).hasClass('viewable')) {
         selectNodeView(id);
         nodeOpen(id);
         if (window.location.hash != id) {
@@ -199,7 +220,8 @@ function nodeClick(obj) {
         }
         $(".viewer").trigger('viewChanged', [id]);
     } else {
-        nodeToggle($(obj).parent().parent());
+        nodeOpen(id);
+        nodeToggle($(li));
     }
 }
 
@@ -307,17 +329,18 @@ function loadTreeNode(id) {
 
     var path = id.split('_')[0];
     var url = 'details/treeNode.vm?pid=' + pid + '&model_path=' + path;
-    $.get(url, function(data) {
-        var d = trim10(data);
-        if (d.length > 0) {
-            $(jq(id)).append(d);
-            if ($(jq(id) + ">ul").html() == null || $(jq(id) + ">ul").html().trim().length == 0) {
-                $(jq(id) + ">ul").hide();
-            }
-        } else {
-            $(jq(id) + ">span.folder").removeClass();
-        }
-    });
+    getChildren($(jq(id)), pid);
+//    $.get(url, function(data) {
+//        var d = trim10(data);
+//        if (d.length > 0) {
+//            $(jq(id)).append(d);
+//            if ($(jq(id) + ">ul").html() == null || $(jq(id) + ">ul").html().trim().length == 0) {
+//                $(jq(id) + ">ul").hide();
+//            }
+//        } else {
+//            $(jq(id) + ">span.folder").removeClass();
+//        }
+//    });
 }
 
 function setActiveUuids(id) {
@@ -429,11 +452,11 @@ function searchInside(start) {
         });
         fq = "&fq=" + fq;
     } else {
-        var fqval = $('#item_tree>li>ul>li:first').attr("id").split('_')[1];
+        var fqval = $('#item_tree>ul>li>ul>li:first').attr("id").split('_')[1];
         fq = "&fq=pid_path:" + fqval.replace(":", "\\:") + "*";
     }
 
-    var url = "inc/details/searchInside.vm?q=" + q + "&offset=" + offset + "&xsl=insearch.xsl&collapsed=false&facet=false" + fq;
+    var url = "details/searchInside.vm?q=" + q + "&offset=" + offset + "&xsl=insearch.xsl&collapsed=false&facet=false" + fq;
     $.get(url, function(data) {
         $('#searchInsideResults').html(data);
     });
@@ -467,7 +490,7 @@ function getTreeSelection() {
 }
 
 function checkDonator(id) {
-    $.get('inc/details/donator.vm?uuid=' + k4Settings.selectedPath[0].split("_")[1], function(data) {
+    $.get('details/donator.vm?uuid=' + k4Settings.selectedPath[0].split("_")[1], function(data) {
         $('#donator').html(data);
     });
 }
@@ -480,3 +503,22 @@ function getSuggested(viewerOptions) {
     });
 }
 
+
+    function changeSelect(pid, mp){
+        
+        
+        $.getJSON("api/item/"+pid+"/context", function(data){
+            initContext = data; 
+            $("#item_tree").empty();
+            initTree();
+        });
+
+//        var id = mp.replaceAll("/", "-") + "_" + pid;
+//        selectNodeView(id);
+//        nodeOpen(id);
+//        if (window.location.hash != id) {
+//            window.location.hash = id;
+//        }
+//        $(".viewer").trigger('viewChanged', [id]);
+
+    }

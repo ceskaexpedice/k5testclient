@@ -1,0 +1,6 @@
+#set($results = $search.ungrouped)
+#set($xsl = $import.read("../xsl/insearch.xsl"))
+
+$xslt.addParam("bundle_url", $langTool.bundleUrl)
+
+$xslt.transform($results, $xsl)

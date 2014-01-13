@@ -2,7 +2,7 @@
 
 #set($xsl = $import.read("xsl/results_header.xsl"))
 
-$xslt.addParam("bundle_url", $bundle_url)
+$xslt.addParam("bundle_url", $langTool.bundleUrl)
 $xslt.addParam("q", ${params.q})
 $xslt.addParam("cols", "$cols")
 $xslt.addParam("fqs", ${fqsStr})

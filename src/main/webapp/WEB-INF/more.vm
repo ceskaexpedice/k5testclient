@@ -1,4 +1,3 @@
-#parse("language.vm")
 #set($fqsStr = "")
 #foreach($fqs in ${params.getStrings("fq")})
     #set($fqsStr = "${fqsStr}&fq=${fqs}")

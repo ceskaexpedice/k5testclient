@@ -646,7 +646,7 @@ div.search_result *{
     }
     #rightMenuBox .searchQuery{
         width:200px;
-        height:1.1em;
+        height:1.2em;
         margin-right:5px;
     }
     #searchInsideScope{
@@ -766,4 +766,14 @@ div.search_result *{
         -ms-transform: rotate(270deg); 		/* IE 9 */
         -webkit-transform: rotate(270deg); 	/* Safari a Chrome */
         -moz-transform: rotate(270deg);		/* Firefox */
+    }
+
+    
+    
+    #extendedMetadata li{
+        list-style-type: none;
+    }
+    
+    #extendedMetadata h3{
+        margin-bottom:5px;
     }

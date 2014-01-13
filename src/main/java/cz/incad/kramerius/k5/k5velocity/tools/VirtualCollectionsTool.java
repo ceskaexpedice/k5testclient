@@ -15,17 +15,23 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
 package cz.incad.kramerius.k5.k5velocity.tools;
 
+import cz.incad.kramerius.k5.k5velocity.K5APIRetriever;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.velocity.tools.config.DefaultKey;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
@@ -35,16 +41,42 @@ import org.apache.velocity.tools.config.DefaultKey;
 public class VirtualCollectionsTool {
 
     public static final Logger LOGGER = Logger.getLogger(VirtualCollectionsTool.class.getName());
-    
-    public void configure(Map props){
+
+    HttpServletRequest req;
+    String language;
+    Map<String, String> cols = new HashMap<String, String>();
+
+    public void configure(Map props) {
         LOGGER.log(Level.INFO, "Configuring vc..");
-        for(Object key : props.keySet()){
-            LOGGER.log(Level.INFO, "key {0} -> {1}", new Object[]{key, props.get(key)});
+
+        req = (HttpServletRequest) props.get("request");
+        if (req.getSession().getAttribute("language") != null) {
+            language = (String) req.getSession().getAttribute("language");
+        } else {
+            language = req.getLocale().getLanguage();
         }
-        Object locale = props.get("locale");
-        
+        try {
+            JSONArray json = new JSONArray(K5APIRetriever.getAsString("/vc/" + language));
+            for (int i = 0; i < json.length(); i++) {
+                JSONObject jo = json.getJSONObject(i);
+                cols.put(jo.getString("pid"), jo.getString(language));
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(VirtualCollectionsTool.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JSONException ex) {
+            Logger.getLogger(VirtualCollectionsTool.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public String getName(String pid) {
+        if (cols.containsKey(pid)) {
+            return cols.get(pid);
+        } else {
+            return pid;
+        }
     }
     
+
 //    private ArrayList languageCodes(){
 //        ArrayList l = new ArrayList<String>();
 //        String[] langs = kConfiguration.getPropertyList("interface.languages");

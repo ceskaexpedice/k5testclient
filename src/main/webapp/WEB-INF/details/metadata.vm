@@ -1,0 +1,6 @@
+#set($xml = $item.mods)
+#set($xsl = $import.read("../xsl/mods.xsl"))
+$xslt.addParam("pid", "$params.pid")
+$xslt.addParam("bundle_url", $langTool.bundleUrl)
+$xslt.addParam("model", "$params.model")
+$xslt.transform($xml, $xsl)

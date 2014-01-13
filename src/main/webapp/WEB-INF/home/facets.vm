@@ -10,7 +10,6 @@
     #set($n = ($facet.length() - 1))
     #set($range = [0..$n])
         <li style="float:left; border:1px solid silver;margin:5px;padding:5px;width:30%;">
-        <span class="ui-icon ui-icon-triangle-1-e folder" ></span>
             <a href="#">$text.facet.get($fi)</a>
                 <ul>
         #foreach($i in $range)
@@ -19,6 +18,8 @@
                <li><a href="javascript:addFilter('$fi', '$value')">
                     #if($fi == "fedora.model")
                         $text.fedora.model.get($value)
+                    #elseif($fi == "collection")
+                        $vc.getName($value)
                     #else
                         $value
                     #end

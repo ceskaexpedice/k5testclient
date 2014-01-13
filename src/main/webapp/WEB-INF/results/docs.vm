@@ -1,11 +1,10 @@
-
 #if($isGrouped)
     #set($xsl = $import.read("xsl/grouped_results.xsl"))
 #else
     #set($xsl = $import.read("xsl/not_grouped_results.xsl"))
 #end
 
-$xslt.addParam("bundle_url", $bundle_url)
+$xslt.addParam("bundle_url", $langTool.bundleUrl)
 $xslt.addParam("fqs", ${fqsStr})
 $xslt.addParam("q", ${params.q})
 ##$xslt.addParam("collection", "$collection")

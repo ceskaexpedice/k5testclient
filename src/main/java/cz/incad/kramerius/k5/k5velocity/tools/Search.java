@@ -17,6 +17,7 @@
 package cz.incad.kramerius.k5.k5velocity.tools;
 
 import cz.incad.kramerius.k5.k5velocity.K5APIRetriever;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Map;
@@ -24,6 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.velocity.tools.config.DefaultKey;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -41,11 +43,14 @@ public class Search {
         req = (HttpServletRequest) props.get("request");
     }
 
-    public JSONObject getJSON(String queryString) {
+    private JSONObject getJSON(String queryString) {
         try {
             String jStr = K5APIRetriever.getJSON("/search?" + queryString);
             return new JSONObject(jStr);
-        } catch (Exception ex) {
+        } catch (IOException ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+            return null;
+        } catch (JSONException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
             return null;
         }
@@ -106,6 +111,14 @@ public class Search {
         }
         return res.toString();
 
+    }
+    
+    private String getCollectionFilter(){
+        String col   = req.getParameter("collection");
+        if (col != null && !col.equals("")) {
+            return "&fq=collection:\""+ col + "\"";
+        }
+        return "";
     }
     
      private String getStart() throws UnsupportedEncodingException {
@@ -228,9 +241,12 @@ public class Search {
             String q = req.getParameter("q");
             if (q == null || q.equals("")) {
                 q += "*:*";
+            }else{
+                q = URLEncoder.encode(q, "UTF-8");
             }
             return K5APIRetriever.getAsString("/search?q=" + q + "&wt=xml&facet=true"
                     + getStart()
+                    + getCollectionFilter()
                     + homeFacets
                     + daFacets
                     + getSort()
@@ -260,8 +276,12 @@ public class Search {
             String q = req.getParameter("q");
             if (q == null || q.equals("")) {
                 q = "*:*";
+            }else{
+                q = URLEncoder.encode(q, "UTF-8");
             }
             return K5APIRetriever.getAsString("/search?q=" + q + "&wt=xml&facet=true"
+                    + getStart()
+                    + getCollectionFilter()
                     + homeFacets
                     + daFacets
                     + getSort()
@@ -273,7 +293,7 @@ public class Search {
     }
 
     public JSONObject getHome() {
-        return getJSON("q=*:*&facet=true&rows=0" + homeFacets);
+        return getJSON("q=*:*&facet=true&rows=0" + homeFacets + getCollectionFilter());
     }
 
     public String getDa() {
@@ -282,7 +302,7 @@ public class Search {
             if (q == null || q.equals("")) {
                 q = "*:*";
             }
-            return K5APIRetriever.getJSON("/search?q=" + q + "&wt=xml&facet=true&rows=0" + daFacets);
+            return K5APIRetriever.getJSON("/search?q=" + q + "&wt=xml&facet=true&rows=0" + daFacets + getCollectionFilter());
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, null, ex);
             return null;
