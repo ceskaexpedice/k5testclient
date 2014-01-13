@@ -1,0 +1,25 @@
+apply plugin: 'war'
+apply plugin: 'jetty'
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.json:json:20090211'
+    compile 'org.apache.velocity:velocity-tools:2.0'
+    compile 'org.apache.velocity:velocity:1.7'
+    compile 'commons-io:commons-io:2.4'
+    compile 'org.antlr:stringtemplate:3.2.1'
+    compile 'com.google.inject:guice:3.0'
+    compile 'com.google.inject.extensions:guice-multibindings:3.0'
+
+    compile project(':k5velocity-jaas')
+    
+    providedCompile 'javax.servlet:servlet-api:2.5'
+}
+
+httpPort = 8181
+stopPort = 9451
+stopKey = 'foo'

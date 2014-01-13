@@ -28,25 +28,39 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cz.ceskaexpedice.k5.k5jaas.K5User;
+import cz.incad.kramerius.k5.k5velocity.kapi.CallUserController;
+import cz.incad.kramerius.k5.k5velocity.kapi.User;
 
 public class ForwardServlet extends HttpServlet {
 
+	
 	public static final Logger LOGGER = Logger.getLogger(ForwardServlet.class.getName());
+	
+	public static enum TypeOfCall {
+		ADMIN {
+			@Override
+			public User getUser(CallUserController cus) {
+				return cus.getAdminCaller();
+			}
+		}, 
+		USER {
+			@Override
+			public User getUser(CallUserController cus) {
+				return cus.getClientCaller();
+			}
+		};
+
+		public abstract User getUser(CallUserController cus);
+	}
+	
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		String userName = null /*getInitParameter("user")*/;
-		String password = null /*getInitParameter("password")*/;
 		
-		K5User k5user = (K5User) req.getUserPrincipal();
-		if (k5user != null) {
-			userName = k5user.getRemoteName();
-			password = k5user.getRemotePass();
-		}
-		
-		LOGGER.info("user & password "+(userName+","+password));
-		
+		TypeOfCall tc = disectTypeOfCall(req);
+		User user = tc.getUser((CallUserController) req.getSession().getAttribute(CallUserController.KEY));
+
 		String k5addr = getInitParameter("k5prefix");
 		
 		String queryString = req.getQueryString();
@@ -59,14 +73,19 @@ public class ForwardServlet extends HttpServlet {
 			replaceURL = replaceURL+"?"+queryString;
 		}
 		LOGGER.info("requesting url "+replaceURL);
-		URLConnection urlCon = null;
-		if (userName != null && password != null) {
-			urlCon = RESTHelper.openConnection(replaceURL, userName, password);
+		InputStream inputStream = null;
+		if (user != null) {
+			inputStream = RESTHelper.inputStream(replaceURL, user.getUserName(), user.getPassword());
 		} else {
-			urlCon = RESTHelper.openConnection(replaceURL);
+			inputStream = RESTHelper.inputStream(replaceURL);
 		}
-		InputStream inputStream = RESTHelper.inputStream(replaceURL, userName, password);
 		resp.setContentType("application/json; charset=utf-8");
 		IOUtils.copyStreams(inputStream, resp.getOutputStream());
+	}
+
+
+	private TypeOfCall disectTypeOfCall(HttpServletRequest req) {
+		String requestedURI = req.getRequestURI();
+		return requestedURI.contains("admin") ? TypeOfCall.ADMIN : TypeOfCall.USER;
 	}
 }
