@@ -32,8 +32,8 @@
 
             #if(${params.da_od} && ${params.da_od} != '')
                 <li>
-                <a title="$text.filter.remove_criteria" />" class="mainNav" href="javascript:removeDateAxisFilter();">
-                $text.common.date" />: ${params.da_od} - $param.da_do</a>
+                <a title="$text.filter.remove_criteria" class="mainNav" href="javascript:removeDateAxisFilter();">
+                $text.common.date: ${params.da_od} - $params.da_do</a>
                 </li>
             #end
 

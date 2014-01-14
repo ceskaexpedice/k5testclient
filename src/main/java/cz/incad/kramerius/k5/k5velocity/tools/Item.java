@@ -300,12 +300,14 @@ public class Item {
             jViewer.put("previewStreamGenerated", false);
             jViewer.put("deepZoomGenerated", false);
             jViewer.put("deepZoomCofigurationEnabled", false);
-            jViewer.put("mimeType", jStreams.getJSONObject("IMG_FULL").getString("mimeType"));
+            jViewer.put("imgfull", jStreams.has("IMG_FULL"));
+            if(jStreams.has("IMG_FULL")){
+                jViewer.put("mimeType", jStreams.getJSONObject("IMG_FULL").getString("mimeType"));
+            }
             jViewer.put("hasAlto", jStreams.has("ALTO"));
             jViewer.put("pid", pid);
             jViewer.put("model", getFields().getString("model"));
             jViewer.put("displayableContent", true);
-            jViewer.put("imgfull", jStreams.has("IMG_FULL"));
             jViewer.put("donator", "");
             JSONArray pop = new JSONArray();
             JSONArray cxt =  getFields().getJSONArray("context");

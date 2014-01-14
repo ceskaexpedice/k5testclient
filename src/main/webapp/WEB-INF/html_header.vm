@@ -95,8 +95,8 @@
         
         var searchPage = "./";
         // time axis 
-        var fromField = "<%=fromField%>";
-        var toField = "<%=toField%>";
+        var fromField = "f1";
+        var toField = "f2";
         var dateAxisAdditionalParams = "";
         var fromStr = "od";
         var toStr = "do";
