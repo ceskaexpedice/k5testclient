@@ -46,7 +46,11 @@ public class ForwardServlet extends HttpServlet {
 		USER {
 			@Override
 			public User getUser(CallUserController cus) {
+                            if(cus != null){
 				return cus.getClientCaller();
+                            }else{
+                                return null;
+                            }
 			}
 		};
 
