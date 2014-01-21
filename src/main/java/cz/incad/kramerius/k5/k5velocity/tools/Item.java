@@ -18,7 +18,13 @@
 package cz.incad.kramerius.k5.k5velocity.tools;
 
 import cz.incad.kramerius.k5.k5velocity.K5APIRetriever;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -61,6 +67,7 @@ public class Item {
                 jContext = new JSONArray(K5APIRetriever.getAsString("/item/" + pid + "/context"));
             }
             return jContext;
+            // return getFields().getJSONArray("context");
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, null, ex);
             return null;
@@ -83,7 +90,6 @@ public class Item {
     public JSONObject getStreams() {
         try {
             if (jStreams == null) {
-//                String pid = req.getParameter("pid");
                 jStreams = new JSONObject(K5APIRetriever.getAsString("/item/" + pid + "/streams"));
             }
             return jStreams;
@@ -93,10 +99,39 @@ public class Item {
         }
     }
 
+    public String getMods() {
+        try {
+            return getStream("BIBLIO_MODS");
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public String getAlto() {
+        try {
+            return getStream("ALTO");
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public String getStream(String ds) {
+        try {
+            return K5APIRetriever.getAsString("/item/" + pid + "/streams/" + ds);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    
+
     public String getModelPath() {
         String ret = "";
         try {
-            JSONArray ja = getContext().getJSONArray(0);
+            JSONArray ja = getFields().getJSONArray("context").getJSONArray(0);
             for (int i = 0; i < ja.length(); i++) {
                 if (i > 0) {
                     ret += "/";
@@ -109,6 +144,8 @@ public class Item {
             return null;
         }
     }
+    
+    
 
     public String getPidPath() {
         String ret = "";
@@ -130,7 +167,6 @@ public class Item {
     public JSONObject getFields() {
         try {
             if (json == null) {
-//                String pid = req.getParameter("pid");
                 json = new JSONObject(K5APIRetriever.getAsString("/item/" + pid));
             }
             return json;
@@ -142,7 +178,6 @@ public class Item {
 
     public JSONObject getSiblings() {
         try {
-//            String pid = req.getParameter("pid");
             JSONObject js = new JSONObject(K5APIRetriever.getAsString("/item/" + pid + "/siblings"));
 
             return js;
@@ -153,10 +188,9 @@ public class Item {
 
     }
 
-    public JSONObject getChildren() {
+    public JSONArray getChildren() {
         try {
-//            String pid = req.getParameter("pid");
-            JSONObject js = new JSONObject(K5APIRetriever.getAsString("/item/" + pid + "/children"));
+            JSONArray js = new JSONArray(K5APIRetriever.getAsString("/item/" + pid + "/children"));
 
             return js;
         } catch (Exception ex) {
@@ -205,6 +239,58 @@ public class Item {
      }
 
      */
+    
+    public String getCustomContent(){
+        StringBuilder stringBuilder = new StringBuilder();
+        String tab = req.getParameter("tab");
+        String ds = tab;
+        String xsl = tab;
+        if (tab.indexOf('.') >= 0) {
+            ds = tab.split("\\.")[0];
+            xsl = tab.split("\\.")[1] + ".xsl";
+        }
+        String pid_path = req.getParameter("pid_path");
+        List<String> pids =  Arrays.asList(pid_path.split("/"));
+        if(ds.startsWith("-")){ 
+            Collections.reverse(pids);
+            ds = ds.substring(1);
+        }
+        for (String pid : pids) {
+            //TODO: proces vsechny. Zatim jen posledni
+        }
+        
+        pid = pids.get(pids.size()-1);
+        
+            
+            if (getStreams().has(ds)) {
+            try {                
+                String mime = getStreams().getJSONObject(ds).getString("mimeType");
+                if (mime.equals("text/plain")) {
+                    
+                    stringBuilder.append("<textarea style=\"width:98%; height:98%; border:0; \">" + getStream(ds)+ "</textarea>");
+                    
+                } else if (mime.equals("text/xml") || mime.equals("application/rdf+xml")) {
+                            stringBuilder.append(getStream(ds));
+                            // TODO: apply transform
+//                    try {
+//                        org.w3c.dom.Document xml = XMLUtils.parseDocument(fedoraAccess.getDataStream(pid, ds), true);
+//                        if (xslService.isAvailable(xsl)) {
+//                            String text = xslService.transform(xml, xsl, this.localesProvider.get());
+//                            stringBuilder.append(text);
+//                        }
+//                    } catch (cz.incad.kramerius.security.SecurityException e) {
+//                        securityError(stringBuilder, pid,ds);
+//                    } catch (Exception e) {
+//                        LOGGER.log(Level.SEVERE,e.getMessage(), e);
+//                    }
+                }
+            } catch (JSONException ex) {
+                Logger.getLogger(Item.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            }
+        
+        return stringBuilder.toString();
+    }
 
     public String getViewerOptions() {
         try {
@@ -214,18 +300,35 @@ public class Item {
             jViewer.put("previewStreamGenerated", false);
             jViewer.put("deepZoomGenerated", false);
             jViewer.put("deepZoomCofigurationEnabled", false);
-            jViewer.put("mimeType", jStreams.getJSONObject("IMG_FULL").getString("mimeType"));
+            jViewer.put("imgfull", jStreams.has("IMG_FULL"));
+            if(jStreams.has("IMG_FULL")){
+                jViewer.put("mimeType", jStreams.getJSONObject("IMG_FULL").getString("mimeType"));
+            }
             jViewer.put("hasAlto", jStreams.has("ALTO"));
             jViewer.put("pid", pid);
-            jViewer.put("model", false);
-            jViewer.put("displayableContent", false);
-            jViewer.put("imgfull", jStreams.has("IMG_FULL"));
-            jViewer.put("donator", false);
-            jViewer.put("pathsOfPids", false);
+            jViewer.put("model", getFields().getString("model"));
+            jViewer.put("displayableContent", true);
+            jViewer.put("donator", "");
+            JSONArray pop = new JSONArray();
+            JSONArray cxt =  getFields().getJSONArray("context");
+            for(int i = 0; i<cxt.length(); i++){
+                JSONArray na = new JSONArray();
+                JSONArray p = cxt.getJSONArray(i);
+                for(int j = 0; j<p.length(); j++){
+                    na.put(p.getJSONObject(j).getString("pid"));
+                }
+                pop.put(na);
+            }
+            jViewer.put("pathsOfPids", pop);
             jViewer.put("imageServerConfigured", false);
-            JSONObject jRights=new JSONObject();
-            jRights.put("administrate", new JSONObject());
-            jRights.put("read", new JSONObject());
+            JSONObject jRights = new JSONObject();
+            JSONObject jrAdmin = new JSONObject();
+            jrAdmin.put(pid, false);
+            //jrAdmin.put(pid, false);
+            jRights.put("administrate", jrAdmin);
+            JSONObject jrRead = new JSONObject();
+            jrRead.put(pid, true);
+            jRights.put("read", jrRead);
             jViewer.put("rights", jRights);
             jViewer.put("isContentPDF", false);
             jViewer.put("isContentDJVU", false);

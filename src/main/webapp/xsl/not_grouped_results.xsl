@@ -136,7 +136,11 @@
             <xsl:call-template name="teaser">
                 <xsl:with-param name="pid"><xsl:value-of select="$pid" /></xsl:with-param>
             </xsl:call-template>
-            <div class="extInfo" style="display:none;"><xsl:value-of select="./arr[@name='pid_path']/str[position()=1]"/></div>
+            
+            <div class="extInfo" style="display:none;">
+                <xsl:attribute name="data-pid"><xsl:value-of select="$pid" /></xsl:attribute>
+                <xsl:attribute name="data-pidpath"><xsl:value-of select="./arr[@name='pid_path']/str[position()=1]" /></xsl:attribute>
+            </div>
             </div>
         </div>
         </td></tr></table>

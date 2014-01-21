@@ -1,53 +1,3 @@
-<style type="text/css">
-    #filters>ul>li>a{
-        line-height: 17px;
-    }
-    
-    #docs_content{
-        padding:4px;
-        padding-bottom:1px;
-    }
-    #docs_content>div.header{
-        height:17px;
-        border-bottom:1px solid #E66C00; 
-        margin-bottom:2px;
-    }
-    #docs_content>div.content{
-        overflow:auto;
-    }
-    
-    .extInfo{
-        /*font-style: italic;*/
-    }
-    
-    .collapse_label{
-        position:absolute;
-        bottom:5px;
-        right:5px;
-        width:90%;
-    }
-    
-    #split {
-        height: 700px;
-        width: 1000px;
-    }
-    
-    div.collections{
-        float:left;
-    }
-    
-    div.collections div.cols{
-        display:none;
-        position:absolute;
-        padding:3px;
-        z-index:99;
-    }
-    
-    div.collections h4{
-        margin: 1px;
-    }
-
-</style>
 <div class="ui-layout-west">
 <div id="filters">
     <ul>
@@ -63,9 +13,11 @@
     #parse("results/facets.vm")
     </div>
     <div id="dadiv" style="padding:3px;">
-        <p style="text-align: center;">
+        <p style="text-align: center;" id="daloading">
             <img src="img/loading.gif" alt="loading date axis" /><br/>Time line loading...
         </p>
+#set($isHome = false)
+            #parse("da.vm")
     </div>
     #if($loggedusers == "true")
     <div id="contextMenu">#parse("contextMenu.vm")</div>
@@ -100,17 +52,21 @@
         }
     });
 $(document).ready(function(){
-    $.get("da.vm", function(data){
-        $("#dadiv").html(data);
+    //$.get("da.vm", function(data){
+    //    $("#dadiv").html(data);
+        $("#daloading").remove();
         if($("#dadiv").length==0){
             $("#dali").remove();
         }else{
             resizeAll();
-            initDateAxis();
-            $("#content-resizable").css("height", (containerHeight+7) + "px");
-            daScrollToMax();
+            if(initDateAxis()){
+                $("#content-resizable").css("height", (containerHeight+7) + "px");
+                daScrollToMax();
+            }else{
+                $("#dali").remove();
+            }
         }
-    });
+    //});
     
     var w;
     var w1 = $(window).height() -
@@ -432,7 +388,7 @@ $(document).ready(function(){
                     $(info).append('<span data-pid="' + pids[i] + '"></span>');
                     var url = "api/item/" + pids[i];
                     $.getJSON(url, function(data) {
-                            $(info).find('span[data-pid="' + data.pid + '"]').html('&t; ' + dictionary['fedora.model.'+data.model] + ': <a href="doc.vm?pid=' + data.pid + '">' + data.title+'</a>  ');
+                            $(info).find('span[data-pid="' + data.pid + '"]').html('> ' + dictionary['fedora.model.'+data.model] + ': <a href="doc.vm?pid=' + data.pid + '">' + data.title+'</a>  ');
                     });
                 }
                 $(info).show();
@@ -507,6 +463,7 @@ $(document).ready(function(){
           var url =  "results/uncollapse.vm?rows=10&" + page.toString() +
               "&type=uncollapse&collapsed=false&root_pid=" + root_pid +
               "&pid=" + pid +
+              "&offset=" + offset +
               "&fq=root_pid:\"" + root_pid.split("_")[1] + "\"" + "&fq=-PID:\"" + pid + "\"";
           $.get(url, function(xml) {
               $(jq("res_"+root_pid)+" div.uncollapsed").html(xml);

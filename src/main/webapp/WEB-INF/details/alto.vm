@@ -1,0 +1,6 @@
+#set($xml = $item.alto)
+#set($xsl = $import.read("../xsl/alto.xsl"))
+$xslt.addParam("q", "$params.q")
+$xslt.addParam("w", "$params.w")
+$xslt.addParam("h", "$params.h")
+$xslt.transform($xml, $xsl)

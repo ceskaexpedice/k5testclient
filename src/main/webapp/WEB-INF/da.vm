@@ -1,4 +1,6 @@
-#set($xml = $search.getDa())
+#if($params.home)
+    #set($xml = $search.getDa())
+#end
 #set($xsl = $import.read("xsl/da.xsl"))
 
 #if($conf.search.dateaxis.min)
@@ -35,7 +37,11 @@
         <div id="bubbleDiv" class="da_bubble" ><div id="bubbleText" ></div></div>
 $xslt.addParam("cfgmin", "${damin}")    
 $xslt.addParam("cfgmax", "${damax}")    
-$xslt.transform($xml, $xsl)
+#if($params.home)
+    $xslt.transform($xml, $xsl)
+#else
+    $xslt.transform($results, $xsl)
+#end
     </div>
 </div>
 </div><div class="clear"></div>

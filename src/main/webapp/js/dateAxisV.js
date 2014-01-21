@@ -41,7 +41,7 @@ var maxScroll;
 function daLoad(){
     if(number_of_items<2){
         $("#dadiv").remove();
-        return;
+        return false;
     }
     dateAxisActive = true;
     var a = new Array();
@@ -99,6 +99,8 @@ function daLoad(){
     //initDateAxis();
     //$("#content-resizable").css("height", (containerHeight+7) + "px");
     //daScrollToMax();
+    
+    return true;
 
 }
     
@@ -109,8 +111,10 @@ function checkDoFilter(event){
 }
     
 function initDateAxis(){
-    daLoad();
-   totalHeight = (containerHeight + groupTitleHeight) + 2;
+    if(!daLoad()){
+        return false;
+    }
+    totalHeight = (containerHeight + groupTitleHeight) + 2;
    
     cloneElements();
     formatBreadCrumb();
@@ -137,6 +141,7 @@ function initDateAxis(){
     setDatePicker();
     //$("#content-resizable>div.ui-resizable-s").append('<span class="ui-icon ui-icon-arrowthick-2-n-s">handle</span>');
     //setTimeout('toggleDASlow()', 1000);
+    return true;
 }
 
 function setMaxResize(h){
@@ -295,7 +300,7 @@ function doFilter(){
     
     page.setValue("da_od", decodeDate($("#" + fromField).val()));
     page.setValue("da_do", decodeDate($("#" + toField).val()));
-    var newurl = "r.jsp?" + page.toString() + dateAxisAdditionalParams;
+    var newurl = "search.vm?" + page.toString() + dateAxisAdditionalParams;
     
     document.location.href = newurl;
 

@@ -6,11 +6,14 @@
     <toolbox scope="request">
         <tool key="esc" class="org.apache.velocity.tools.generic.EscapeTool" />
         <tool key="import" class="org.apache.velocity.tools.view.ImportTool" />
+     <tool class="org.apache.velocity.tools.generic.ConversionTool"
+              dateFormat="yyyy-MM-dd"/>
+        <tool class="org.apache.velocity.tools.generic.ResourceTool"
+              bundles="labels"/>
+        <tool key="langTool" class="cz.incad.kramerius.k5.k5velocity.tools.LanguageTool" />
         <tool key="link" class="org.apache.velocity.tools.view.LinkTool" />
         <tool key="date" class="org.apache.velocity.tools.generic.DateTool" />
         <tool class="org.apache.velocity.tools.view.ParameterTool" />
-        <tool class="org.apache.velocity.tools.generic.ResourceTool"
-              bundles="labels"/>
         <tool class="org.apache.velocity.tools.generic.ResourceTool"
               bundles="res.configuration"
               key="conf"/>
@@ -26,8 +29,6 @@
 
 
         <tool key="vc" class="cz.incad.kramerius.k5.k5velocity.tools.VirtualCollectionsTool" />
-     <tool class="org.apache.velocity.tools.generic.ConversionTool"
-              dateFormat="yyyy-MM-dd"/>
      <tool key="pidconvert" stringsDelimiter="/" class="org.apache.velocity.tools.generic.ConversionTool"
               dateFormat="yyyy-MM-dd"/>
      

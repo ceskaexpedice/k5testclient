@@ -22,9 +22,7 @@
         #end
     </ul>
     <div id="structure"  >
-        <div id="item_tree" class="viewer">
-            
-        </div>
+        <div id="item_tree" class="viewer"></div>
     <div id="donator" class="viewer" style="position:relative; bottom:0px; width:100%; text-align:center;clear:both;"></div>  
     </div>
     <div id="contextMenu">#parse("details/contextMenu.vm")</div>
@@ -32,7 +30,7 @@
         $text.administrator.menu.selected.scope:
         <ul id="searchInsideScope"></ul>
         <div>
-            <input type="text"  id="insideQuery" size="25" class="searchQuery" onkeypress="checkEnter();" onclick="checkInsideInput();" value="${params.q}" />
+            <input type="text"  id="insideQuery" size="25" class="searchQuery" onkeypress="checkEnter();" onclick="checkInsideInput();" value="$!{params.q}" />
             <a href="javascript:searchInside();"><img border="0" align="top" alt="$text.administrator.menu.searchinside" src="img/lupa_orange.png" /></a>
         </div>
         <div id="searchInsideResults"></div>
@@ -48,8 +46,42 @@
 <script type="text/javascript">
     var initContext = $item.context; 
     $(document).ready(function(){
-        initTree('${item.pidPath}',
-                 '${item.modelPath}',
-                 '$item.fields.root_title', $class_viewable);
+        $('#item_tree').css('width', $('#itemTree').width() - 20);
+        $('#rightMenuBox>h3').addClass('ui-state-default ui-corner-top ui-tabs-selected ui-state-active ');
+        $("#item_tree li>div>a").live('click', function(event) {
+            nodeClick(this);
+            event.preventDefault();
+            event.stopPropagation();
+        });
+
+        $("#item_tree li>span.folder").live('click', function(event) {
+            nodeToggle($(this).parent());
+        });
+
+        $('#item_tree.viewer').bind('viewChanged', function(event, id) {
+            selectNodeView(id);
+        });
+
+
+        $('#donator.viewer').bind('viewReady', function(event, viewerOptions) {
+            checkDonator(viewerOptions);
+        });
+
+        $('#suggest.viewer').bind('viewReady', function(event, viewerOptions) {
+            getSuggested(viewerOptions);
+        });
+
+        $(window).bind('hashchange', function(e) {
+            checkHashChanged(e);
+        });
+
+
+        $('#rightMenuBox').tabs({
+            show: function(event, ui) {
+                var tab = ui.tab.toString().split('#')[1];
+                ctxMenuOpen(tab);
+            }
+        });
+        initTree();
     });
 </script>

@@ -23,7 +23,7 @@
     });
     $(document).ready(function(){
         setTimeout(resizeAll, 5000);
-        $.get("da.vm", function(data){
+        $.get("da.vm?home=true", function(data){
             $("#dadiv").html(data);
         //    doDateAxis(daJSON);
             initDateAxis();

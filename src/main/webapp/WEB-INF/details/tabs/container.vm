@@ -48,9 +48,9 @@
     function updateAudioplayerTab(tab, pid_path){
     	var pid_path_parts = pid_path.split('/');
     	var topLevelPid = pid_path_parts[0];
-        $.get('audioTracks?action=canContainTracks&pid_path=' + topLevelPid, function(data){
+        $.get('details/audioTracks.vm?action=canContainTracks&pid_path=' + topLevelPid, function(data){
             if (data.canContainTracks){                
-                $.get('inc/details/tabs/audioplayer.jsp', function(data){
+                $.get('details/tabs/audioplayer.vm', function(data){
                     $('#itemtab_'+tab.split(".")[1]).html(data);
                 });                
             }

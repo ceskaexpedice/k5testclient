@@ -1,0 +1,77 @@
+
+<div id="extendedMetadata" class="viewer">
+    <div class="level0"><div class="meta"></div></div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#extendedMetadata.viewer').bind('viewReady', function(event, viewerOptions){
+            //updateMetadata(viewerOptions.fullid);
+        });
+        $('#extendedMetadata.viewer').bind('selectedPathChanged', function(event, level){
+            updateMetaFromLevel(level);
+        });
+        updateMetaFromLevel(0);
+    });
+
+    function updateMetaFromLevel(level){
+        var uuid = "";
+        var model;
+        var models;
+        for(var i=level; i<k4Settings.selectedPath.length; i++){
+            if($("#extendedMetadata div.level"+(i+1)).length==0)
+                $("#extendedMetadata div.level"+(i)).append('<div class="level'+(i+1)+'"><div class="meta"></div></div>');
+        }
+        for(var i=0; i<k4Settings.selectedPath.length; i++){
+            uuid = k4Settings.selectedPath[i].split('_')[1];
+            models = k4Settings.selectedPath[i].split('_')[0].split('-');
+            model = models[models.length-1];
+            getModelMetadata(uuid, i, model);
+        }
+    }
+   
+    function updateMetadata(){
+        var uuid = "";
+        var model;
+        var models;
+        for(var i=0; i<k4Settings.selectedPath.length; i++){
+            $("#extendedMetadata div.level"+(i)).append('<div class="level'+(i+1)+'"><div class="meta"></div></div>');
+            
+        }
+        for(var i=0; i<k4Settings.selectedPath.length; i++){
+            uuid = k4Settings.selectedPath[i].split('_')[1];
+            models = k4Settings.selectedPath[i].split('_')[0].split('-');
+            model = models[models.length-1];
+            getModelMetadata(uuid, i, model);
+        }
+    }
+
+    function getModelMetadata(pid, level, model){
+        var url = "details/metadata.vm?pid=" + pid + "&model=" + model + "&level=" + level;
+        $.get(url, function(data){
+            var id = "#extendedMetadata div.level" + (level) + ">div.meta";
+            $(id).html(data);
+            setAlephLinks(id);
+        }); 
+    }
+ 
+    function setAlephLinks(id){
+        $(id + ' .aleph').each(function(){
+            var field = $(this).data('field');
+            var value = $(this).text();
+            var url;
+            $(this).css('text-decoration', 'underline');
+            $(this).css('cursor', 'pointer');
+            if(field == 'ISSN'){
+                url = '${text.search.aleph.baseURL.ISSN}' + value;
+            }else if(field == 'ISBN'){
+                url = '${text.search.aleph.baseURL.ISBN}' + value;
+            }else if(field == 'ccnb'){
+                url = '${text.search.aleph.baseURL.CNB}' + value;
+            }
+            $(this).click(function(){
+                window.open(url, 'aleph', '');
+            });
+        });
+    }
+</script>

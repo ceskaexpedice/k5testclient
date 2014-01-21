@@ -339,6 +339,57 @@ div.search_result *{
     width:100%;
     clear: both;
 }
+
+
+#filters>ul>li>a{
+        line-height: 17px;
+    }
+    
+    #docs_content{
+        padding:4px;
+        padding-bottom:1px;
+    }
+    #docs_content>div.header{
+        height:17px;
+        border-bottom:1px solid #E66C00; 
+        margin-bottom:2px;
+    }
+    #docs_content>div.content{
+        overflow:auto;
+    }
+    
+    .extInfo{
+        /*font-style: italic;*/
+    }
+    
+    .collapse_label{
+        position:absolute;
+        bottom:5px;
+        right:5px;
+        width:90%;
+    }
+    
+    #split {
+        height: 700px;
+        width: 1000px;
+    }
+    
+    div.collections{
+        float:left;
+    }
+    
+    div.collections div.cols{
+        display:none;
+        position:absolute;
+        padding:3px;
+        z-index:99;
+    }
+    
+    div.collections h4{
+        margin: 1px;
+    }
+    
+    
 #dateAxis{
     float:left;
 }
@@ -646,7 +697,7 @@ div.search_result *{
     }
     #rightMenuBox .searchQuery{
         width:200px;
-        height:1.1em;
+        height:1.2em;
         margin-right:5px;
     }
     #searchInsideScope{
@@ -768,6 +819,7 @@ div.search_result *{
         -moz-transform: rotate(270deg);		/* Firefox */
     }
 
+<<<<<<< HEAD
 
 /** Admin menu */
     #adminMenu{
@@ -803,10 +855,20 @@ div.search_result *{
         font-weight: bold;
     }
     #adminMenu>div.footer{
+
         text-align: right;
         width:100%;
         height:20px;
     }
      
 
+    
+    
+    #extendedMetadata li{
+        list-style-type: none;
+    }
+    
+    #extendedMetadata h3{
+        margin-bottom:5px;
+    }
 
