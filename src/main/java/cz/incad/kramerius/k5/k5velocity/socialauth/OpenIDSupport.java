@@ -16,12 +16,22 @@
  */
 package cz.incad.kramerius.k5.k5velocity.socialauth;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.core.MediaType;
+
+
+
+
+
+
+
+
 
 import org.brickred.socialauth.AuthProvider;
 import org.brickred.socialauth.Contact;
@@ -29,6 +39,12 @@ import org.brickred.socialauth.Profile;
 import org.brickred.socialauth.SocialAuthConfig;
 import org.brickred.socialauth.SocialAuthManager;
 import org.brickred.socialauth.util.SocialAuthUtil;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.WebResource;
 
 import cz.incad.kramerius.k5.k5velocity.kapi.AdminUser;
 import cz.incad.kramerius.k5.k5velocity.kapi.CallUserController;
@@ -36,8 +52,16 @@ import cz.incad.kramerius.k5.k5velocity.kapi.ClientUser;
 import cz.incad.kramerius.k5.k5velocity.kapi.ProfileDelegator;
 import cz.incad.kramerius.k5.k5velocity.kapi.impl.CallUserControllerImpl;
 
+/**
+ * OpenID support -> login via fb or gplus
+ * @author pavels
+ */
 public class OpenIDSupport {
-
+	
+	//TODO: from configuration
+	public static final String ADMIN_NAME = "krameriusAdmin";
+	public static final String ADMIN_PSWD = "krameriusAdmin";
+	
 	public Profile getProfile(HttpSession session, HttpServletRequest request, HttpServletResponse resp)
 			throws Exception {
 		// get the social auth manager from session
@@ -48,7 +72,7 @@ public class OpenIDSupport {
 		// Pass request parameter map while calling connect method.
 		AuthProvider provider = manager.connect(SocialAuthUtil
 				.getRequestParametersMap(request));
-
+		
 		// get profile
 		Profile p = provider.getUserProfile();
 		return p;
@@ -83,24 +107,59 @@ public class OpenIDSupport {
 		// Store in session
 		session.setAttribute("authManager", manager);
 		resp.sendRedirect(url);
-		
 	}
 
-	private String calculateUserName(Profile p) {
-		String ident = p.getProviderId()+"_"+p.getEmail();
-		return ident;
+	private static String calculateUserName(Profile p) {
+		return p.getProviderId()+"_"+p.getValidatedId();
 	}
-	
-	
-	
-	public void provideRedirection(HttpServletRequest req, HttpServletResponse resp, Profile profile)  {
+
+	// create user
+    public static String createUser(Profile profile) throws JSONException {
+    	Client c = Client.create();
+
+        WebResource r = c.resource("http://localhost:8080/search/api/v4.6/k5/admin/users");
+        r.addFilter(new BasicAuthenticationFilter("krameriusAdmin", "krameriusAdmin"));
+        JSONObject object = new JSONObject();
+
+        object.put("lname", calculateUserName(profile));
+        
+        object.put("firstname", profile.getFirstName());
+        object.put("surname", profile.getLastName());
+        object.put("password",calculateUserName(profile));
+        
+        String t = r.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).entity(object.toString(), MediaType.APPLICATION_JSON).post(String.class);
+        return t;
+    }
+
+	// user exists ?
+    public static boolean userExists(Profile p) throws JSONException {
+    	Client c = Client.create();
+    	
+        WebResource r = c.resource("http://localhost:8080/search/api/v4.6/k5/admin/users?lname="+calculateUserName(p));
+        r.addFilter(new BasicAuthenticationFilter("krameriusAdmin", "krameriusAdmin"));
+
+        String t = r.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).get(String.class);
+        JSONArray jsonArr = new JSONArray(t);
+        return jsonArr.length() > 0;
+    }
+    
+	public void provideRedirection(HttpServletRequest req, HttpServletResponse resp) throws Exception  {
+
+		Profile profile = getProfile(req.getSession(), req, resp);
+		
+		if (!userExists(profile)) {
+			createUser(profile);
+		}
+		
 		CallUserController controller = new CallUserControllerImpl();
 		// load from props 
 		controller.createCaller("krameriusAdmin", "krameriusAdmin", AdminUser.class);
-		controller.createCaller("krameriusAdmin", "krameriusAdmin", ClientUser.class);
+		controller.createCaller(calculateUserName(profile), calculateUserName(profile), ClientUser.class);
 		controller.createCaller(calculateUserName(profile), "invalid password", ProfileDelegator.class);
 		
 		req.getSession(true).setAttribute(CallUserController.KEY, controller);
+		
+		resp.sendRedirect("index.vm");
 	}
 	
 	
@@ -108,15 +167,13 @@ public class OpenIDSupport {
 		try {
 			HttpSession session = request.getSession(true);
 			providerLogin(session, request, resp);
-
+			
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
-	
-	
-
 
 }

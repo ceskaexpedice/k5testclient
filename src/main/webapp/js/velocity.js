@@ -69,7 +69,7 @@ function setVirtualCollection(collection){
 
 function refreshCollections(){
      $("#vc>div.collections>ul>li").remove();
-    var url = "api/vc/" + language;
+    var url = "api/vc";
     $.getJSON(url, function(data) {
         $.each(data, function(i, item) {
             var a = $('<li><a href="javascript:setVirtualCollection(\''+item.pid+'\');">'+item[language]+'</a></li>');
@@ -80,7 +80,7 @@ function refreshCollections(){
 }
 
 function getCollsDict(){
-    var url = "api/vc/" + language;
+    var url = "api/vc/";
     $.getJSON(url, function(data) {
         $.each(data, function(i, item) {
             collectionsDict[item.pid.toString()] = item[language];

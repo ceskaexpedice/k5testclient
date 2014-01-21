@@ -767,3 +767,46 @@ div.search_result *{
         -webkit-transform: rotate(270deg); 	/* Safari a Chrome */
         -moz-transform: rotate(270deg);		/* Firefox */
     }
+
+
+/** Admin menu */
+    #adminMenu{
+        padding:5px;
+        display: none;
+        position:absolute;
+        right:0;
+        z-index:100;
+        width:380px;
+        border: 1px solid gray;
+    }
+    
+    #adminMenuItems{
+        padding:5px;
+    }
+    #adminMenuItems>div{
+        padding:2px;
+    }
+    
+    #adminMenuItems > span {
+    display: block;
+    float: left;
+    height: 16px;
+    overflow: hidden;
+    text-indent: -99999px;
+    width: 16px;
+}
+
+    #adminMenu>div.header{
+        height:20px;
+        text-align: center;
+        width:100%;
+        font-weight: bold;
+    }
+    #adminMenu>div.footer{
+        text-align: right;
+        width:100%;
+        height:20px;
+    }
+     
+
+

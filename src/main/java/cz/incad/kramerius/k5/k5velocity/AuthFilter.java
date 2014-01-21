@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import cz.ceskaexpedice.k5.k5jaas.K5User;
+import cz.ceskaexpedice.k5.k5jaas.basic.K5User;
 import cz.incad.kramerius.k5.k5velocity.kapi.AdminUser;
 import cz.incad.kramerius.k5.k5velocity.kapi.CallUserController;
 import cz.incad.kramerius.k5.k5velocity.kapi.ClientUser;

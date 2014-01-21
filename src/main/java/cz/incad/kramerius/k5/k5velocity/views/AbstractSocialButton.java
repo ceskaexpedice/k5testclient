@@ -25,6 +25,8 @@ import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.velocity.tools.generic.ValueParser;
+
 
 public abstract class AbstractSocialButton {
 
@@ -36,8 +38,9 @@ public abstract class AbstractSocialButton {
     HttpServletRequest req;
     String language;
 
-    public void configure(Map props) {
-        req = (HttpServletRequest) props.get("request");
+    public void configure(ValueParser vp /* Map props*/) {
+    	req = (HttpServletRequest) vp.getValue("request");
+    	//req = (HttpServletRequest) props.get("request");
         if(req.getSession().getAttribute("language") != null){
             language = (String) req.getSession().getAttribute("language");
         }else{

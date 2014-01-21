@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" xmlns:fb="http://ogp.me/ns/fb#">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 #parse("language.vm")
 #set($results = $search.home)
 <html>
@@ -14,12 +14,6 @@
         </div>
         <div id="footer">
             #parse( "footer.vm" )
-            <script type="text/javascript">
-              var rbs = new RebuildSocialButtons();
-              // rebuild gplus button - explicit initialization
-              rbs.rebuildExplicit(rbs.buildSearchURLS());
-              
-            </script>
         </div>
         #if(${param.error})
             <script type="text/javascript">

@@ -1,6 +1,59 @@
 #set($langs = $convert.toStrings($conf.interface.languages))
 #set($currentParam = $request.url)
 
+<script type="text/javascript">
+
+function AdminMenu() {}
+AdminMenu.prototype.show = function() {
+	$("#adminMenu").css("top",$("#header").offset().top + $("#header").height()+4);
+	
+	$("#adminMenu").show();
+}
+
+AdminMenu.prototype.hide = function() {
+	$("#adminMenu").hide();
+}
+var adminMenu = new AdminMenu();
+
+</script>
+
+<script type="text/javascript">
+
+            function SiginOptions() {this.dialog=null;}
+            SiginOptions.prototype.open=function() {   
+		    	if (this.dialog) {
+		    		this.dialog.dialog('open');
+			    } else {
+			        $(document.body).append('<div id="loginOptions" style="display:none">'+
+			        	'<table style="width: 100%; height:200px;text-align:center;">'+
+							'<tr>'+
+								'<td><div id="k5signin"><a href="redirect.jsp"><img width="90" height="90" src="img/logo.png"/></a></div></td>'+
+								'<td><div id="gplussignin"><a href="gplus.jsp"><img width="90" height="90" src="img/google_plus_logo.png"/></a></div></td>'+
+							'</tr>'+								
+			        	'</table>'+
+			        '</div>');
+					
+			        
+					
+			        this.dialog = $('#loginOptions').dialog({
+			            width:600,
+			            height:400,
+			            modal:true,
+			            title: 'login options',
+			            buttons: {
+			            	"Close": function() {
+			                    $(this).dialog("close");
+			                }
+			            }
+			        });
+				}            	
+            }
+    
+            var soptions = new SiginOptions();
+</script>
+
+
+
 #set($l = $link.relative())
 #foreach($p in $params.all.entrySet())
     #if($p.key != "language")
@@ -8,7 +61,7 @@
     #end
 #end
 
-<div  id="main_menu_in">
+<div  id="main_menu_in" style="">
     #foreach($lang in $langs)
         #if($velocityCount % 2 == 1)
             #set($lname = $lang)
@@ -18,31 +71,25 @@
     #end
 
         <!-- Registrace pouze pro neprihlasene -->
-        <scrd:notloggedusers>
+        #if(!$logControl.logged)
             #if(${text.search.mainbuttons.showregistrationbutton} == "true")
                 <a id="registerHref" href="javascript:registerUser.register();">$text.registeruser.menu.title</a>
             #end
-        </scrd:notloggedusers>
+        #end
 
         <!--  show admin menu - only for logged users -->
-        #if($loggedusers)
-            <a id="adminHref" href="javascript:showAdminMenu();">$text.administrator.menu</a>
+        #if($logControl.logged)
+            <a id="adminHref" href="javascript:adminMenu.show();">$text.administrator.menu</a>
         #end
         
         <!-- login - only for notlogged "redirect.jsp"-->
-        <scrd:notloggedusers>
+        #if(!$logControl.logged)
             <a href="javascript:soptions.open();">$text.application.login</a>
-            <script type="text/javascript">
+        #end
 
-            function SiginOptions() {}
-            SiginOptions.prototype.open=function() {  alert("open dialog"); }
-            var soptions = new SiginOptions();
-
-            </script>
-            </scrd:notloggedusers>
         
         <!-- logout - only for logged -->
-        #if($loggedusers)
+        #if($logControl.logged)
             #if(!${buttons.shibbLogout})
                  <a href="logout.jsp?redirectURL=${searchFormViewObject.requestedAddress}">$text.application.logout</a>
             #else
@@ -56,3 +103,36 @@
     <a href=".">$text.application.home</a>
 #end
 </div>
+
+
+<!-- admin menu -->	
+<div id="adminMenu" class="shadow ui-widget-content" style="display:none;">
+    <div class="header">Vice...</div>
+	    <div id="adminMenuItems" class="adminMenuItems">
+ 		<!-- public items -->		
+ 		#foreach( $item in $menu.publicItems )
+ 		  <span class="ui-icon ui-icon-triangle-1-e">item</span>
+		  <div align="left"> 
+			    <a href="$item.href">$item.name</a>
+		  </div> 	
+		#end
+
+ 		#if( $menu.adminMenuVisible )
+ 			<hr>
+	 		<!-- admin items -->		
+	 		#foreach( $item in $menu.adminItems )
+	 		  <span class="ui-icon ui-icon-triangle-1-e">item</span>
+			  <div align="left"> 
+				<a href="$item.href">$item.name</a>
+			  </div> 	
+			#end
+ 		
+		#end
+ 		
+    	</div>
+ 
+		<div class="footer">
+			<input type="button" value="Close" class="ui-state-default ui-corner-all"  onclick="adminMenu.hide();" />
+		</div>
+</div>
+

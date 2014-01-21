@@ -17,7 +17,6 @@
      #if(${cols.canLeaveCurrent}=='true')
      <a id="leave_vc" title="$text.search.leave.virtual.collection" href="javascript:leaveVirtualCollection();" style="float:right;margin-top:5px;margin-left:5px;" class="ui-icon ui-icon-arrowreturnthick-1-w">leave virtual collection</a>    
      #end
-     
 </div>
 #end
 
