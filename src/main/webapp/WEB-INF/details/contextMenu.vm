@@ -1,4 +1,3 @@
-
 <div><h3>$text.administrator.menu.Scope:</h3></div>
 <div class="scope selected viewer" id="scope_single"><span>$text.administrator.menu.active</span>
     <ul id="context_items_active"></ul>
@@ -7,21 +6,46 @@
     <ul id="context_items_selection"></ul>
 </div>
 
+
+
 <div style="height:0px;border-top:1px solid silver;"></div>
 <div><h3>$text.administrator.menu.Actions:</h3>
     <ul id="contextMenuList">
-         #foreach($part in ${ctxView.contextMenu.parts})
+## public items 
+<li class='no-multiple'>  
+    <span class="ui-icon ui-icon-triangle-1-e" >item</span> <a title="$text.administrator.menu.showmetadata" href="javascript:viewMetadata();">$text.administrator.menu.showmetadata</a>
+</li>
+<li>  
+    <span class="ui-icon ui-icon-triangle-1-e" >item</span> <a title="$text.administrator.menu.persistenturl" href="javascript:persistentURL();">$text.administrator.menu.persistenturl</a>
+</li>
+## TODO. check if mimetype=pdf 
+<li>
+    <span class="ui-icon ui-icon-triangle-1-e" >item</span> <a title="$text.administrator.menu.generatepdf" href="javascript:generatepdf();">$text.administrator.menu.generatepdf</a>
+</li>
+<li>
+    <span class="ui-icon ui-icon-triangle-1-e" >item</span> <a title="$text.administrator.menu.downloadOriginal" href="javascript:downloadOriginalItem();">$text.administrator.menu.downloadOriginal</a>
+</li>
+<li>  
+    <span class="ui-icon ui-icon-triangle-1-e" >item</span> <a title="$text.administrator.menu.feedback" href="javascript:feedbackDialog();">$text.administrator.menu.feedback</a>
+</li>
+#if($logControl.logged)
+<li>
+<span class="ui-icon ui-icon-triangle-1-e">item</span> <a title="$text.administrator.menu.favorites.add" href="javascript:addToFavorites();">$text.administrator.menu.favorites.add</a>
+</li>
+#end
+<li><hr/></li>
+#if($logControl.logged)
 
+## user items
 
-           #if(${part.renderable})
-               #if($velocityCount > 0)
-                     <hr/>
-               #end
-               #foreach($pitem in ${part.items})
-                   #if(${pitem.renderable})${pitem.renderedItem}#end
-               #end
-           #end
-         #end
+    #foreach($item in ${ctxMenu.items})
+        <li #if($item.multiple)class="no-multiple"#end>  
+        <span class="ui-icon ui-icon-triangle-1-e">item</span> <a title="$text.get($item.name)" href="$text.get($item.href)">$text.get($item.name)</a>
+        </li>
+    #end
+
+#end
+
     </ul>
 </div>
 
@@ -39,7 +63,7 @@
     </table>
 </div>
 
-#if($loggedusers)
+#if(!$logControl.logged)
     <div id="reindex" style="display:none;">
         <div class="allowed"></div>
         <div style="padding-bottom: 5px; margin-bottom: 5px;">
@@ -55,8 +79,6 @@
         <div id="vc_dialog" style="display:none;"><div class="content"></div></div>
 #end
 <script type="text/javascript">
-    
-    
     
     var policyPublic = ${policyPublic};
 
@@ -80,21 +102,19 @@
 
     });
 
-function getInitialPid(){
-    for (var i = 0; i < initContext.length; i++) {
+    function getInitialPid(){
         var mPath = "";
-        for (var j = 0; j < initContext[i].length; j++) {
+        var lastPid = "";
+        for (var j = 0; j < initContext[0].length; j++) {
                 if(j>0) mPath += "-";
-                mPath += initContext[i][j].model;
-                lastPid = mPath + "_" + initContext[i][j].pid;
+                mPath += initContext[0][j].model;
+                lastPid = mPath + "_" + initContext[0][j].pid;
         }
-    }
-    return lastPid;
-}
+        return mPath;
+    } 
 
     function setInitActive(){
-        var l1 = initContext.length - 1;
-        var l2 = initContext[l1].length - 1;
+        //var initialPid = model_path_str.replaceAll('/', '-') + "_" + pid_path[pid_path.length - 1];
         var initialPid = getInitialPid();
         $('#context_items_active').html('<li id="cms_'+ initialPid+'"><span class="ui-icon ui-icon-triangle-1-e " >item</span><label>'+$(jq(initialPid)+">div>a>label").html()+'</label></li>');
     }
@@ -259,7 +279,7 @@ function getInitialPid(){
         }
 
         $('#metaData').html('<p align="center"><img src="img/loading.gif" alt="loading" /></p>');
-        var url = "inc/details/metadataFull.jsp?pid="+pid+"&model="+model;
+        var url = "details/metadataFull.vm?pid="+pid+"&model="+model;
         $.get(url, function(data){
             $('#metaData').html(data);
             $('#mods-full').tabs();
@@ -383,7 +403,7 @@ function getInitialPid(){
         downloadOriginal.download(structs);
     }
 
-    #if($loggedusers)
+    #if(!$logControl.logged)
 
 
       /* add to favorite */
@@ -561,7 +581,7 @@ function getInitialPid(){
                   bgiframe: true,
                   width: 500,
                   modal: true,
-                  title:'<fmt:message bundle="${lctx}">administrator.menu.reindex</fmt:message>',
+                  title:'$text.administrator.menu.reindex',
                   buttons: [
                       {
                           text: "Ok",
@@ -882,4 +902,3 @@ function getInitialPid(){
     #end
 
 </script>
-

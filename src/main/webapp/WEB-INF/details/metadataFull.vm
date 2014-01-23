@@ -1,0 +1,18 @@
+#set($xml = $item.mods)
+#set($xsl = $import.read("../xsl/modsFull.xsl"))
+$xslt.addParam("pid", "$params.pid")
+$xslt.addParam("bundle_url", $langTool.bundleUrl)
+$xslt.addParam("model", "$params.model")
+
+<div id="mods-full">
+    <ul>
+        <li><a href="#mods-html" class="vertical-text" >html</a></li>
+        <li><a href="#mods-xml" class="vertical-text" >xml</a></li>
+    </ul>
+    <div id="mods-html">
+        $xslt.transform($xml, $xsl)
+    </div>
+    <div id="mods-xml" style="overflow:scroll;height:80%">
+        <pre>$esc.xml($xml)</pre>
+    </div>
+</div>

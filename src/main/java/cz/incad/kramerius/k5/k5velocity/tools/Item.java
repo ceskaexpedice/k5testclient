@@ -51,23 +51,27 @@ public class Item {
     public void configure(Map props) {
         req = (HttpServletRequest) props.get("request");
         pid = req.getParameter("pid");
-        //jContext = new JSONArray(K5APIRetriever.getAsString("/item/" + pid + "/context"));
     }
     
-//    private String getPid(){
-//        if(pid==null)
-//        pid = req.getParameter("pid");
-//        return pid;
-//    }
-
     public JSONArray getContext() {
         try {
-            if (jContext == null) {
-                //String pid = req.getParameter("pid");
-                jContext = new JSONArray(K5APIRetriever.getAsString("/item/" + pid + "/context"));
+//            if (jContext == null) {
+//                jContext = new JSONArray(K5APIRetriever.getAsString("/item/" + pid + "/context"));
+//            }
+//            return jContext;
+            JSONArray ja = getFields().getJSONArray("context");
+            for(int i = 0; i<ja.length(); i++){
+                JSONArray jc = ja.getJSONArray(i);
+                for(int j = 0; j<jc.length(); j++){
+                    JSONObject jcpid = jc.getJSONObject(j);
+                    String cpid = jcpid.getString("pid");
+                    JSONObject jpid = new JSONObject(K5APIRetriever.getAsString("/item/" + cpid));
+                    jcpid.put("title", jpid.get("title"));
+                    jcpid.put("root_title", jpid.get("root_title"));
+                    jcpid.put("details", jpid.get("details"));
+                }
             }
-            return jContext;
-            // return getFields().getJSONArray("context");
+             return getFields().getJSONArray("context");
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, null, ex);
             return null;

@@ -25,6 +25,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.velocity.tools.config.DefaultKey;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -45,7 +46,7 @@ public class Search {
 
     private JSONObject getJSON(String queryString) {
         try {
-            String jStr = K5APIRetriever.getJSON("/search?" + queryString);
+            String jStr = K5APIRetriever.getAsString("/search?" + queryString);
             return new JSONObject(jStr);
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
@@ -302,7 +303,37 @@ public class Search {
             if (q == null || q.equals("")) {
                 q = "*:*";
             }
-            return K5APIRetriever.getJSON("/search?q=" + q + "&wt=xml&facet=true&rows=0" + daFacets + getCollectionFilter());
+            return K5APIRetriever.getAsString("/search?q=" + q + "&wt=xml&facet=true&rows=0" + daFacets + getCollectionFilter());
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public JSONArray getDaJSON() {
+        try {
+//            return new JSONObject(K5APIRetriever.getAsString("/search?q=fedora.model:" + model + "&wt=json&facet=true&rows=0" + daFacets + getCollectionFilter()))
+//                    .getJSONObject("facet_counts")
+//                    .getJSONObject("facet_fields").getJSONArray("rok");
+            
+            String q = req.getParameter("q");
+            if (q == null || q.equals("")) {
+                q = "*:*";
+            }
+            return new JSONObject(K5APIRetriever.getAsString("/search?q=" + q + "&wt=json&facet=true&rows=0" + daFacets + getCollectionFilter()))
+                    .getJSONObject("facet_counts")
+                    .getJSONObject("facet_fields").getJSONArray("rok");
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public JSONArray getDaJSON(String model) {
+        try {
+            return new JSONObject(K5APIRetriever.getAsString("/search?q=fedora.model:" + model + "&wt=json&facet=true&rows=0" + daFacets + getCollectionFilter()))
+                    .getJSONObject("facet_counts")
+                    .getJSONObject("facet_fields").getJSONArray("rok");
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, null, ex);
             return null;

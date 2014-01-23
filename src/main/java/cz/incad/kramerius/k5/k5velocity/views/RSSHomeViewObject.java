@@ -38,7 +38,7 @@ public class RSSHomeViewObject {
 
     public void getDesirables() {
         try {
-            String jStr = K5APIRetriever.getJSON("/feed/mostdesirable");
+            String jStr = K5APIRetriever.getAsString("/feed/mostdesirable");
             this.json = new JSONObject(jStr);
         } catch (Exception ex) {
             Logger.getLogger(RSSHomeViewObject.class.getName()).log(Level.SEVERE, null, ex);
@@ -47,7 +47,7 @@ public class RSSHomeViewObject {
 
     public void getNewest() {
         try {
-            String jStr = K5APIRetriever.getJSON("/feed/newest");
+            String jStr = K5APIRetriever.getAsString("/feed/newest");
             this.json = new JSONObject(jStr);
         } catch (Exception ex) {
             Logger.getLogger(RSSHomeViewObject.class.getName()).log(Level.SEVERE, null, ex);

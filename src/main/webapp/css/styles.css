@@ -418,6 +418,68 @@ div.search_result *{
     overflow:auto;
 }
 
+#contextMenu{
+        margin: 2px;
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+    #contextMenu ul{
+        margin: 2px;
+        padding-left: 4px;
+    }
+    #contextMenu li{
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        line-height: 16px;
+    }
+
+    #contextMenu li>span{
+        width: 16px;
+        height: 16px;
+        overflow:hidden;
+        text-indent: -99999px;
+        display:block;
+        float:left;
+    }
+
+    #contextMenu .scope>span{
+        font-weight: bold;
+    }
+
+
+    #reindex ul{
+        margin: 2px;
+        padding-left: 4px;
+    }
+    #reindex li{
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        line-height: 16px;
+    }
+
+    #reindex li>span{
+        width: 16px;
+        height: 16px;
+        overflow:hidden;
+        text-indent: -99999px;
+        display:block;
+        float:left;
+    }
+
+    #reindex .scope>span{
+        font-weight: bold;
+    }
+    #reindex>div.allowed{
+        border-bottom:1px solid #E66C00;
+        margin-bottom:5px;
+        padding-bottom:3px;
+    }
+    #feedbackDialog{
+        display:none;
+    }
+
 #contextMenuList>li.disabled a{
     color:silver;
 }
