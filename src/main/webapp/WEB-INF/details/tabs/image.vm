@@ -29,6 +29,15 @@ function onLoadPlainImage() {
     <script type="text/javascript" src="${script}"></script>
 #end
 
+#if($conf.zoom.viewer == "deepzoom")
+    <script type="text/javascript" src="js/zoom/deepzoom.js"></script>
+#set($imageDivContainer = 'container')
+#else
+    <script type="text/javascript" src="js/zoom/OpenLayers.js"></script>
+    <script type="text/javascript" src="js/zoom/zoomify.js"></script>
+#set($imageDivContainer = 'ol-container')
+#end
+
 <div id="bigThumbZone" class="viewer">
     <div id="container"  class="view_div"  style="display:none;  height: 512px;">
     </div>
@@ -188,7 +197,7 @@ function onLoadPlainImage() {
                     if (zoomInit) {
                         zoomInit.init();
                     }
-                    displayImageContainer('#${image.divContainer}');
+                    displayImageContainer('#${imageDivContainer}');
                     if (viewerOptions.hasAlto) {
                         zoomInit.open(viewerOptions.uuid, viewerOptions.alto);
                     } else {
