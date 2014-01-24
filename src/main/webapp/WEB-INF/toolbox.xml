@@ -18,6 +18,7 @@
               bundles="res.configuration"
               key="conf"/>
               
+        <tool key="ctxMenu" class="cz.incad.kramerius.k5.k5velocity.views.ContextMenu" />
         <tool key="headerViewObject" class="cz.incad.kramerius.k5.k5velocity.views.HeaderViewObject" />
         <tool key="rssHome" class="cz.incad.kramerius.k5.k5velocity.views.RSSHomeViewObject" />
         <tool key="search" class="cz.incad.kramerius.k5.k5velocity.tools.Search" />

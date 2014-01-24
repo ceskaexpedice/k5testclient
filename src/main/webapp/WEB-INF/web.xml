@@ -12,6 +12,14 @@
     </filter-mapping>
 
 
+    <servlet>
+        <servlet-name>TempImageServlet</servlet-name>
+        <servlet-class>cz.incad.kramerius.k5.k5velocity.TempImageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TempImageServlet</servlet-name>
+        <url-pattern>/img</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>K5Servlet</servlet-name>

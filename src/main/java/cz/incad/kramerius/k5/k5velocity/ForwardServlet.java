@@ -181,9 +181,7 @@ public class ForwardServlet extends HttpServlet {
 			replaceURL = replaceURL+"?"+queryString;
 		}
 		LOGGER.info("requesting url "+replaceURL);
-		
-		
-		LOGGER.info("requesting url "+replaceURL);
+                
 		InputStream inputStream = null;
 		if (user != null) {
 			inputStream = RESTHelper.inputStream(replaceURL, user.getUserName(), user.getPassword());
