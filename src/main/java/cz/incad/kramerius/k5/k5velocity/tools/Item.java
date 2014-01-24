@@ -44,7 +44,7 @@ public class Item {
     HttpServletRequest req;
     String pid;
     JSONObject json;
-    JSONArray jContext;
+//    JSONArray jContext;
     JSONObject jDisplay;
     JSONObject jStreams;
 
@@ -68,7 +68,9 @@ public class Item {
                     JSONObject jpid = new JSONObject(K5APIRetriever.getAsString("/item/" + cpid));
                     jcpid.put("title", jpid.get("title"));
                     jcpid.put("root_title", jpid.get("root_title"));
-                    jcpid.put("details", jpid.get("details"));
+                    if(jpid.has("details")){
+                        jcpid.put("details", jpid.get("details"));
+                    }
                 }
             }
              return getFields().getJSONArray("context");
@@ -78,10 +80,9 @@ public class Item {
         }
     }
 
-    public JSONObject getDisplay() {
+    public JSONObject getDisplay_() {
         try {
             if (jDisplay == null) {
-//                String pid = req.getParameter("pid");
                 jDisplay = new JSONObject(K5APIRetriever.getAsString("/item/" + pid + "/display"));
             }
             return jDisplay;
@@ -130,8 +131,6 @@ public class Item {
         }
     }
     
-    
-
     public String getModelPath() {
         String ret = "";
         try {
@@ -149,8 +148,6 @@ public class Item {
         }
     }
     
-    
-
     public String getPidPath() {
         String ret = "";
         try {
@@ -302,16 +299,17 @@ public class Item {
             JSONObject jViewer = new JSONObject();
             jViewer.put("pdfMaxRange", 20);
             jViewer.put("previewStreamGenerated", false);
-            jViewer.put("deepZoomGenerated", false);
-            jViewer.put("deepZoomCofigurationEnabled", false);
+            jViewer.put("deepZoomGenerated", getFields().has("zoom"));
+            jViewer.put("deepZoomCofigurationEnabled", getFields().has("zoom"));
             jViewer.put("imgfull", jStreams.has("IMG_FULL"));
+            String mimeType = jStreams.getJSONObject("IMG_FULL").getString("mimeType");
             if(jStreams.has("IMG_FULL")){
-                jViewer.put("mimeType", jStreams.getJSONObject("IMG_FULL").getString("mimeType"));
+                jViewer.put("mimeType", mimeType);
             }
             jViewer.put("hasAlto", jStreams.has("ALTO"));
             jViewer.put("pid", pid);
             jViewer.put("model", getFields().getString("model"));
-            jViewer.put("displayableContent", true);
+            jViewer.put("displayableContent", jStreams.has("IMG_FULL"));
             jViewer.put("donator", "");
             JSONArray pop = new JSONArray();
             JSONArray cxt =  getFields().getJSONArray("context");
@@ -334,8 +332,8 @@ public class Item {
             jrRead.put(pid, true);
             jRights.put("read", jrRead);
             jViewer.put("rights", jRights);
-            jViewer.put("isContentPDF", false);
-            jViewer.put("isContentDJVU", false);
+            jViewer.put("isContentPDF", mimeType.toUpperCase().contains("PDF"));
+            jViewer.put("isContentDJVU", mimeType.toUpperCase().contains("DJVU"));
             return jViewer.toString();
 
         } catch (Exception ex) {
