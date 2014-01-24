@@ -148,6 +148,14 @@ public class MenuController {
 		}
 		return false;
 	}
+
+	private MenuItem deleteProcesses() {
+    	StringBuilder builder=new StringBuilder();
+    	builder.append("javascript:parametrizedProcess.open('delete_processes'); javascript:hideAdminMenu();");
+    	MenuItem itm = new MenuItem(builder.toString(), "Smazat stare procesy");
+    	return itm;
+	}
+
 	
 	public List<MenuItem> getAdminItems() {
 		List<MenuItem> l = new ArrayList<MenuItem>();
@@ -169,10 +177,15 @@ public class MenuController {
 			if (jsonObj.getBoolean("show_statictics")){
 				l.add(statistics());
 			}			
+			if (jsonObj.getBoolean("manage_lr_process")){
+				l.add(deleteProcesses());
+			}			
 			
 		} catch (JSONException e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(),e);
 		}
 		return l;
 	}
+
+
 }

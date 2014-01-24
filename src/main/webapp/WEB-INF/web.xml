@@ -79,13 +79,39 @@
             <param-name>k5prefix</param-name>
             <param-value>http://localhost:8080/search/api/v5.0/k5</param-value>
         </init-param>
-		
     </servlet>
 
     <servlet-mapping>
         <servlet-name>api</servlet-name>
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>lr</servlet-name>
+        <servlet-class>cz.incad.kramerius.k5.k5velocity.LRForwardServlet</servlet-class>
+		
+        <init-param>
+            <param-name>user</param-name>
+            <param-value>krameriusAdmin</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>password</param-name>
+            <param-value>krameriusAdmin</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>k5prefix</param-name>
+            <param-value>http://localhost:8080/search/lr</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>lr</servlet-name>
+        <url-pattern>/lr</url-pattern>
+    </servlet-mapping>
+
 
     <servlet>
         <servlet-name>i18n</servlet-name>
