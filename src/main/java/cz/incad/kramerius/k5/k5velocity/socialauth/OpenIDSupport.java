@@ -117,7 +117,7 @@ public class OpenIDSupport {
     public static String createUser(Profile profile) throws JSONException {
     	Client c = Client.create();
 
-        WebResource r = c.resource("http://localhost:8080/search/api/v4.6/k5/admin/users");
+        WebResource r = c.resource("http://localhost:8080/search/api/v5.0/admin/users");
         r.addFilter(new BasicAuthenticationFilter("krameriusAdmin", "krameriusAdmin"));
         JSONObject object = new JSONObject();
 
@@ -135,7 +135,7 @@ public class OpenIDSupport {
     public static boolean userExists(Profile p) throws JSONException {
     	Client c = Client.create();
     	
-        WebResource r = c.resource("http://localhost:8080/search/api/v4.6/k5/admin/users?lname="+calculateUserName(p));
+        WebResource r = c.resource("http://localhost:8080/search/api/v5.0/admin/users?lname="+calculateUserName(p));
         r.addFilter(new BasicAuthenticationFilter("krameriusAdmin", "krameriusAdmin"));
 
         String t = r.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).get(String.class);

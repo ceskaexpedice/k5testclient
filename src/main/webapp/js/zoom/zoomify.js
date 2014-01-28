@@ -20,6 +20,8 @@ function ZoomifyViewerInitObject() {
     		"ol-overview":"ol-overview"
     		
     };
+	
+   this.prefix="http://localhost:8080/search"
 }
 
 
@@ -61,9 +63,9 @@ ZoomifyViewerInitObject.prototype.open = function(pid,altoObject) {
     $('#'+this.divs['ol-overview']).remove();	
     $('#'+this.divs['ol-wrapper']).html('<div id=\"'+this.divs['ol-image']+'\" style=\"width: 100%; height: 100%\"></div>');
     
-    $.get('zoomify/'+pid+'/ImageProperties.xml', bind(function(data) {
+    $.get(this.prefix+'/'+'zoomify/'+pid+'/ImageProperties.xml', bind(function(data) {
         
-        var url = "zoomify/"+pid+"/";
+        var url = this.prefix+'/'+"zoomify/"+pid+"/";
         
         function resolutions(numberOfTiles) {
             var resolutions = [];

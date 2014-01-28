@@ -77,7 +77,7 @@
 
         <init-param>
             <param-name>k5prefix</param-name>
-            <param-value>http://localhost:8080/search/api/v5.0/k5</param-value>
+            <param-value>http://localhost:8080/search/api/v5.0</param-value>
         </init-param>
     </servlet>
 

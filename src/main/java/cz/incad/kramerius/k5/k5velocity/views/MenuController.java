@@ -43,7 +43,7 @@ public class MenuController {
 	// create user
     public static String rights() throws JSONException {
     	Client c = Client.create();
-        WebResource r = c.resource("http://localhost:8080/search/api/v5.0/k5/rights");
+        WebResource r = c.resource("http://localhost:8080/search/api/v5.0/rights");
         r.addFilter(new BasicAuthenticationFilter("krameriusAdmin", "krameriusAdmin"));
         String t = r.accept(MediaType.APPLICATION_JSON).get(String.class);
         return t;
@@ -51,7 +51,7 @@ public class MenuController {
 
     public static String showAdminMenu() throws JSONException {
     	Client c = Client.create();
-        WebResource r = c.resource("http://localhost:8080/search/api/v5.0/k5/rights?actions=display_admin_menu");
+        WebResource r = c.resource("http://localhost:8080/search/api/v5.0/rights?actions=display_admin_menu");
         r.addFilter(new BasicAuthenticationFilter("krameriusAdmin", "krameriusAdmin"));
         String t = r.accept(MediaType.APPLICATION_JSON).get(String.class);
         return t;
