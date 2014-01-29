@@ -295,21 +295,26 @@ public class Item {
 
     public String getViewerOptions() {
         try {
-            getStreams();
+        	
+            JSONObject streams = getStreams();
             JSONObject jViewer = new JSONObject();
             jViewer.put("pdfMaxRange", 20);
             jViewer.put("previewStreamGenerated", false);
             jViewer.put("deepZoomGenerated", getFields().has("zoom"));
             jViewer.put("deepZoomCofigurationEnabled", getFields().has("zoom"));
-            jViewer.put("imgfull", jStreams.has("IMG_FULL"));
-            String mimeType = jStreams.getJSONObject("IMG_FULL").getString("mimeType");
-            if(jStreams.has("IMG_FULL")){
-                jViewer.put("mimeType", mimeType);
+            jViewer.put("imgfull", streams.has("IMG_FULL"));
+            if (jViewer.getBoolean("imgfull")) {
+                String mimeType = streams.getJSONObject("IMG_FULL").getString("mimeType");
+                if(jStreams.has("IMG_FULL")){
+                    jViewer.put("mimeType", mimeType);
+                }
+                jViewer.put("isContentPDF", mimeType.toUpperCase().contains("PDF"));
+                jViewer.put("isContentDJVU", mimeType.toUpperCase().contains("DJVU"));
             }
-            jViewer.put("hasAlto", jStreams.has("ALTO"));
+            jViewer.put("hasAlto", streams.has("ALTO"));
             jViewer.put("pid", pid);
             jViewer.put("model", getFields().getString("model"));
-            jViewer.put("displayableContent", jStreams.has("IMG_FULL"));
+            jViewer.put("displayableContent", streams.has("IMG_FULL"));
             jViewer.put("donator", "");
             JSONArray pop = new JSONArray();
             JSONArray cxt =  getFields().getJSONArray("context");
@@ -332,8 +337,6 @@ public class Item {
             jrRead.put(pid, true);
             jRights.put("read", jrRead);
             jViewer.put("rights", jRights);
-            jViewer.put("isContentPDF", mimeType.toUpperCase().contains("PDF"));
-            jViewer.put("isContentDJVU", mimeType.toUpperCase().contains("DJVU"));
             return jViewer.toString();
 
         } catch (Exception ex) {

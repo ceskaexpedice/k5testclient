@@ -241,7 +241,7 @@ public class Search {
             
             String q = req.getParameter("q");
             if (q == null || q.equals("")) {
-                q += "*:*";
+                q = "*:*";
             }else{
                 q = URLEncoder.encode(q, "UTF-8");
             }
